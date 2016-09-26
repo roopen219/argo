@@ -1,0 +1,19 @@
+@import "variables";
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-bottom: 2px solid #79828F;
+    color: #fafafa;
+    background: none;
+    
+    &::placeholder {
+        color: #ccc;
+    }
+    
+    &:focus {
+        border-color: $primary;
+        outline: none;
+    }
+}

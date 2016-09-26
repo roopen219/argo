@@ -1,0 +1,36 @@
+@import "variables";
+
+.flex {
+    display: flex;
+    flex-basis: auto;
+}
+
+.flex-row {
+    @extend .flex;
+    flex-direction: row; 
+    
+    &-reverse {
+        @extend .flex;
+        flex-direction: row-reverse;
+    }
+}
+
+.flex-column {
+    @extend .flex;
+    flex-direction: column;
+    
+    &-reverse {
+        @extend .flex;
+        flex-direction: column-reverse;
+    }
+}
+
+@for $i from 1 through $flex-columns {
+    .flex-grow-#{$i} {
+        flex-grow: $i;
+    }
+    
+    .flex-shrink-#{$i} {
+        flex-shrink: $i;
+    }
+} 
