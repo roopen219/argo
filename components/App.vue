@@ -25,12 +25,14 @@
 </style>
 
 <template>
-    <arc-navbar></arc-navbar>
-    <arc-command-pallete></arc-command-pallete>
-    <div class="dom-container">
-        <arc-dom :dom="dom"></arc-dom>
-        <arc-layer-editor :dom="dom"></arc-layer-editor>
-    </div>
+  <div>
+      <arc-navbar></arc-navbar>
+      <arc-command-pallete></arc-command-pallete>
+      <div class="dom-container">
+          <arc-dom :dom="dom"></arc-dom>
+          <arc-layer-editor :dom="dom"></arc-layer-editor>
+      </div>
+  </div>
 </template>
 
 <script>
