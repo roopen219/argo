@@ -34,7 +34,13 @@ module.exports = {
         loaders: [{
             test: /\.vue$/,
             loader: 'vue'
-        }, {
+        },
+        {
+          test: /\.js$/,
+          loader: 'babel',
+          exclude: /node_modules/
+        },
+        {
             test: /\.json$/,
             loader: 'json'
         }, {
@@ -46,8 +52,7 @@ module.exports = {
         loaders: {
             sass: 'style!css!sass?indentedSyntax',
             scss: 'style!css!sass',
-            css: 'style!css!sass',
-            html: 'vue-html?minimize=false'
+            css: 'style!css!sass'
         }
     },
     sassLoader: {
