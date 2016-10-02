@@ -32,10 +32,12 @@ Mousetrap.bind('4', function() {
 
 function initializeApp() {
     var app = new Vue({
-        el: 'html',
-        replace: false,
+        el: '#app-mount',
         data: {
             dom: window.arcDOM
+        },
+        render: function(h) {
+            return h('arc-app');
         }
     });
     window.arcApp = app;

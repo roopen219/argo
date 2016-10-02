@@ -22,7 +22,11 @@ app.on('ready', function() {
         height: 600
     });
 
-    mainWindow.loadURL('file://' + path.join(__dirname, 'index.html'));
+    if (process.env.NODE_ENV === 'dev') {
+        mainWindow.loadURL('http://localhost:8080/index.html');
+    } else {
+        mainWindow.loadURL('file://' + path.join(__dirname, 'index.html'));
+    }
 
     mainWindow.webContents.openDevTools();
 
