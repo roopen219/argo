@@ -1,0 +1,4 @@
+{
+    "name": "ramiel-desktop",
+    "main": "electron.js"
+}
