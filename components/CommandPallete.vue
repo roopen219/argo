@@ -4,7 +4,7 @@
             class="input-large"
             type="text"
             name="command"
-            placeholder="Type in the action you want to take. ('?' for help)"
+            placeholder="Type in the action you want to take... ('?' for help)"
         />
     </div>
 </template>
