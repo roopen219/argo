@@ -19,7 +19,6 @@ module.exports = {
         fallback: [PATHS.nodeModules],
         alias: {
             'static': PATHS.static,
-            'components': PATHS.components,
             'scss': PATHS.scss
         }
     },
@@ -43,9 +42,9 @@ module.exports = {
     },
     vue: {
         loaders: {
-            sass: 'style!css!sass?indentedSyntax',
-            scss: 'style!css!sass',
-            css: 'style!css!sass'
+            sass: 'style!css?minimize&autoprefixer=1!sass?indentedSyntax',
+            scss: 'style!css?minimize&autoprefixer=1!sass',
+            css: 'style!css?minimize&autoprefixer=1!sass'
         }
     },
     sassLoader: {

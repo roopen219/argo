@@ -2,11 +2,8 @@
 'use strict';
 
 const path = require('path');
-const {electron, ipcMain} = require('electron');
+const {app, BrowserWindow} = require('electron');
 const is = require('electron-is');
-
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
 
 var mainWindow = null;
 
@@ -33,6 +30,4 @@ app.on('ready', function() {
     mainWindow.on('closed', function() {
         mainWindow = null;
     });
-
-    ipcMain.on();
 });

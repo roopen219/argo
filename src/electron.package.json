@@ -1,0 +1,5 @@
+{
+    "name": "ramiel-desktop",
+    "main": "electron.js",
+    "version": "1.2.3"
+}
