@@ -11,6 +11,7 @@ module.exports = {
         path: PATHS.build,
         filename: 'build.js'
     },
+    target: 'electron',
     resolve: {
         root: [
             PATHS.src

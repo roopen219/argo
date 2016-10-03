@@ -2,7 +2,8 @@
 'use strict';
 
 const path = require('path');
-const electron = require('electron');
+const {electron, ipcMain} = require('electron');
+const is = require('electron-is');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -22,15 +23,16 @@ app.on('ready', function() {
         height: 600
     });
 
-    if (process.env.NODE_ENV === 'dev') {
+    if (is.dev()) {
         mainWindow.loadURL('http://localhost:8080/index.html');
+        mainWindow.webContents.openDevTools();
     } else {
         mainWindow.loadURL('file://' + path.join(__dirname, 'index.html'));
     }
 
-    mainWindow.webContents.openDevTools();
-
     mainWindow.on('closed', function() {
         mainWindow = null;
     });
+
+    ipcMain.on();
 });

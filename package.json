@@ -2,6 +2,7 @@
   "name": "ramiel-client",
   "version": "0.1.0",
   "dependencies": {
+    "electron-is": "^2.3.0",
     "mousetrap": "^1.5.3",
     "vue": "^2.0.1",
     "vuex": "^2.0.0"
@@ -29,7 +30,8 @@
     "webpack-merge": "^0.14.1"
   },
   "scripts": {
-    "dev": "webpack-dev-server --config=webpack.dev.config.js --inline --hot",
+    "dev-server": "webpack-dev-server --config=webpack.dev.config.js --inline --hot",
+    "dev-build": "webpack --config=webpack.dev.config.js",
     "electron": "cross-env NODE_ENV=dev electron ./build"
   }
 }
