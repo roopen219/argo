@@ -1,9 +1,9 @@
 /* global __dirname */
 
-const webpackMerge = require('webpack-merge');
-const baseConfig = require('./webpack.base.config');
-const WritePlugin = require('write-file-webpack-plugin');
-const PATHS = require('./webpack.paths');
+const webpackMerge = require('webpack-merge')
+const baseConfig = require('./webpack.base.config')
+const WritePlugin = require('write-file-webpack-plugin')
+const PATHS = require('./webpack.paths')
 
 module.exports = webpackMerge(baseConfig, {
     devServer: {
@@ -14,4 +14,4 @@ module.exports = webpackMerge(baseConfig, {
     plugins: [
         new WritePlugin()
     ]
-});
+})

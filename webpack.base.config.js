@@ -1,6 +1,5 @@
 /* global __dirname */
 
-const CopyPlugin = require('copy-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 
 const PATHS = require('./webpack.paths');
@@ -30,7 +29,10 @@ module.exports = {
         {
             test: /\.js$/,
             loader: 'babel',
-            exclude: /node_modules/
+            exclude: /node_modules/,
+            query: {
+                presets: ['es2015']
+            }
         },
         {
             test: /\.json$/,
@@ -51,13 +53,6 @@ module.exports = {
         includePaths: [PATHS.scss]
     },
     plugins: [
-        new CleanPlugin(['build/*.hot-update.*']),
-        new CopyPlugin([
-            {
-                from: 'electron'
-            }
-        ], {
-            copyUnmodified: true
-        })
+        new CleanPlugin(['build/*.hot-update.*'])
     ]
 };

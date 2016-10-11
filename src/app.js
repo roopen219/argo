@@ -1,8 +1,5 @@
-var Vue = require('vue');
-var Mousetrap = require('mousetrap');
-
-registerArcComponents();
-initializeApp();
+import Vue from 'vue'
+import Mousetrap from 'mousetrap'
 
 window.arcDOM = [{
     type: 'arc-p',
@@ -24,11 +21,14 @@ window.arcDOM = [{
     attrs: {
         type: 'text'
     }
-}];
+}]
+
+registerArcComponents()
+initializeApp()
 
 Mousetrap.bind('4', function() {
-    console.log(4);
-});
+    console.log(4)
+})
 
 function initializeApp() {
     var app = new Vue({
@@ -36,18 +36,16 @@ function initializeApp() {
         data: {
             dom: window.arcDOM
         },
-        render: function(h) {
-            return h('arc-app');
-        }
-    });
-    window.arcApp = app;
+        render: (h) => h('arc-app')
+    })
+    window.arcApp = app
 }
 
 function registerArcComponents() {
-    var components = require.context('components', true, /\.vue$/);
+    var components = require.context('components', true, /\.vue$/)
 
     components.keys().forEach(function(componentName) {
-        var component = components(componentName);
-        Vue.component(component.name, component);
-    });
+        var component = components(componentName)
+        Vue.component(component.name, component)
+    })
 }
