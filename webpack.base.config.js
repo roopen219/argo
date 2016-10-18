@@ -18,7 +18,9 @@ module.exports = {
         fallback: [PATHS.nodeModules],
         alias: {
             'static': PATHS.static,
-            'scss': PATHS.scss
+            'scss': PATHS.scss,
+            'utils': PATHS.utils,
+            'components': PATHS.components
         }
     },
     module: {
