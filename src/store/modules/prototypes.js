@@ -1,10 +1,9 @@
-import Vuex from 'vuex'
+import * as types from '../types'
 
 let state = {
-    documents: [],
-    currentDocument: null
+    prototypes: []
 }
 
-export default new Vuex.Store({
+export default {
     state
-})
+}
