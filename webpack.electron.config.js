@@ -1,6 +1,6 @@
-const CopyPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin')
 
-const PATHS = require('./webpack.paths');
+const PATHS = require('./webpack.paths')
 
 module.exports = {
     entry: PATHS.electronMain,
@@ -27,9 +27,12 @@ module.exports = {
             {
                 from: 'electron.package.json',
                 to: 'package.json'
+            },
+            {
+                from: 'index.html'
             }
         ], {
             copyUnmodified: true
         })
     ]
-};
+}

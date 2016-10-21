@@ -1,8 +1,8 @@
 /* global __dirname */
 
-const CleanPlugin = require('clean-webpack-plugin');
+const CleanPlugin = require('clean-webpack-plugin')
 
-const PATHS = require('./webpack.paths');
+const PATHS = require('./webpack.paths')
 
 module.exports = {
     entry: PATHS.app,
@@ -57,4 +57,4 @@ module.exports = {
     plugins: [
         new CleanPlugin(['build/*.hot-update.*'])
     ]
-};
+}
