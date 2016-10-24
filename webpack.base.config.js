@@ -8,9 +8,9 @@ module.exports = {
     entry: PATHS.app,
     output: {
         path: PATHS.build,
-        filename: 'build.js'
+        filename: 'build.js',
+        libraryTarget: 'commonjs2'
     },
-    target: 'electron',
     resolve: {
         root: [
             PATHS.src
@@ -23,6 +23,9 @@ module.exports = {
             'components': PATHS.components
         }
     },
+    externals: {
+        electron: true
+    },
     module: {
         loaders: [{
             test: /\.vue$/,
@@ -31,10 +34,7 @@ module.exports = {
         {
             test: /\.js$/,
             loader: 'babel',
-            exclude: /node_modules/,
-            query: {
-                presets: ['es2015']
-            }
+            exclude: /node_modules/
         },
         {
             test: /\.json$/,
