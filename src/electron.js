@@ -1,38 +1,39 @@
 /* global process */
 'use strict';
 
-const path = require('path');
-const is = require('electron-is');
+const path = require('path')
+const is = require('electron-is')
 
 const {
     app,
     BrowserWindow,
     protocol
-} = require('electron');
+} = require('electron')
 
-var mainWindow = null;
+var mainWindow = null
 
-app.on('window-all-closed', function() {
+app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
-        app.quit();
+        app.quit()
     }
 });
 
 protocol.registerStandardSchemes(['ramiel'])
 
-app.on('ready', function() {
+app.on('ready', () => {
     mainWindow = new BrowserWindow({
         width: 800,
-        height: 600
-    });
+        height: 600,
+        titleBarStyle: 'hidden-inset'
+    })
 
     if (is.dev()) {
         mainWindow.loadURL('http://localhost:8080/index.html');
-        mainWindow.webContents.openDevTools();
+        mainWindow.webContents.openDevTools()
     } else {
         protocol.registerFileProtocol('ramiel', (request, callback) => {
             const url = request.url.substr(13)
-            console.log(url);
+            console.log(url)
             console.log(path.resolve(`${__dirname}/${url}`))
 
             if (url.length) {
@@ -42,10 +43,12 @@ app.on('ready', function() {
             }
 
         })
-        mainWindow.loadURL('ramiel://app');
+        mainWindow.loadURL('ramiel://app')
     }
 
+    mainWindow.maximize()
+
     mainWindow.on('closed', function() {
-        mainWindow = null;
+        mainWindow = null
     });
 });
