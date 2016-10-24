@@ -14,6 +14,7 @@
     "clean-webpack-plugin": "^0.1.11",
     "copy-webpack-plugin": "^3.0.1",
     "css-loader": "^0.23.1",
+    "electron": "^1.4.4",
     "devtron": "^1.4.0",
     "eslint": "^3.7.0",
     "eslint-plugin-vue": "^0.1.1",
@@ -27,12 +28,12 @@
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.16.1",
     "webpack-merge": "^0.14.1",
-    "worker-loader": "^0.7.0",
-    "write-file-webpack-plugin": "^3.3.0"
+    "worker-loader": "^0.7.0"
   },
   "scripts": {
     "dev-server": "webpack-dev-server --config=webpack.dev.config.js --inline --hot",
     "electron-server": "webpack --watch --config=webpack.electron.config.js",
+    "electron-build": "webpack --config=webpack.electron.config.js",
     "dev-build": "webpack --config=webpack.dev.config.js",
     "electron": "electron ./build"
   }
