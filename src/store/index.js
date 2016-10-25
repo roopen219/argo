@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import * as actions from './actions'
-import * as getters from './getters'
+// import * as actions from './actions'
+// import * as getters from './getters'
 
 Vue.use(Vuex)
 
 let storeModules = requireStoreModules()
 
 export default new Vuex.Store({
-    actions,
-    getters,
+    // actions,
+    // getters,
     modules: storeModules
 })
 
@@ -20,14 +20,11 @@ function requireStoreModules() {
     return storeModules
         .keys()
         .map((filePath) => {
-            let lastIndexOf = filePath.lastIndexOf
-            var fileName = filePath.substr(lastIndexOf('/') + 1, lastIndexOf('.'))
+            let fileName = filePath.substr(filePath.lastIndexOf('/') + 1, filePath.lastIndexOf('.') - 2)
 
             return {
-                [fileName]: storeModules(filePath)
+                [fileName]: storeModules(filePath).default
             }
         })
-        .reduce((module1, module2) => {
-            return Object.assign({}, module1, module2)
-        })
+        .reduce((module1, module2) => Object.assign({}, module1, module2))
 }

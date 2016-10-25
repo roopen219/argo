@@ -13,6 +13,15 @@ module.exports = {
     externals: {
         electron: true
     },
+    resolve: {
+        root: [
+            PATHS.src
+        ],
+        alias: {
+            'utils': PATHS.utils,
+            'services': PATHS.services
+        }
+    },
     target: 'node',
     node: {
         __dirname: false,

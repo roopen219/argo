@@ -8,6 +8,7 @@ module.exports = {
     static: path.join(__dirname, 'src/static/'),
     utils: path.join(__dirname, 'src/utils/'),
     components: path.join(__dirname, 'src/components/'),
+    services: path.join(__dirname, 'src/services'),
     nodeModules: path.join(__dirname, 'node_modules/'),
     electronMain: path.join(__dirname, 'src/electron.js')
 };

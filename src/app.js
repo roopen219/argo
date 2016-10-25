@@ -1,44 +1,16 @@
 import Vue from 'vue'
-import Mousetrap from 'mousetrap'
-
-window.arcDOM = [{
-    type: 'arc-p',
-    children: [{
-        type: 'arc-text',
-        text: 'Hello there!'
-    }]
-}, {
-    type: 'arc-div',
-    children: [{
-        type: 'arc-button',
-        children: [{
-            type: 'arc-text',
-            text: 'Click me!'
-        }]
-    }]
-}, {
-    type: 'arc-input',
-    attrs: {
-        type: 'text'
-    }
-}]
+import store from './store'
 
 registerArcComponents()
 initializeApp()
 
-Mousetrap.bind('4', function() {
-    console.log(4)
-})
-
 function initializeApp() {
     var app = new Vue({
         el: '#app-mount',
-        data: {
-            dom: window.arcDOM
-        },
-        render: (h) => h('arc-app')
+        store,
+        render: (h) => h('raml-app')
     })
-    window.arcApp = app
+    window.ramlApp = app
 }
 
 function registerArcComponents() {

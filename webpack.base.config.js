@@ -20,7 +20,8 @@ module.exports = {
             'static': PATHS.static,
             'scss': PATHS.scss,
             'utils': PATHS.utils,
-            'components': PATHS.components
+            'components': PATHS.components,
+            'services': PATHS.services
         }
     },
     externals: {
@@ -43,6 +44,14 @@ module.exports = {
             test: /\.(sass|scss)$/,
             loaders: ['style', 'css?minimize&autoprefixer=1', 'sass']
         }]
+    },
+    node: {
+        __dirname: false,
+        global: false,
+        process: false,
+        Buffer: false,
+        __filename: false,
+        setImmediate: false
     },
     vue: {
         loaders: {

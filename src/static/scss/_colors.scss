@@ -2,6 +2,19 @@ $bg-color: #4F5966;
 
 $primary: #F4AA7A;
 $default: #79828F;
+$danger: #D35400;
 
 $text-color-dark: #4F5966;
 $text-color-light: #fafafa;
+$text-color-muted: #999;
+
+// TABS
+$bg-title-bar: #34495E;
+$bg-tab-active: #ECF0F1;
+$bg-tab-hover: darken($bg-tab-active, 2%);
+$bg-tab: darken($bg-tab-active, 15%);
+$color-tabs-border: #AAA;
+
+$color-close-btn-default: $text-color-muted;
+$color-close-btn-hover: #fff;
+$bg-close-btn-hover: $danger;

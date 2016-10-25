@@ -1,4 +1,4 @@
-<style>
+<style lang="scss">
     @import "app";
 
     html {
@@ -11,6 +11,7 @@
         display: flex;
         flex-direction: column;
         margin: 0;
+        font-size: 14px;
     }
 
     * {
@@ -26,18 +27,17 @@
 
 <template>
   <div>
-      <arc-navbar></arc-navbar>
-      <arc-command-pallete></arc-command-pallete>
+      <raml-tabs></raml-tabs>
   </div>
 </template>
 
 <script>
-    module.exports = {
-        name: 'arc-app',
+    export default {
+        name: 'raml-app',
         data: function() {
             return {
                 dom: window.arcDOM
             };
         }
-    };
+    }
 </script>

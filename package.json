@@ -4,6 +4,7 @@
   "dependencies": {
     "electron-is": "^2.3.0",
     "mousetrap": "^1.5.3",
+    "random-key": "^0.3.2",
     "vue": "^2.0.1",
     "vuex": "^2.0.0"
   },

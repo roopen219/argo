@@ -1,8 +1,9 @@
 /* global process */
-'use strict';
 
 const path = require('path')
 const is = require('electron-is')
+
+const appService = require('services/appService')
 
 const {
     app,
@@ -16,7 +17,7 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit()
     }
-});
+})
 
 protocol.registerStandardSchemes(['ramiel'])
 
@@ -28,7 +29,7 @@ app.on('ready', () => {
     })
 
     if (is.dev()) {
-        mainWindow.loadURL('http://localhost:8080/index.html');
+        mainWindow.loadURL('http://localhost:8080/index.html')
         mainWindow.webContents.openDevTools()
     } else {
         protocol.registerFileProtocol('ramiel', (request, callback) => {
@@ -50,5 +51,5 @@ app.on('ready', () => {
 
     mainWindow.on('closed', function() {
         mainWindow = null
-    });
-});
+    })
+})
