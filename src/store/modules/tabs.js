@@ -1,13 +1,12 @@
 import Vue from 'vue'
-import rand from 'random-key'
+import {RamlEntity} from 'utils'
 
 import appService from 'services/appService'
 import * as types from '../types'
 
-class Tab {
-    constructor(tabContent) {
-        this.id = rand.generate()
-        this.type = 'tab'
+class Tab extends RamlEntity {
+    constructor (tabContent) {
+        super('tab')
         this.tabContent = tabContent
     }
 }
@@ -39,7 +38,9 @@ let actions = {
         if (alreadyOpenedTab) {
             commit(types.SWITCH_TAB, alreadyOpenedTab.id)
         } else {
-            commit(types.OPEN_TAB, new Tab(tabContent))
+            let newTab = new Tab(tabContent)
+            commit(types.OPEN_TAB, newTab)
+            commit(types.SWITCH_TAB, newTab.id)
         }
     },
     [types.SWITCH_TAB] ({commit}, tabId) {
@@ -52,7 +53,7 @@ let actions = {
 
         if (isOnlyTabOpen) {
             commit(types.CLOSE_TAB, tabId)
-            appService.quit()
+            appService.quitApp()
         }
 
         if (isCurrentTab) {
@@ -82,7 +83,7 @@ function getTabToSwitch (tabId) {
         return
     }
 
-    if(currentTabIndex === tabs.length - 1) {
+    if(currentTabIndex === (tabOrder.length - 1)) {
         return tabs[tabOrder[currentTabIndex - 1]]
     }
 
