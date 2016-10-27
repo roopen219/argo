@@ -74,14 +74,35 @@
 </style>
 
 <template>
-    <div class="tab" @click="log">
-        <span>{this.tabName}</span>
-        <button class="close">&times;</button>
+    <div :class="this.classes" @click="switchTab">
+        <span>{{this.id}}</span>
+        <button class="close" @click="closeTab">&times;</button>
     </div>
 </template>
 
 <script>
+	import * as types from '../store/types'
+
     export default {
-        name: 'raml-tab'
+        name: 'raml-tab',
+        computed: {
+        	classes: function () {
+        		let classes = {
+        			tab: 'tab',
+        			active: this.active
+        		}
+        		return classes
+        	}
+        },
+        methods: {
+        	closeTab: function (e) {
+        		e.stopPropagation()
+        		this.$store.dispatch(types.CLOSE_TAB, this.id)
+        	},
+        	switchTab: function () {
+        		this.$store.dispatch(types.SWITCH_TAB, this.id)
+        	}
+        },
+        props: ['id', 'active']
     }
 </script>

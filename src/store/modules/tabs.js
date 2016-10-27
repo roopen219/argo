@@ -63,7 +63,10 @@ let actions = {
                 commit(types.SWITCH_TAB, tabToSwitch.id)
                 commit(types.CLOSE_TAB, tabId)
             }
+            return
         }
+
+        commit(types.CLOSE_TAB, tabId)
     }
 }
 
