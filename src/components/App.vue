@@ -26,8 +26,9 @@
 </style>
 
 <template>
-  <div>
+  <div class="flex-column flex-grow-1">
       <raml-tabs></raml-tabs>
+      <raml-tab-content></raml-tab-content>
   </div>
 </template>
 
