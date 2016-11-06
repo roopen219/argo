@@ -2,6 +2,7 @@
   "name": "ramiel-client",
   "version": "0.1.0",
   "dependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "electron-is": "^2.3.0",
     "mousetrap": "^1.5.3",
     "random-key": "^0.3.2",

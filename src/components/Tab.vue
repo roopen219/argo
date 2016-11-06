@@ -80,6 +80,7 @@
 
 <script>
 	import * as types from '../store/types'
+	import {mapActions} from 'vuex'
 
     export default {
         name: 'raml-tab',
@@ -93,12 +94,16 @@
         	}
         },
         methods: {
+			...mapActions({
+				'_closeTab': types.CLOSE_TAB,
+				'_switchTab': types.SWITCH_TAB
+			}),
         	closeTab: function (e) {
         		e.stopPropagation()
-        		this.$store.dispatch(types.CLOSE_TAB, this.id)
+				this._closeTab(this.id)
         	},
         	switchTab: function () {
-        		this.$store.dispatch(types.SWITCH_TAB, this.id)
+				this._switchTab(this.id)
         	}
         },
         props: ['id', 'active']

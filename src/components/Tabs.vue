@@ -41,7 +41,7 @@
 
 <template>
 	<div class="tabs-container flex-row">
-		<raml-tab :id="tabId" v-for="tabId in tabOrder" :active="tabId === currentTab.id"></raml-tab>
+		<raml-tab :id="tabId" v-for="tabId in tabs.tabOrder" :active="tabId === tabs.currentTab.id"></raml-tab>
 		<button class="btn-open-new-tab" @click="openTab">+</button>
 	</div>
 </template>
@@ -49,18 +49,19 @@
 <script>
 	import rand from 'random-key'
 	import * as types from '../store/types'
-	import {mapState} from 'vuex'
-	
+	import {mapState, mapActions} from 'vuex'
+
 	export default {
 		name: 'raml-tabs',
-		computed: mapState({
-		    tabs: state => state.tabs.tabs,
-			tabOrder: state => state.tabs.tabOrder,
-			currentTab: state => state.tabs.currentTab
-		}),
+		computed: {
+			...mapState(['tabs'])
+		},
 		methods: {
+			...mapActions({
+				_openTab: types.OPEN_TAB
+			}),
 			openTab: function () {
-				this.$store.dispatch(types.OPEN_TAB, {id: rand.generate()})
+				this._openTab({id: rand.generate()})
 			}
 		}
 	}
