@@ -8,7 +8,8 @@ const appService = require('services/appService')
 const {
     app,
     BrowserWindow,
-    protocol
+    protocol,
+    globalShortcut
 } = require('electron')
 
 var mainWindow = null
@@ -31,6 +32,9 @@ app.on('ready', () => {
 
     if(is.windows()) {
         mainWindow.setMenu(null)
+        globalShortcut.register('Control+R', () => {
+            mainWindow.reload()
+        })
     }
 
     if (is.dev()) {
@@ -52,6 +56,11 @@ app.on('ready', () => {
     }
 
     mainWindow.maximize()
+
+    globalShortcut.register('Control+Shift+R', () => {
+        app.relaunch()
+        app.quit()
+    })
 
     mainWindow.on('closed', function() {
         mainWindow = null
