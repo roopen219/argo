@@ -3,7 +3,7 @@
 
 	.tabs-container {
 		background: $bg-title-bar;
-		padding: 4px 20px 0 80px;
+		padding: 5px 20px 0 80px;
 		border-bottom: 1px solid #aaa;
     	box-shadow: inset 0 -2px 4px rgba(0,0,0,0.2);
 	}

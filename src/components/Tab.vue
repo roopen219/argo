@@ -1,9 +1,9 @@
-<style>
+<style lang="scss">
     @import "variables";
-    
+
     .tab {
 		cursor: pointer;
-		padding: 10px 20px 8px 14px;
+		padding: 8px 20px 6px 14px;
     	margin-right: 4px;
     	position: relative;
     	min-width: 200px;
@@ -24,7 +24,7 @@
 			background: $bg-tab-active;
 			box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8),
 			0 -3px 4px rgba(0, 0, 0, .2);
-			
+
 			&:after {
 				content: '';
 				position: absolute;
@@ -45,14 +45,14 @@
 	.close {
 		padding: 0;
 	    border: none;
-	    border-radius: 100%;
+	    border-radius: 2px;
 	    line-height: 1;
 	    width: 16px;
 	    height: 16px;
 	    font-size: 14px;
 	    position: absolute;
     	right: 10px;
-    	top: 9px;
+    	top: 7px;
 
 		background: transparent;
 		color: $color-close-btn-default;
@@ -63,6 +63,7 @@
     		font-size: 14px;
 	    	background: $bg-close-btn-hover;
 		    color: $color-close-btn-hover;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
     	}
 
     	&:focus, &:active {
