@@ -41,7 +41,7 @@
 
 <template>
 	<div class="tabs-container flex-row">
-		<raml-tab :id="tabId" v-for="tabId in tabs.tabOrder" :active="tabId === tabs.currentTab.id"></raml-tab>
+		<raml-tab :id="tabId" v-for="tabId in tabs.tabOrder" :active="isActiveTab(tabId)"></raml-tab>
 		<button class="btn-open-new-tab" @click="openTab">+</button>
 	</div>
 </template>
@@ -62,7 +62,10 @@
 			}),
 			openTab: function () {
 				this._openTab({id: rand.generate()})
-			}
+			},
+            isActiveTab: function (tabId) {
+                return tabId === this.tabs.currentTab.id
+            }
 		}
 	}
 </script>
