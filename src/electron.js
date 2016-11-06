@@ -25,8 +25,13 @@ app.on('ready', () => {
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
-        titleBarStyle: 'hidden-inset'
+        titleBarStyle: 'hidden-inset',
+        frame: false
     })
+
+    if(is.windows()) {
+        mainWindow.setMenu(null)
+    }
 
     if (is.dev()) {
         mainWindow.loadURL('http://localhost:8080/index.html')
@@ -42,7 +47,6 @@ app.on('ready', () => {
             } else {
                 callback(path.resolve(`${__dirname}/index.html`))
             }
-
         })
         mainWindow.loadURL('ramiel://app')
     }
