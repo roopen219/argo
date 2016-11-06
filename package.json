@@ -36,7 +36,7 @@
     "dev-server": "webpack-dev-server --config=webpack.dev.config.js --inline --hot",
     "electron-server": "webpack --watch --config=webpack.electron.config.js",
     "electron-build": "webpack --config=webpack.electron.config.js",
-    "dev-build": "webpack --config=webpack.dev.config.js",
+    "dev-build": "webpack --config=webpack.base.config.js",
     "electron": "electron ./build"
   }
 }
