@@ -36,7 +36,9 @@ class RamlService extends nedbAdapter.Service {
         this.path = path
         this.backendService = this.app.service(path + 'server')
         this.backendService.after({
-            create ()
+            create (hook) {
+                if()
+            }
         })
         return super.setup(app, path)
     }
