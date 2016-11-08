@@ -40,7 +40,8 @@ module.exports = {
         {
             test: /\.json$/,
             loader: 'json'
-        }, {
+        },
+        {
             test: /\.(sass|scss)$/,
             loaders: ['style', 'css?minimize&autoprefixer=1', 'sass']
         }]

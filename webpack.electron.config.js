@@ -22,6 +22,14 @@ module.exports = {
             'services': PATHS.services
         }
     },
+    module: {
+        loaders: [
+            {
+                test: /\.json$/,
+                loader: 'json'
+            }
+        ]
+    },
     target: 'node',
     node: {
         __dirname: false,

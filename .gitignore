@@ -38,3 +38,5 @@ jspm_packages
 
 # Electron Build Directory
 build
+
+db

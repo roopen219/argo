@@ -2,7 +2,7 @@ import * as types from '../types'
 import {RamlEntity} from 'utils'
 
 class Prototype extends RamlEntity {
-    constructor () {
+    constructor (options) {
         super('prototype')
     }
 }
@@ -12,11 +12,13 @@ let state = {
 }
 
 let mutations = {
-    
+
 }
 
 let actions = {
+    [types.CREATE_PROTOTYPE]: (options) => {
 
+    }
 }
 
 export default {

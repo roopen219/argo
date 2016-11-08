@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import store from './store'
+import prototype from 'services/prototypeService'
 
 registerArcComponents()
 initializeApp()
+
+window.prototypeService = prototype()
 
 function initializeApp() {
     var app = new Vue({

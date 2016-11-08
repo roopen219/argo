@@ -4,8 +4,15 @@
   "dependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "electron-is": "^2.3.0",
+    "feathers": "^2.0.2",
+    "feathers-hooks": "^1.6.1",
+    "feathers-nedb": "^2.5.1",
+    "feathers-socketio": "^1.4.2",
     "mousetrap": "^1.5.3",
+    "nedb": "^1.8.0",
+    "node-uuid": "^1.4.7",
     "random-key": "^0.3.2",
+    "socket.io-client": "^1.5.1",
     "vue": "^2.0.1",
     "vuex": "^2.0.0"
   },
