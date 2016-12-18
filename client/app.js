@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import store from './store'
-import prototype from 'services/prototypeService'
 
 registerArcComponents()
 initializeApp()
