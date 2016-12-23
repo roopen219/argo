@@ -8,9 +8,11 @@
   "dependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "electron-is": "^2.3.0",
+    "mongodb": "^2.2.16",
     "mousetrap": "^1.5.3",
     "node-uuid": "^1.4.7",
     "random-key": "^0.3.2",
+    "socket.io": "^1.7.2",
     "socket.io-client": "^1.5.1",
     "vue": "^2.0.1",
     "vuex": "^2.0.0"
@@ -20,6 +22,7 @@
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",
     "babel-preset-es2015": "^6.0.0",
+    "babel-register": "^6.18.0",
     "clean-webpack-plugin": "^0.1.11",
     "copy-webpack-plugin": "^3.0.1",
     "css-loader": "^0.23.1",
@@ -46,7 +49,11 @@
     "source": [
       "common/**/*.js"
     ],
-    "concurrency": "4"
+    "concurrency": "4",
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
   },
   "scripts": {
     "dev-server": "webpack-dev-server --config=webpack.dev.config.js --inline --hot",
@@ -54,6 +61,6 @@
     "electron-build": "webpack --config=webpack.electron.config.js",
     "dev-build": "webpack --config=webpack.base.config.js",
     "electron": "electron ./build",
-    "test": "ava"
+    "test": "ava --verbose"
   }
 }
