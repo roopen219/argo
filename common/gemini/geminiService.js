@@ -1,5 +1,3 @@
-export default GeminiService
-
 class GeminiService {
     constructor (options) {
         
@@ -30,6 +28,8 @@ class GeminiService {
     }
 
     setup (geminiApp) {
-
+        
     }
 }
+
+export default GeminiService
