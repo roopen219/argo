@@ -61,6 +61,7 @@
     "electron-build": "webpack --config=webpack.electron.config.js",
     "dev-build": "webpack --config=webpack.base.config.js",
     "electron": "electron ./build",
-    "test": "ava --verbose"
+    "test": "ava --verbose",
+    "test-watch": "ava --verbose --watch"
   }
 }

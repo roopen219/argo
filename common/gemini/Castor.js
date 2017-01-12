@@ -1,12 +1,12 @@
 import _ from 'lodash'
+import METHODS from './geminiMethods'
 
-class GeminiCastor {
+class Castor {
     constructor (socketIOInstance) {
         let _this = this
         let socketIOListen = socketIOInstance.listen.bind(socketIOInstance)
 
         this._socketio = socketIOInstance
-        this._channels = {}
         this._services = {}
         this._configuration = {
             authentication: {
@@ -38,6 +38,28 @@ class GeminiCastor {
     }
 
     use (serviceName, service) {
+        let methods = Object.keys(METHODS).map((methodKey) => METHODS[methodKey])
+
+        methods.forEach((method) => {
+            if(service[method]) {
+                let originalMethod = service[method].bind(service)
+                service[method] = function(params, client) {
+                    let hook = {
+                        params,
+                        client
+                    }
+                    service.hooks && service.hooks.before && service.hooks.before[method] && service.hooks.before[method](hook)
+                    return originalMethod(...arguments)
+                        .then((result) => {
+                            service.hooks && service.hooks.after && service.hooks.after[method] && service.hooks
+                                .after[method]({
+                                    result
+                                })
+                            return result
+                        })
+                }
+            }
+        })
         this._services[serviceName] = service
         return this
     }
@@ -50,12 +72,12 @@ class GeminiCastor {
         this._socketio.on('connection', (client) => {
             client.on(this._configuration.authentication.events.login, (data) => {
                 this._configuration.authentication.userService
-                    .find(username)
+                    .find(data.username)
                     .then((user) => {
-                        return user.comparePassword(password)
-                    })
-                    .then((isSame) => {
-                        client[this._configuration.authentication.userEntity] = user
+                        return user.comparePassword(data.password)
+                            .then((isSame) => {
+                                client[this._configuration.authentication.userEntity] = user
+                            })
                     })
                     .catch((error) => {
                         console.log(error)
@@ -66,4 +88,4 @@ class GeminiCastor {
     }
 }
 
-export default GeminiCastor
+export default Castor
