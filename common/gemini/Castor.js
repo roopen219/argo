@@ -1,8 +1,10 @@
+/*global Promise*/
+
 import _ from 'lodash'
 import METHODS from './geminiMethods'
 
 class Castor {
-    constructor (socketIOInstance) {
+    constructor(socketIOInstance) {
         let _this = this
         let socketIOListen = socketIOInstance.listen.bind(socketIOInstance)
 
@@ -28,43 +30,72 @@ class Castor {
         }
     }
 
-    configure (configurationName, configuration) {
+    configure(configurationName, configuration) {
         _.extend(this._configuration[configurationName], configuration)
         return this
     }
 
-    service (serviceName) {
+    service(serviceName) {
         return this._services[serviceName]
     }
 
-    use (serviceName, service) {
+    use(serviceName, service) {
         let methods = Object.keys(METHODS).map((methodKey) => METHODS[methodKey])
 
         methods.forEach((method) => {
-            if(service[method]) {
-                let originalMethod = service[method].bind(service)
-                service[method] = function(params, client) {
-                    let hook = {
-                        params,
-                        client
-                    }
-                    service.hooks && service.hooks.before && service.hooks.before[method] && service.hooks.before[method](hook)
-                    return originalMethod(...arguments)
-                        .then((result) => {
-                            service.hooks && service.hooks.after && service.hooks.after[method] && service.hooks
-                                .after[method]({
-                                    result
-                                })
-                            return result
-                        })
-                }
-            }
+            service[method] = this._wrapMethod(method, service)
         })
+
         this._services[serviceName] = service
         return this
     }
 
-    setup () {
+    _wrapMethod(method, service) {
+        if (service[method]) {
+            let originalMethod = service[method].bind(service)
+
+            return (params, client) => {
+                let hookObject = {
+                    params,
+                    client
+                }
+
+                if (service.hooks) {
+                    return this._executeHooks('before', method, hookObject, service)
+                        .then(originalMethod)
+                        .then((result) => {
+                            return this._executeHooks('after', method, {
+                                result
+                            }, service)
+                        })
+
+                }
+
+                return originalMethod(params)
+            }
+        }
+
+        return undefined
+    }
+
+    _executeHooks(type, method, hookObject, service) {
+        let isHookPresent = service.hooks[type] && service.hooks[type][method]
+
+        if (isHookPresent) {
+            let hooks = service.hooks[type][method]
+
+            if (_.isArray(hooks)) {
+                hooks.reduce((promise, hook) => promise.then(() => hook(hookObject)), Promise.resolve())
+            } else {
+                hooks(hookObject)
+            }
+
+        }
+
+        return Promise.resolve(type === 'before' ? hookObject.params : hookObject.result)
+    }
+
+    setup() {
         this._services.keys().forEach((key) => {
             this._services[key].setup(this)
         })

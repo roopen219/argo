@@ -21,8 +21,12 @@ test('register a service and call a method internally', t => {
     })
 
     return t.context.castor.service('user')
-        .find({_id: 1})
-        .then((result) => t.deepEqual(result, {_id: 1}))
+        .find({
+            _id: 1
+        })
+        .then((result) => t.deepEqual(result, {
+            _id: 1
+        }))
 })
 
 test('single before hook executes in internal service calls', t => {
@@ -43,7 +47,9 @@ test('single before hook executes in internal service calls', t => {
     })
 
     return t.context.castor.service('user')
-        .find({_id: 1})
+        .find({
+            _id: 1
+        })
         .then((result) => {
             t.deepEqual({
                 _id: 1,
@@ -62,14 +68,15 @@ test('single after hook executes in internal service calls', t => {
             after: {
                 find: (hook) => {
                     hook.result.addedInAfterHook = true
-                    return Promise.resolve(hook)
                 }
             }
         }
     })
 
     return t.context.castor.service('user')
-        .find({_id: 1})
+        .find({
+            _id: 1
+        })
         .then((result) => {
             t.deepEqual({
                 _id: 1,
@@ -79,14 +86,12 @@ test('single after hook executes in internal service calls', t => {
 })
 
 test('multiple before hooks execute in internal service calls', t => {
-    let hook1 = function (hook) {
+    let hookOne = function (hook) {
         hook.params.addedInHook1 = true
-        return Promise.resolve(hook)
     }
 
-    let hook2 = function (hook) {
+    let hookTwo = function (hook) {
         hook.params.addedInHook2 = true
-        return Promise.resolve(hook)
     }
 
     t.context.castor.use('user', {
@@ -94,17 +99,86 @@ test('multiple before hooks execute in internal service calls', t => {
             return Promise.resolve(params)
         },
         hooks: {
-            before: [hook1, hook2]
+            before: {
+                find: [hookOne, hookTwo]
+            }
         }
     })
 
     return t.context.castor.service('user')
-        .find({_id: 1})
+        .find({
+            _id: 1
+        })
         .then((result) => {
             t.deepEqual({
                 _id: 1,
                 addedInHook1: true,
                 addedInHook2: true
-            })
+            }, result)
         })
+})
+
+test('multiple after hooks execute in internal service calls', t => {
+    let hookOne = function (hook) {
+        hook.result.addedInHook1 = true
+    }
+
+    let hookTwo = function (hook) {
+        hook.result.addedInHook2 = true
+    }
+
+    t.context.castor.use('user', {
+        find: (params) => {
+            return Promise.resolve(params)
+        },
+        hooks: {
+            after: {
+                find: [hookOne, hookTwo]
+            }
+        }
+    })
+
+    return t.context.castor.service('user')
+        .find({
+            _id: 1
+        })
+        .then((result) => {
+            t.deepEqual({
+                _id: 1,
+                addedInHook1: true,
+                addedInHook2: true
+            }, result)
+        })
+})
+
+test('create service call emits a create event', t => {
+    let userData = {
+        name: 'John Doe'
+    }
+
+    t.context.castor.use('user', {
+        create: (params) => {
+            return Promise.resolve({
+                _id: 1,
+                data: params.data
+            })
+        }
+    })
+
+    let deffered = new Promise((resolve, reject) => {
+        t.context.castor.service('user').on('created', (user) => {
+            resolve(user)
+        })
+    })
+
+    deffered.then((user) => {
+        t.deepEqual(userData, user.data)
+    })
+
+    t.context.castor.service('user')
+        .create({
+            data: Object.assign({}, userData)
+        })
+
+    return deffered
 })
