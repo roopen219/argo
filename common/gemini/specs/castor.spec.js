@@ -5,11 +5,12 @@ import io from 'socket.io'
 import ioClient from 'socket.io-client'
 import Castor from '../Castor'
 
-let socketio = io()
-
 test.beforeEach(t => {
-    t.context.castor = new Castor(socketio)
-    t.context.socketClient = ioClient('http://localhost:3000')
+    t.context.socketio = io()
+    t.context.castor = new Castor(t.context.socketio)
+    t.context.port = Math.floor(3000 + (Math.random() * 1000) % 1000)
+    t.context.socketio.listen(t.context.port)
+    t.context.socketClient = ioClient('http://localhost:' + t.context.port)
 })
 
 test('register a service and call a method internally', t => {
@@ -151,6 +152,16 @@ test('multiple after hooks execute in internal service calls', t => {
         })
 })
 
+test('not implemented methods should throw an error', t => {
+    t.context.castor.use('user', {})
+
+    return t.context.castor.service('user')
+        .find()
+        .catch((reason) => {
+            t.is(reason.message, 'find not implemented on this service')
+        })
+})
+
 test('create service call emits a create event', t => {
     let userData = {
         name: 'John Doe'
@@ -166,7 +177,7 @@ test('create service call emits a create event', t => {
     })
 
     let deffered = new Promise((resolve, reject) => {
-        t.context.castor.service('user').on('created', (user) => {
+        t.context.castor.service('user').on('create', (user) => {
             resolve(user)
         })
     })
