@@ -2,12 +2,14 @@
 
 import _ from 'lodash'
 import CastorService from './CastorService'
+import METHODS from './geminiMethods'
 
 class Castor {
     constructor(socketIOInstance) {
         let _this = this
         let socketIOListen = socketIOInstance.listen.bind(socketIOInstance)
 
+        this._methods = Object.keys(METHODS).map((methodKey) => METHODS[methodKey])
         this._socketio = socketIOInstance
         this._services = {}
         this._configuration = {
@@ -47,17 +49,35 @@ class Castor {
 
     setup() {
         this._socketio.on('connection', (client) => {
+            this._methods.forEach((method) => {
+                client.on(method, (data, ack) => {
+                    if (!_.isFunction(ack)) {
+                        client.emit('error', new Error('pass in an acknowledgement callback'))
+                        return
+                    }
+
+                    if (this._services[data.service]) {
+                        this._services[data.service][method](data.params, client)
+                            .then(ack)
+                    } else {
+                        client.emit('error', 'service not defined')
+                    }
+                })
+            })
             client.on(this._configuration.authentication.events.login, (data) => {
                 this._configuration.authentication.userService
                     .find(data.username)
                     .then((user) => {
+                        if (!_.isFunction(user.comparePassword)) {
+                            throw new Error('comparePassword not implemented in the user service')
+                        }
                         return user.comparePassword(data.password)
                             .then((isSame) => {
                                 client[this._configuration.authentication.userEntity] = user
                             })
                     })
                     .catch((error) => {
-                        console.log(error)
+                        client.emit('error', error)
                     })
             })
             client.on(this._configuration.authentication.events.logout, () => {})

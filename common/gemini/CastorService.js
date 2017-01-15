@@ -42,7 +42,7 @@ class CastorService extends EventEmitter {
                     .then((result) => {
                         let shouldEmitEvent = (method !== 'find' && method !== 'get')
 
-                        if(shouldEmitEvent) {
+                        if (shouldEmitEvent) {
                             this.emit(method, result)
                         }
 

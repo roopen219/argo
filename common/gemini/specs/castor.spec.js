@@ -193,3 +193,30 @@ test('create service call emits a create event', t => {
 
     return deffered
 })
+
+test('register a service and call a method externally', t => {
+    let findParams = {
+        service: 'user',
+        params: {
+            _id: 1,
+            name: 'John Doe'
+        }
+    }
+
+    t.context.castor.use('user', {
+        find: (params) => {
+            return Promise.resolve(params)
+        }
+    })
+
+    return new Promise((resolve, reject) => {
+        let timeout = setTimeout(() => reject('timeout'), 2000)
+
+        t.context.socketClient.emit('find', findParams, (result) => {
+            clearTimeout(timeout)
+            resolve(result)
+        })
+    }).then((result) => {
+        t.deepEqual(findParams.params, result)
+    })
+})
