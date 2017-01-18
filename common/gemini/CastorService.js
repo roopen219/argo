@@ -11,6 +11,11 @@ class CastorService extends EventEmitter {
         super()
         this._methods = _.pick(options, methods)
         this._hooks = _.pick(options.hooks, ['before', 'after'])
+        this._setup = options.setup
+
+        Object.keys(this._methods).forEach((method) => {
+            this._methods[method] = this._methods[method].bind(this)
+        })
 
         methods.forEach((method) => {
             this[method] = this._wrapMethod(method)
@@ -18,7 +23,11 @@ class CastorService extends EventEmitter {
     }
 
     setup(geminiApp) {
+        if (_.isFunction(this._setup)) {
+            this._setup(geminiApp)
+        }
 
+        this.app = geminiApp
     }
 
     _wrapMethod(method) {
