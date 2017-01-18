@@ -4,8 +4,6 @@ import store from './store'
 registerArcComponents()
 initializeApp()
 
-window.prototypeService = prototype()
-
 function initializeApp() {
     var app = new Vue({
         el: '#app-mount',
@@ -17,7 +15,7 @@ function initializeApp() {
 
 function registerArcComponents() {
     var components = require.context('components', true, /\.vue$/)
-    components.keys().forEach(function(componentName) {
+    components.keys().forEach(function (componentName) {
         var component = components(componentName)
         Vue.component(component.name, component)
     })

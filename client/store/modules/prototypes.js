@@ -1,8 +1,10 @@
 import * as types from '../types'
-import {RamlEntity} from 'utils'
+import {
+    RamlEntity
+} from 'utils'
 
 class Prototype extends RamlEntity {
-    constructor (options) {
+    constructor(options) {
         super('prototype')
     }
 }
@@ -21,6 +23,10 @@ let actions = {
     }
 }
 
-export default {
-    state
+let PrototypeModule = {
+    state,
+    mutations,
+    actions
 }
+
+export default PrototypeModule
