@@ -152,7 +152,7 @@ test('multiple after hooks execute in internal service calls', t => {
         })
 })
 
-test('not implemented methods should throw an error', t => {
+test('throw an error when non implemented methods are called internally', t => {
     t.context.castor.use('user', {})
 
     return t.context.castor.service('user')
@@ -218,5 +218,112 @@ test('register a service and call a method externally', t => {
         })
     }).then((result) => {
         t.deepEqual(findParams.params, result)
+    })
+})
+
+test('not passing an ack should emit an error', t => {
+    let findParams = {
+        service: 'user',
+        params: {
+            _id: 1,
+            name: 'John Doe'
+        }
+    }
+
+    t.context.castor.use('user', {
+        find: (params) => {
+            return Promise.resolve(params)
+        }
+    })
+
+    return new Promise((resolve, reject) => {
+        let timeout = setTimeout(() => reject('timeout'), 2000)
+
+        t.context.socketClient.on('_error', (err) => {
+            clearTimeout(timeout)
+            reject(err)
+        })
+
+        t.context.socketClient.emit('find', findParams)
+    }).catch((err) => {
+        t.is(err, 'pass in an acknowledgement callback')
+    })
+})
+
+test('emit an error when non implemented methods are called externally', t => {
+    let findParams = {
+        service: 'user',
+        params: {
+            _id: 1,
+            name: 'John Doe'
+        }
+    }
+
+    t.context.castor.use('user', {
+        create: (params) => {
+            return Promise.resolve(params)
+        }
+    })
+
+    return new Promise((resolve, reject) => {
+        let timeout = setTimeout(() => reject('timeout'), 2000)
+
+        t.context.socketClient.on('_error', (err) => {
+            clearTimeout(timeout)
+            reject(err)
+        })
+
+        t.context.socketClient.emit('find', findParams, (result) => resolve(result))
+    }).catch((err) => {
+        t.is(err, 'find not implemented on this service')
+    })
+})
+
+test('emit an error when service name is provided in params', t => {
+    let findParams = {
+        params: {
+            _id: 1,
+            name: 'John Doe'
+        }
+    }
+
+    t.context.castor.use('user', {
+        find: (params) => {
+            return Promise.resolve(params)
+        }
+    })
+
+    return new Promise((resolve, reject) => {
+        let timeout = setTimeout(() => reject('timeout'), 2000)
+
+        t.context.socketClient.on('_error', (err) => {
+            clearTimeout(timeout)
+            reject(err)
+        })
+
+        t.context.socketClient.emit('find', findParams, (result) => resolve(result))
+    }).catch((err) => {
+        t.is(err, 'provide the service name in the params')
+    })
+})
+
+test('emit an error when no params are passed', t => {
+    t.context.castor.use('user', {
+        find: (params) => {
+            return Promise.resolve(params)
+        }
+    })
+
+    return new Promise((resolve, reject) => {
+        let timeout = setTimeout(() => reject('timeout'), 2000)
+
+        t.context.socketClient.on('_error', (err) => {
+            clearTimeout(timeout)
+            reject(err)
+        })
+
+        t.context.socketClient.emit('find', null, (result) => resolve(result))
+    }).catch((err) => {
+        t.is(err, 'provide proper service params')
     })
 })

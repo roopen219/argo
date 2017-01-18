@@ -52,15 +52,19 @@ class Castor {
             this._methods.forEach((method) => {
                 client.on(method, (data, ack) => {
                     if (!_.isFunction(ack)) {
-                        client.emit('error', new Error('pass in an acknowledgement callback'))
-                        return
-                    }
-
-                    if (this._services[data.service]) {
+                        client.emit('_error', 'pass in an acknowledgement callback')
+                    } else if (!data || !_.isObjectLike(data)) {
+                        client.emit('_error', 'provide proper service params')
+                    } else if (!data.service) {
+                        client.emit('_error', 'provide the service name in the params')
+                    } else if (this._services[data.service]) {
                         this._services[data.service][method](data.params, client)
                             .then(ack)
+                            .catch((err) => {
+                                client.emit('_error', err.message)
+                            })
                     } else {
-                        client.emit('error', 'service not defined')
+                        client.emit('_error', 'service not defined')
                     }
                 })
             })
