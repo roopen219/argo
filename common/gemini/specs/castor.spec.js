@@ -16,7 +16,7 @@ test.beforeEach(t => {
 test('register a service and call a method internally', t => {
 
     t.context.castor.use('user', {
-        find: (params) => {
+        find(params) {
             return new Promise(resolve => resolve(params))
         }
     })
@@ -32,7 +32,7 @@ test('register a service and call a method internally', t => {
 
 test('single before hook executes in internal service calls', t => {
     t.context.castor.use('user', {
-        find: (params) => {
+        find(params) {
             return new Promise(resolve => {
                 resolve(params)
             })
@@ -62,7 +62,7 @@ test('single before hook executes in internal service calls', t => {
 
 test('single after hook executes in internal service calls', t => {
     t.context.castor.use('user', {
-        find: (params) => {
+        find(params) {
             return new Promise(resolve => resolve(params))
         },
         hooks: {
@@ -96,7 +96,7 @@ test('multiple before hooks execute in internal service calls', t => {
     }
 
     t.context.castor.use('user', {
-        find: (params) => {
+        find(params) {
             return Promise.resolve(params)
         },
         hooks: {
@@ -129,7 +129,7 @@ test('multiple after hooks execute in internal service calls', t => {
     }
 
     t.context.castor.use('user', {
-        find: (params) => {
+        find(params) {
             return Promise.resolve(params)
         },
         hooks: {
@@ -168,7 +168,7 @@ test('create service call emits a create event', t => {
     }
 
     t.context.castor.use('user', {
-        create: (params) => {
+        create(params) {
             return Promise.resolve({
                 _id: 1,
                 data: params.data
@@ -204,7 +204,7 @@ test('register a service and call a method externally', t => {
     }
 
     t.context.castor.use('user', {
-        find: (params) => {
+        find(params) {
             return Promise.resolve(params)
         }
     })
@@ -221,7 +221,7 @@ test('register a service and call a method externally', t => {
     })
 })
 
-test('not passing an ack should emit an error', t => {
+test('not passing an acknowledgement callback should emit an error', t => {
     let findParams = {
         service: 'user',
         params: {
@@ -231,7 +231,7 @@ test('not passing an ack should emit an error', t => {
     }
 
     t.context.castor.use('user', {
-        find: (params) => {
+        find(params) {
             return Promise.resolve(params)
         }
     })
@@ -260,7 +260,7 @@ test('emit an error when non implemented methods are called externally', t => {
     }
 
     t.context.castor.use('user', {
-        create: (params) => {
+        create(params) {
             return Promise.resolve(params)
         }
     })
@@ -279,7 +279,7 @@ test('emit an error when non implemented methods are called externally', t => {
     })
 })
 
-test('emit an error when service name is provided in params', t => {
+test('emit an error when service name is not provided in params', t => {
     let findParams = {
         params: {
             _id: 1,
@@ -288,7 +288,7 @@ test('emit an error when service name is provided in params', t => {
     }
 
     t.context.castor.use('user', {
-        find: (params) => {
+        find(params) {
             return Promise.resolve(params)
         }
     })
@@ -309,7 +309,7 @@ test('emit an error when service name is provided in params', t => {
 
 test('emit an error when no params are passed', t => {
     t.context.castor.use('user', {
-        find: (params) => {
+        find(params) {
             return Promise.resolve(params)
         }
     })
@@ -326,4 +326,58 @@ test('emit an error when no params are passed', t => {
     }).catch((err) => {
         t.is(err, 'provide proper service params')
     })
+})
+
+test('define custom properties on a service and access them internally', t => {
+    t.context.castor.use('user', {
+        customMethod: function (testParam) {
+            return Promise.resolve(testParam + this.customProperty)
+        },
+        customProperty: 'test'
+    })
+
+    return t.context.castor.service('user')
+        .customMethod('hello ')
+        .then((result) => {
+            t.is('hello test', result)
+        })
+})
+
+test('"this" should be the service in methods', t => {
+    t.context.castor.use('user', {
+        find(params) {
+            return Promise.resolve(this.app.whichGemini)
+        }
+    })
+
+    return t.context.castor.service('user')
+        .find({})
+        .then((result) => {
+            t.is('castor', result)
+        })
+})
+
+test('"this" should be the service in hooks', t => {
+    let beforeHook = function (hook) {
+        hook.params.whichGemini = this.app.whichGemini
+    }
+
+    t.context.castor.use('user', {
+        find(params) {
+            return Promise.resolve(params)
+        },
+        hooks: {
+            before: {
+                find: [beforeHook]
+            }
+        }
+    })
+
+    return t.context.castor.service('user')
+        .find({})
+        .then((result) => {
+            t.deepEqual({
+                whichGemini: 'castor'
+            }, result)
+        })
 })
