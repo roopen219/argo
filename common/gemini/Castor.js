@@ -51,7 +51,7 @@ class Castor {
         this._socketio.on('connection', (client) => {
             this._methods.forEach((method) => {
                 client.on(method, (data, ack) => {
-                    if (!_.isFunction(ack)) {
+                    if (!ack) {
                         client.emit('_error', 'pass in an acknowledgement callback')
                     } else if (!data || !_.isObjectLike(data)) {
                         client.emit('_error', 'provide proper service params')
@@ -81,7 +81,7 @@ class Castor {
                             })
                     })
                     .catch((error) => {
-                        client.emit('error', error)
+                        client.emit('_error', error.message)
                     })
             })
             client.on(this._configuration.authentication.events.logout, () => {})
