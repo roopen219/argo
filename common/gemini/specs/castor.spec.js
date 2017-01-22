@@ -381,3 +381,58 @@ test('"this" should be the service in hooks', t => {
             }, result)
         })
 })
+
+test('errors thrown are propogated to client when methods are called externally', t => {
+    let findParams = {
+        service: 'user',
+        params: {
+            _id: 1,
+            name: 'John Doe'
+        }
+    }
+
+    t.context.castor.use('user', {
+        find(params) {
+            return Promise.reject(new Error('error occured'))
+        }
+    })
+
+    return new Promise((resolve, reject) => {
+        let timeout = setTimeout(() => reject('timeout'), 2000)
+
+        t.context.socketClient.on('_error', (err) => {
+            clearTimeout(timeout)
+            reject(err)
+        })
+
+        t.context.socketClient.emit('find', findParams, (result) => resolve(result))
+    }).catch((err) => {
+        t.is(err, 'error occured')
+    })
+})
+
+test('authetication should throw error when comparePassword method is not defined on user service', t => {
+    let loginData = {
+        username: 'john',
+        password: 'pass'
+    }
+
+    t.context.castor.use('user', {
+        find(params) {
+            return Promise.resolve(params)
+        }
+    })
+
+    return new Promise((resolve, reject) => {
+        let timeout = setTimeout(() => reject('timeout'), 2000)
+
+        t.context.socketClient.on('_error', (err) => {
+            clearTimeout(timeout)
+            reject(err)
+        })
+
+        t.context.socketClient.emit('login', loginData, (result) => resolve(result))
+    }).catch((err) => {
+        t.is(err, 'An error occured while logging in')
+    })
+})

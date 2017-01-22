@@ -3,6 +3,9 @@
 import _ from 'lodash'
 import CastorService from './CastorService'
 import METHODS from './geminiMethods'
+import debug from 'debug'
+
+let log = debug('castor')
 
 class Castor {
     constructor(socketIOInstance) {
@@ -68,8 +71,8 @@ class Castor {
                     }
                 })
             })
-            client.on(this._configuration.authentication.events.login, (data) => {
-                this._configuration.authentication.userService
+            client.on(this._configuration.authentication.events.login, (data, ack) => {
+                this._services[this._configuration.authentication.userService]
                     .find(data.username)
                     .then((user) => {
                         if (!_.isFunction(user.comparePassword)) {
@@ -81,10 +84,14 @@ class Castor {
                             })
                     })
                     .catch((error) => {
-                        client.emit('_error', error.message)
+                        log(error.message)
+                        client.emit('_error', 'An error occured while logging in')
                     })
             })
-            client.on(this._configuration.authentication.events.logout, () => {})
+            client.on(this._configuration.authentication.events.logout, (data, ack) => {
+                delete client[this._configuration.authentication.userEntity]
+                ack('logged out successfully')
+            })
         })
     }
 }
