@@ -72,15 +72,33 @@ class Castor {
                 })
             })
             client.on(this._configuration.authentication.events.login, (data, ack) => {
-                this._services[this._configuration.authentication.userService]
-                    .find(data.username)
+                let userService = this._services[this._configuration.authentication.userService]
+                userService
+                    .find({
+                        username: data.username
+                    })
                     .then((user) => {
-                        if (!_.isFunction(user.comparePassword)) {
+                        if (!_.isFunction(userService.comparePassword)) {
                             throw new Error('comparePassword not implemented in the user service')
                         }
-                        return user.comparePassword(data.password)
+                        return userService.comparePassword(user.password, data.password)
                             .then((isSame) => {
                                 client[this._configuration.authentication.userEntity] = user
+                                userService.on('update', (data) => {
+                                    if (client[this._configuration.authentication.userEntity].id === data.id) {
+                                        this._services[this._configuration.authentication.userEntity]
+                                            .find({
+                                                username: client[this._configuration.authentication.userEntity].username
+                                            })
+                                            .then((user) => {
+                                                client[this._configuration.authentication.userEntity] = user
+                                            })
+                                    }
+                                })
+                                return client[this._configuration.authentication.userEntity]
+                            })
+                            .then((user) => {
+                                ack(user)
                             })
                     })
                     .catch((error) => {

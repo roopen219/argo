@@ -436,3 +436,34 @@ test('authetication should throw error when comparePassword method is not define
         t.is(err, 'An error occured while logging in')
     })
 })
+
+test('should login successfully', t => {
+    let loginData = {
+        username: 'john',
+        password: 'pass'
+    }
+
+    t.context.castor.use('user', {
+        find(params) {
+            return Promise.resolve(params)
+        },
+        comparePassword(password) {
+            return Promise.resolve(true)
+        }
+    })
+
+    return new Promise((resolve, reject) => {
+        let timeout = setTimeout(() => reject('timeout'), 2000)
+
+        t.context.socketClient.on('_error', (err) => {
+            clearTimeout(timeout)
+            reject(err)
+        })
+
+        t.context.socketClient.emit('login', loginData, (result) => resolve(result))
+    }).then((result) => {
+        t.deepEqual(result, {
+            username: 'john'
+        })
+    })
+})
