@@ -45,6 +45,9 @@ class CastorService extends EventEmitter {
             if (!this._methods[method]) {
                 return Promise.reject(new Error(`${method} not implemented on this service`))
             } else {
+                client = client || {}
+                params = params || {}
+
                 let hookObject = {
                     params,
                     client,

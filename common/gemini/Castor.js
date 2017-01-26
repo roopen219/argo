@@ -71,6 +71,7 @@ class Castor {
                     }
                 })
             })
+
             client.on(this._configuration.authentication.events.login, (data, ack) => {
                 let userService = this._services[this._configuration.authentication.userService]
                 userService
@@ -83,19 +84,22 @@ class Castor {
                         }
                         return userService.comparePassword(user.password, data.password)
                             .then((isSame) => {
-                                client[this._configuration.authentication.userEntity] = user
+
+                                let userEntity = this._configuration.authentication.userEntity
+                                client[userEntity] = user
+
                                 userService.on('update', (data) => {
-                                    if (client[this._configuration.authentication.userEntity].id === data.id) {
-                                        this._services[this._configuration.authentication.userEntity]
+                                    if (userEntity.id === data.id) {
+                                        this._services[this._configuration.authentication.userService]
                                             .find({
-                                                username: client[this._configuration.authentication.userEntity].username
+                                                username: client[userEntity].username
                                             })
                                             .then((user) => {
-                                                client[this._configuration.authentication.userEntity] = user
+                                                client[userEntity] = user
                                             })
                                     }
                                 })
-                                return client[this._configuration.authentication.userEntity]
+                                return client[userEntity]
                             })
                             .then((user) => {
                                 ack(user)
@@ -106,6 +110,7 @@ class Castor {
                         client.emit('_error', 'An error occured while logging in')
                     })
             })
+
             client.on(this._configuration.authentication.events.logout, (data, ack) => {
                 delete client[this._configuration.authentication.userEntity]
                 ack('logged out successfully')

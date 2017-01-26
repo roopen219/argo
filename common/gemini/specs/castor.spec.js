@@ -8,7 +8,7 @@ import Castor from '../Castor'
 test.beforeEach(t => {
     t.context.socketio = io()
     t.context.castor = new Castor(t.context.socketio)
-    t.context.port = Math.floor(3000 + (Math.random() * 1000) % 1000)
+    t.context.port = Math.floor(3000 + (Math.random() * 10000) % 10000)
     t.context.socketio.listen(t.context.port)
     t.context.socketClient = ioClient('http://localhost:' + t.context.port)
 })
@@ -55,7 +55,7 @@ test('single before hook executes in internal service calls', t => {
             t.deepEqual({
                 _id: 1,
                 addedInBeforeHook: true,
-                client: undefined
+                client: {}
             }, result)
         })
 })
@@ -461,6 +461,55 @@ test('should login successfully', t => {
         })
 
         t.context.socketClient.emit('login', loginData, (result) => resolve(result))
+    }).then((result) => {
+        t.deepEqual(result, {
+            username: 'john'
+        })
+    })
+})
+
+test('user should be available on the client object after login', t => {
+    let loginData = {
+        username: 'john',
+        password: 'pass'
+    }
+
+    let findParams = {
+        service: 'user',
+        params: {}
+    }
+
+    t.context.castor.use('user', {
+        find(params) {
+            return Promise.resolve(params)
+        },
+        comparePassword(password) {
+            return Promise.resolve(true)
+        },
+        hooks: {
+            before: {
+                find: function (hook) {
+                    if (hook.client.user) {
+                        hook.params = hook.client.user
+                    }
+                }
+            }
+        }
+    })
+
+    return new Promise((resolve, reject) => {
+        let timeout = setTimeout(() => reject('timeout'), 2000)
+
+        t.context.socketClient.on('_error', (err) => {
+            clearTimeout(timeout)
+            reject(err)
+        })
+
+        t.context.socketClient.emit('login', loginData, (user) => {
+            t.context.socketClient.emit('find', findParams, (result) => {
+                resolve(result)
+            })
+        })
     }).then((result) => {
         t.deepEqual(result, {
             username: 'john'
