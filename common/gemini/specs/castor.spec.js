@@ -545,7 +545,7 @@ test('client gets notified about updates from a service', t => {
         create(params) {
             return Promise.resolve(params)
         },
-        notify: 'to'
+        notifyTo: 'to'
     })
 
     return new Promise((resolve, reject) => {

@@ -4,7 +4,7 @@ import EventEmitter from 'events'
 import _ from 'lodash'
 import METHODS from './geminiMethods'
 
-let methods = Object.keys(METHODS).map((methodKey) => METHODS[methodKey])
+let methods = Object.keys(METHODS).map((methodKey) => METHODS[methodKey].name)
 
 class CastorService extends EventEmitter {
     constructor(serviceName, options) {
