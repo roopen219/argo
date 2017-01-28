@@ -45,7 +45,21 @@ class Castor {
     }
 
     use(serviceName, service) {
-        this._services[serviceName] = new CastorService(service)
+        this._services[serviceName] = new CastorService(serviceName, service)
+
+        this._methods.forEach((method) => {
+            let shouldEmitEvent = (method !== 'find' && method !== 'get')
+
+            if (shouldEmitEvent) {
+                this._services[serviceName].on(method, (result) => {
+                    this._socketio.to(result[this._services[serviceName].notify]).emit(method, {
+                        service: serviceName,
+                        data: result
+                    })
+                })
+            }
+        })
+
         this._services[serviceName].setup(this)
         return this
     }
@@ -61,7 +75,9 @@ class Castor {
                     } else if (!data.service) {
                         client.emit('_error', 'provide the service name in the params')
                     } else if (this._services[data.service]) {
-                        this._services[data.service][method](data.params, client)
+                        let service = this._services[data.service]
+
+                        service[method](data.params, client)
                             .then(ack)
                             .catch((err) => {
                                 client.emit('_error', err.message)
@@ -102,6 +118,7 @@ class Castor {
                                 return client[userEntity]
                             })
                             .then((user) => {
+                                client.join(user[this._configuration.authentication.channel])
                                 ack(user)
                             })
                     })

@@ -7,12 +7,16 @@ import METHODS from './geminiMethods'
 let methods = Object.keys(METHODS).map((methodKey) => METHODS[methodKey])
 
 class CastorService extends EventEmitter {
-    constructor(options) {
+    constructor(serviceName, options) {
+        if (!serviceName) {
+            throw new Error('Missing service name')
+        }
         super()
         let nonCustomProperties = methods.concat(['hooks'])
         this._methods = _.pick(options, methods)
         this._hooks = _.pick(options.hooks, ['before', 'after'])
         this._setup = options.setup
+        this.name = serviceName
 
         Object.keys(options).forEach((option) => {
             if (nonCustomProperties.indexOf(option) === -1) {

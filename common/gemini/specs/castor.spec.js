@@ -516,3 +516,58 @@ test('user should be available on the client object after login', t => {
         })
     })
 })
+
+test('client gets notified about updates from a service', t => {
+    let loginData = {
+        username: 'john',
+        password: 'pass',
+        _id: '1'
+    }
+
+    let createParams = {
+        service: 'message',
+        params: {
+            content: 'blah blah blah',
+            to: '1'
+        }
+    }
+
+    t.context.castor.use('user', {
+        find(params) {
+            return Promise.resolve(loginData)
+        },
+        comparePassword(password) {
+            return Promise.resolve(true)
+        }
+    })
+
+    t.context.castor.use('message', {
+        create(params) {
+            return Promise.resolve(params)
+        },
+        notify: 'to'
+    })
+
+    return new Promise((resolve, reject) => {
+        let timeout = setTimeout(() => reject('timeout'), 2000)
+
+        t.context.socketClient.on('_error', (err) => {
+            clearTimeout(timeout)
+            reject(err)
+        })
+
+        t.context.socketClient.on('create', (data) => {
+            clearTimeout(timeout)
+            resolve(data)
+        })
+
+        t.context.socketClient.emit('login', loginData, (user) => {
+            t.context.socketClient.emit('create', createParams, () => {})
+        })
+    }).then((result) => {
+        t.deepEqual(result, {
+            service: createParams.service,
+            data: createParams.params
+        })
+    })
+})
