@@ -3,7 +3,7 @@
 import test from 'ava'
 import GeminiService from '../GeminiService'
 
-test('single before hook executes in internal service calls', t => {
+test('single before hook executes', t => {
     let userService = new GeminiService('user', {
         find(params) {
             return new Promise(resolve => {
@@ -33,7 +33,7 @@ test('single before hook executes in internal service calls', t => {
         })
 })
 
-test('single after hook executes in internal service calls', t => {
+test('single after hook executes', t => {
     let userService = new GeminiService('user', {
         find(params) {
             return new Promise(resolve => resolve(params))
@@ -59,7 +59,7 @@ test('single after hook executes in internal service calls', t => {
         })
 })
 
-test('multiple before hooks execute in internal service calls', t => {
+test('multiple before hooks execute', t => {
     let hookOne = function (hook) {
         hook.params.addedInHook1 = true
     }
@@ -92,7 +92,7 @@ test('multiple before hooks execute in internal service calls', t => {
         })
 })
 
-test('multiple after hooks execute in internal service calls', t => {
+test('multiple after hooks execute', t => {
     let hookOne = function (hook) {
         hook.result.addedInHook1 = true
     }
@@ -125,7 +125,7 @@ test('multiple after hooks execute in internal service calls', t => {
         })
 })
 
-test('throw an error when non implemented methods are called internally', t => {
+test('throw an error when non implemented methods are called', t => {
     let userService = new GeminiService('user', {})
 
     return userService
@@ -135,7 +135,7 @@ test('throw an error when non implemented methods are called internally', t => {
         })
 })
 
-test('create service call emits a create event', t => {
+test('event emitting methods emit appropiate events', t => {
     let userData = {
         name: 'John Doe'
     }
@@ -167,7 +167,7 @@ test('create service call emits a create event', t => {
     return deffered
 })
 
-test('define custom properties on a service and access them internally', t => {
+test('extra parameters passed to the service are added as properties', t => {
     let userService = new GeminiService('user', {
         customMethod: function (testParam) {
             return Promise.resolve(testParam + this.customProperty)

@@ -13,24 +13,7 @@ test.beforeEach(t => {
     t.context.socketClient = ioClient('http://localhost:' + t.context.port)
 })
 
-test('register a service and call a method internally', t => {
-
-    t.context.castor.use('user', {
-        find(params) {
-            return new Promise(resolve => resolve(params))
-        }
-    })
-
-    return t.context.castor.service('user')
-        .find({
-            _id: 1
-        })
-        .then((result) => t.deepEqual(result, {
-            _id: 1
-        }))
-})
-
-test('register a service and call a method externally', t => {
+test('register a service and call a method', t => {
     let findParams = {
         service: 'user',
         params: {
@@ -86,7 +69,7 @@ test('not passing an acknowledgement callback should emit an error', t => {
     })
 })
 
-test('emit an error when non implemented methods are called externally', t => {
+test('emit an error when non implemented methods are called', t => {
     let findParams = {
         service: 'user',
         params: {
@@ -164,7 +147,7 @@ test('emit an error when no params are passed', t => {
     })
 })
 
-test('errors thrown are propogated to client when methods are called externally', t => {
+test('errors thrown in methods are propogated to client', t => {
     let findParams = {
         service: 'user',
         params: {
@@ -193,7 +176,7 @@ test('errors thrown are propogated to client when methods are called externally'
     })
 })
 
-test('authetication should throw error when comparePassword method is not defined on user service', t => {
+test('emit error when comparePassword method is missing in user service', t => {
     let loginData = {
         username: 'john',
         password: 'pass'
@@ -219,7 +202,7 @@ test('authetication should throw error when comparePassword method is not define
     })
 })
 
-test('should login successfully', t => {
+test('login with proper credentials', t => {
     let loginData = {
         username: 'john',
         password: 'pass'
@@ -250,7 +233,7 @@ test('should login successfully', t => {
     })
 })
 
-test('user should be available on the client object after login', t => {
+test('user is available on the client object after login', t => {
     let loginData = {
         username: 'john',
         password: 'pass'
