@@ -2,11 +2,13 @@
 
 import EventEmitter from 'events'
 import _ from 'lodash'
+
 import METHODS from './geminiMethods'
 
-let methods = Object.keys(METHODS).map((methodKey) => METHODS[methodKey].name)
+let methods = METHODS.map((method) => method.name)
+let methodsWhichEmitEvents = METHODS.filter((method) => method.notify).map((method) => method.name)
 
-class CastorService extends EventEmitter {
+class GeminiService extends EventEmitter {
 
     constructor(serviceName, options) {
 
@@ -83,7 +85,7 @@ class CastorService extends EventEmitter {
                         })
                     })
                     .then((result) => {
-                        let shouldEmitEvent = (method !== 'find' && method !== 'get')
+                        let shouldEmitEvent = methodsWhichEmitEvents.indexOf(method) !== -1
 
                         if (shouldEmitEvent) {
                             this.emit(method, result)
@@ -124,4 +126,4 @@ class CastorService extends EventEmitter {
 
 }
 
-export default CastorService
+export default GeminiService
