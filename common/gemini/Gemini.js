@@ -1,9 +1,13 @@
+import EventEmitter from 'events'
+
 import METHODS from './geminiMethods'
 import GeminiService from './GeminiService'
 
-class Gemini {
+class Gemini extends EventEmitter {
 
     constructor() {
+
+        super()
 
         this._services = {}
         this._methods = METHODS.map((method) => method.name)
