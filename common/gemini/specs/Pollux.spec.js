@@ -59,6 +59,42 @@ test('register a service and call a method', t => {
             t.deepEqual(findParams, result)
         })
 })
+
+test('should login successfully', t => {
+
+    let userServiceParameters = {
+        data: {},
+        find(params) {
+            if(params.name === this.data.name)
+                return Promise.resolve(data)
+            return Promise.reject('No such user!')
+        },
+        create(params) {
+            this.data = this.params.data
+            return Promise.resolve(this.data._id)
+        },
+        remoteService: 'user'
+    }
+
+    t.context.pollux.use('user', userServiceParameters)
+
+    return new Promise((resolve, reject) => {
+        let timeout = setTimeout(() => reject('timeout'), 2000)
+
+        t.context.socketIOClient.on('_error', (err) => {
+            clearTimeout(timeout)
+            reject(err)
+        })
+
+        t.context.pollux.on('loginSuccessful', (ev) => {
+            t.pass()
+        })
+
+        t.context.pollux.login(t.context.loginData)
+    })
+
+})
+
 test.skip('dummy', t => {
 
     let userServiceParameters = {
