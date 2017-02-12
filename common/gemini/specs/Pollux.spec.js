@@ -41,6 +41,25 @@ test.beforeEach(t => {
 })
 
 test('register a service and call a method', t => {
+    let articleServiceParameters = {
+        find(params) {
+            return Promise.resolve(params)
+        }
+    }
+
+    let findParams = {
+        _id: 1
+    }
+
+    t.context.pollux.use('article', articleServiceParameters)
+
+    return t.context.pollux.service('article')
+        .find(findParams)
+        .then((result) => {
+            t.deepEqual(findParams, result)
+        })
+})
+test.skip('dummy', t => {
 
     let userServiceParameters = {
         find(params) {
@@ -58,7 +77,6 @@ test('register a service and call a method', t => {
     }
 
     t.context.pollux.use('user', userServiceParameters)
-    t.context.pollux.use('article', articleServiceParameters)
 
     t.context.pollux.login({
         username: 'john',
