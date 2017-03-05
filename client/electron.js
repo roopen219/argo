@@ -25,9 +25,9 @@ protocol.registerStandardSchemes(['ramiel'])
 app.on('ready', () => {
     mainWindow = new BrowserWindow({
         width: 800,
-        height: 600,
-        titleBarStyle: 'hidden-inset',
-        frame: false
+        height: 600
+        // titleBarStyle: 'hidden-inset',
+        // frame: true
     })
 
     if(is.windows()) {

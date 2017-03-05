@@ -41,7 +41,12 @@
 
 <template>
 	<div class="tabs-container flex-row">
-		<raml-tab :id="tabId" v-for="tabId in tabs.tabOrder" :active="isActiveTab(tabId)"></raml-tab>
+		<raml-tab   :id="tabId"
+                    v-for="tabId in tabs.tabOrder"
+                    :active="isActiveTab(tabId)"
+                    :onTabClick="_switchTab"
+                    :onTabClose="_closeTab">
+        </raml-tab>
 		<button class="btn-open-new-tab" @click="openTab">+</button>
 	</div>
 </template>
@@ -58,7 +63,9 @@
 		},
 		methods: {
 			...mapActions({
-				_openTab: types.OPEN_TAB
+				_openTab: types.OPEN_TAB,
+                _closeTab: types.CLOSE_TAB,
+				_switchTab: types.SWITCH_TAB
 			}),
 			openTab: function () {
 				this._openTab({id: rand.generate()})

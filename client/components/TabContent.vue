@@ -13,7 +13,13 @@
 </template>
 
 <script>
+    import * as types from '../store/types'
+	import {mapState, mapActions} from 'vuex'
+
     export default {
-        name: 'raml-tab-content'
+        name: 'raml-tab-content',
+        computed: {
+			...mapState(['tabs'])
+		}
     }
 </script>

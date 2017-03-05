@@ -73,16 +73,13 @@
 </style>
 
 <template>
-    <div :class="this.classes" @click="switchTab">
+    <div :class="this.classes" @click="clickTab">
         <span>{{this.id}}</span>
         <button class="close" @click="closeTab">&times;</button>
     </div>
 </template>
 
 <script>
-	import * as types from '../store/types'
-	import {mapActions} from 'vuex'
-
     export default {
         name: 'raml-tab',
         computed: {
@@ -95,18 +92,14 @@
         	}
         },
         methods: {
-			...mapActions({
-				'_closeTab': types.CLOSE_TAB,
-				'_switchTab': types.SWITCH_TAB
-			}),
         	closeTab: function (e) {
         		e.stopPropagation()
-				this._closeTab(this.id)
+				this.onTabClose(this.id)
         	},
-        	switchTab: function () {
-				this._switchTab(this.id)
+        	clickTab: function () {
+				this.onTabClick(this.id)
         	}
         },
-        props: ['id', 'active']
+        props: ['id', 'active', 'onTabClick', 'onTabClose']
     }
 </script>
