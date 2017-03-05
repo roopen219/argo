@@ -100,6 +100,56 @@ test.skip('dummy', t => {
     let userServiceParameters = {
         find(params) {
             return Promise.resolve(params)
+        }
+    }
+
+    let findParams = {
+        _id: 1
+    }
+
+    t.context.pollux.use('user', userServiceParameters)
+
+    return t.context.pollux.service('user')
+        .find(findParams)
+        .then((result) => {
+            t.deepEqual(findParams, result)
+        })
+
+})
+
+test('local service should sync with the remote service', t => {
+
+    let articleServiceParameters = {
+        find(params) {
+            return Promise.resolve(this.data[params.id])
+        },
+        data: {}
+    }
+
+    let findParams = {
+        _id: 1
+    }
+
+    t.context.pollux.use('article', articleServiceParameters)
+
+    t.context.pollux.sync('article')
+        .then((result) => {
+            return t.context.pollux.service('article')
+                .find(findParams)
+        })
+        .then((result) => {
+            t.deepEqual({
+                _id: 1,
+                name: 'Some random name'
+            }, result)
+        })
+})
+
+test.skip('dummy', t => {
+
+    let userServiceParameters = {
+        find(params) {
+            return Promise.resolve(params)
         },
         remoteService: 'user'
     }
