@@ -3,7 +3,6 @@ import {
     ArgoEntity
 } from 'utils'
 
-import appService from 'services/appService'
 import * as types from '../types'
 
 class Tab extends ArgoEntity {
@@ -13,8 +12,33 @@ class Tab extends ArgoEntity {
     }
 }
 
+class TabGroup extends ArgoEntity {
+    constructor(id, tabs = []) {
+        super('tab-group')
+        this.tabs = tabs
+        this.currentTab = tabs.length ? 0 : null
+    }
+
+    addTab(tab) {
+        this.tabs.push(tab)
+        return this
+    }
+
+    removeTab(index) {
+        return this.tabs.splice(index, 1)
+    }
+
+    get currentTab() {
+        return this.currentTab
+    }
+
+    set currentTab(index) {
+        this.currentTab = index
+    }
+}
+
 let state = {
-    tabs: {},
+    tabGroup: {},
     tabOrder: [],
     currentTab: null
 }
@@ -58,13 +82,7 @@ let actions = {
         state
     }, tabId) {
         let [tabOrder, currentTab] = [state.tabOrder, state.currentTab]
-        let isOnlyTabOpen = tabOrder.length === 1
         let isCurrentTab = currentTab.id === tabId
-
-        if (isOnlyTabOpen) {
-            commit(types.CLOSE_TAB, tabId)
-            appService.quitApp()
-        }
 
         if (isCurrentTab) {
             let tabToSwitch = getTabToSwitch(tabId)
