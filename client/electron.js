@@ -20,7 +20,7 @@ app.on('window-all-closed', () => {
     }
 })
 
-protocol.registerStandardSchemes(['ramiel'])
+protocol.registerStandardSchemes(['argo'])
 
 app.on('ready', () => {
     mainWindow = new BrowserWindow({
@@ -41,7 +41,7 @@ app.on('ready', () => {
         mainWindow.loadURL('http://localhost:8080/index.html')
         mainWindow.webContents.openDevTools()
     } else {
-        protocol.registerFileProtocol('ramiel', (request, callback) => {
+        protocol.registerFileProtocol('argo', (request, callback) => {
             const url = request.url.substr(13)
 
             if (url.length) {
@@ -50,7 +50,7 @@ app.on('ready', () => {
                 callback(path.resolve(`${__dirname}/index.html`))
             }
         })
-        mainWindow.loadURL('ramiel://app')
+        mainWindow.loadURL('argo://app')
     }
 
     mainWindow.maximize()
