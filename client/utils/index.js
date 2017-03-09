@@ -1,7 +1,7 @@
-import RamlEntity from './RamlEntity'
+import ArgoEntity from './ArgoEntity'
 
 export default {
-    RamlEntity
+    ArgoEntity
 }
 
-export {RamlEntity as RamlEntity}
+export {ArgoEntity as ArgoEntity}
