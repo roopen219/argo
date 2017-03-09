@@ -1,4 +1,5 @@
 import Vue from 'vue'
+
 import {
     ArgoEntity
 } from 'utils'
@@ -6,22 +7,32 @@ import {
 import * as types from '../types'
 
 class Tab extends ArgoEntity {
+
     constructor(tabContent) {
+
         super('tab')
+
         this.tabContent = tabContent
+
     }
 }
 
 class TabGroup extends ArgoEntity {
+
     constructor(id, tabs = []) {
+
         super('tab-group')
+
         this.tabs = tabs
         this.currentTab = tabs.length ? 0 : null
+
     }
 
     addTab(tab) {
+
         this.tabs.push(tab)
         return this
+
     }
 
     removeTab(index) {
@@ -45,9 +56,11 @@ class TabGroup extends ArgoEntity {
 let state = {}
 
 let mutations = {
+
     [types.ADD_TAB](state, tabGroupId, tab) {
         state[tabGroupId].addTab(tab)
     },
+
     [types.SWITCH_TAB](state, tabGroupId, tabIndex) {
         state[tabGroupId].currentTab = tabIndex
     },
@@ -55,6 +68,7 @@ let mutations = {
     [types.REMOVE_TAB](state, tabGroupId, tabIndex) {
         state[tabGroupId].removeTab(tabIndex)
     }
+
 }
 
 let actions = {
@@ -63,40 +77,55 @@ let actions = {
         commit,
         state
     }, tabContent) {
+
         let alreadyOpenedTab = getTabByContentId(tabContent.id)
 
         if (alreadyOpenedTab) {
+
             commit(types.SWITCH_TAB, alreadyOpenedTab.id)
+
         } else {
+
             let newTab = new Tab(tabContent)
+
             commit(types.ADD_TAB, newTab)
             commit(types.SWITCH_TAB, newTab.id)
+
         }
+
     },
+
     [types.SWITCH_TAB]({
         commit
     }, tabId) {
         commit(types.SWITCH_TAB, tabId)
     },
+
     [types.REMOVE_TAB]({
         commit,
         state
     }, tabId) {
+
         let [tabOrder, currentTab] = [state.tabOrder, state.currentTab]
         let isCurrentTab = currentTab.id === tabId
 
         if (isCurrentTab) {
+
             let tabToSwitch = getTabToSwitch(tabId)
 
             if (tabToSwitch) {
+
                 commit(types.SWITCH_TAB, tabToSwitch.id)
                 commit(types.REMOVE_TAB, tabId)
 
             }
+
             return
+
         }
 
         commit(types.REMOVE_TAB, tabId)
+
     }
 
 }
@@ -121,4 +150,5 @@ let TabModule = {
     mutations,
     actions
 }
+
 export default TabModule
