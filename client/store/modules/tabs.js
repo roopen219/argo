@@ -35,13 +35,14 @@ class TabGroup extends ArgoEntity {
     set currentTab(index) {
         this.currentTab = index
     }
+
+    getTabByContentId(id) {
+        return this.tabs.find((tab) => tab.tabContent.id === id)
+    }
+
 }
 
-let state = {
-    tabGroup: {},
-    tabOrder: [],
-    currentTab: null
-}
+let state = {}
 
 let mutations = {
     [types.ADD_TAB](state, tabGroupId, tab) {
@@ -97,14 +98,7 @@ let actions = {
 
         commit(types.REMOVE_TAB, tabId)
     }
-}
 
-function getTabByContentId(tabContentId) {
-    return state.tabs[
-        state.tabOrder.find((tabId) => {
-            return state.tabs[tabId].tabContent.id === tabContentId
-        })
-    ]
 }
 
 function getTabToSwitch(tabId) {
