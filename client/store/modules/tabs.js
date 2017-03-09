@@ -44,21 +44,21 @@ let state = {
 }
 
 let mutations = {
-    [types.OPEN_TAB](state, tab) {
-        Vue.set(state.tabs, tab.id, tab)
-        state.tabOrder.push(tab.id)
+    [types.ADD_TAB](state, tabGroupId, tab) {
+        state[tabGroupId].addTab(tab)
     },
-    [types.SWITCH_TAB](state, tabId) {
-        state.currentTab = state.tabs[tabId]
+    [types.SWITCH_TAB](state, tabGroupId, tabIndex) {
+        state[tabGroupId].currentTab = tabIndex
     },
-    [types.CLOSE_TAB](state, tabId) {
-        Vue.delete(state.tabs, tabId)
-        state.tabOrder.splice(state.tabOrder.indexOf(tabId), 1)
+
+    [types.REMOVE_TAB](state, tabGroupId, tabIndex) {
+        state[tabGroupId].removeTab(tabIndex)
     }
 }
 
 let actions = {
-    [types.OPEN_TAB]({
+
+    [types.ADD_TAB]({
         commit,
         state
     }, tabContent) {
@@ -68,7 +68,7 @@ let actions = {
             commit(types.SWITCH_TAB, alreadyOpenedTab.id)
         } else {
             let newTab = new Tab(tabContent)
-            commit(types.OPEN_TAB, newTab)
+            commit(types.ADD_TAB, newTab)
             commit(types.SWITCH_TAB, newTab.id)
         }
     },
@@ -77,7 +77,7 @@ let actions = {
     }, tabId) {
         commit(types.SWITCH_TAB, tabId)
     },
-    [types.CLOSE_TAB]({
+    [types.REMOVE_TAB]({
         commit,
         state
     }, tabId) {
@@ -89,12 +89,13 @@ let actions = {
 
             if (tabToSwitch) {
                 commit(types.SWITCH_TAB, tabToSwitch.id)
-                commit(types.CLOSE_TAB, tabId)
+                commit(types.REMOVE_TAB, tabId)
+
             }
             return
         }
 
-        commit(types.CLOSE_TAB, tabId)
+        commit(types.REMOVE_TAB, tabId)
     }
 }
 

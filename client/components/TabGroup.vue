@@ -46,9 +46,9 @@
                     v-for="tabId in tabs.tabOrder"
                     :active="isActiveTab(tabId)"
                     :onTabClick="_switchTab"
-                    :onTabClose="_closeTab">
+                    :onTabClose="_removeTab">
         </component>
-		<button class="btn-open-new-tab" @click="openTab">+</button>
+		<button class="btn-open-new-tab" @click="_addTab">+</button>
 	</div>
 </template>
 
@@ -70,12 +70,12 @@
 		},
 		methods: {
 			...mapActions({
-				_openTab: types.OPEN_TAB,
-                _closeTab: types.CLOSE_TAB,
+				_addTab: types.ADD_TAB,
+                _removeTab: types.REMOVE_TAB,
 				_switchTab: types.SWITCH_TAB
 			}),
 			openTab: function () {
-				this._openTab({id: rand.generate()})
+				this._addTab({id: rand.generate()})
 			},
             isActiveTab: function (tabId) {
                 return tabId === this.tabs.currentTab.id
