@@ -81,7 +81,7 @@
 
 <script>
     export default {
-        name: 'raml-tab',
+        name: 'argo-tab',
         computed: {
         	classes: function () {
         		let classes = {

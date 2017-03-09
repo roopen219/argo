@@ -8,9 +8,9 @@ function initializeApp() {
     var app = new Vue({
         el: '#app-mount',
         store,
-        render: (h) => h('raml-app')
+        render: (h) => h('argo-app')
     })
-    window.ramlApp = app
+    window.argoApp = app
 }
 
 function registerArcComponents() {

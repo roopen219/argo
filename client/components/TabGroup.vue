@@ -41,12 +41,13 @@
 
 <template>
 	<div class="tabs-container flex-row">
-		<raml-tab   :id="tabId"
+		<component  :is="tabComponent"
+                    :id="tabId"
                     v-for="tabId in tabs.tabOrder"
                     :active="isActiveTab(tabId)"
                     :onTabClick="_switchTab"
                     :onTabClose="_closeTab">
-        </raml-tab>
+        </component>
 		<button class="btn-open-new-tab" @click="openTab">+</button>
 	</div>
 </template>
@@ -57,7 +58,13 @@
 	import {mapState, mapActions} from 'vuex'
 
 	export default {
-		name: 'raml-tabs',
+		name: 'argo-tab-group',
+        props: {
+            tabComponent: {
+                type: String,
+                default: 'argo-tab'
+            }
+        },
 		computed: {
 			...mapState(['tabs'])
 		},

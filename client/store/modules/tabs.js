@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import {
-    RamlEntity
+    ArgoEntity
 } from 'utils'
 
 import appService from 'services/appService'
 import * as types from '../types'
 
-class Tab extends RamlEntity {
+class Tab extends ArgoEntity {
     constructor(tabContent) {
         super('tab')
         this.tabContent = tabContent

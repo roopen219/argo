@@ -1,9 +1,9 @@
 import * as types from '../types'
 import {
-    RamlEntity
+    ArgoEntity
 } from 'utils'
 
-class Prototype extends RamlEntity {
+class Prototype extends ArgoEntity {
     constructor(options) {
         super('prototype')
     }

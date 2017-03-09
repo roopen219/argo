@@ -17,7 +17,7 @@
 	import {mapState, mapActions} from 'vuex'
 
     export default {
-        name: 'raml-tab-content',
+        name: 'argo-tab-content',
         computed: {
 			...mapState(['tabs'])
 		}

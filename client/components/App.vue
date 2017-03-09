@@ -27,14 +27,14 @@
 
 <template>
   <div class="flex-column flex-grow-1">
-      <raml-tabs></raml-tabs>
-      <raml-tab-content></raml-tab-content>
+      <argo-tab-group></argo-tab-group>
+      <argo-tab-content></argo-tab-content>
   </div>
 </template>
 
 <script>
     export default {
-        name: 'raml-app',
+        name: 'argo-app',
         data: function() {
             return {
                 dom: window.arcDOM
