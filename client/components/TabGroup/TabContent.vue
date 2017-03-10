@@ -13,13 +13,7 @@
 </template>
 
 <script>
-    import * as types from '../store/types'
-	import {mapState, mapActions} from 'vuex'
-
     export default {
-        name: 'argo-tab-content',
-        computed: {
-			...mapState(['tabs'])
-		}
+        name: 'argo-tab-content'
     }
 </script>
