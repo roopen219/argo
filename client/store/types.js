@@ -1,7 +1,9 @@
 // TABS
-export const OPEN_TAB = 'tabs/OPEN_TAB'
-export const CLOSE_TAB = 'tabs/CLOSE_TAB'
+export const ADD_TAB = 'tabs/ADD_TAB'
+export const REMOVE_TAB = 'tabs/REMOVE_TAB'
 export const SWITCH_TAB = 'tabs/SWITCH_TAB'
+export const ADD_TAB_GROUP = 'tabs/ADD_TAB_GROUP'
+export const REMOVE_TAB_GROUP = 'tabs/REMOVE_TAB_GROUP'
 
 // PROTOTYPE
 export const CREATE_PROTOTYPE = 'prototype/CREATE_PROTOTYPE'

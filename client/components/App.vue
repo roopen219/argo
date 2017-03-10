@@ -26,19 +26,81 @@
 </style>
 
 <template>
-  <div class="flex-column flex-grow-1">
-      <argo-tab-group></argo-tab-group>
-      <argo-tab-content></argo-tab-content>
-  </div>
+    <div class="flex-column flex-grow-1">
+        <argo-tab-group
+            :tabs="tabGroup['prototype'].tabs"
+            :switchTab="switchTab"
+            :openTab="openTab"
+            :closeTab="closeTab"
+            :activeTab="getActiveTabIndex('prototype')">
+        </argo-tab-group>
+        <argo-tab-content></argo-tab-content>
+    </div>
 </template>
 
 <script>
+    import * as types from '../store/types'
+	import {mapState, mapActions, mapGetters} from 'vuex'
+
     export default {
         name: 'argo-app',
+        computed: {
+			...mapState(['tabGroup']),
+            ...mapGetters(['getActiveTabIndex'])
+		},
         data: function() {
             return {
                 dom: window.arcDOM
             };
+        },
+        methods: {
+            ...mapActions({
+				_addTab: types.ADD_TAB,
+                _removeTab: types.REMOVE_TAB,
+				_switchTab: types.SWITCH_TAB,
+                _addTabGroup: types.ADD_TAB_GROUP
+			}),
+            switchTab: function (tabIndex) {
+                console.log(tabIndex)
+                this._switchTab({
+                    tabGroupId: 'prototype',
+                    tabIndex
+                })
+            },
+            openTab: function () {
+                this._addTab({
+                    tabGroupId: 'prototype',
+                    tabContent: {
+                        name: 'one more'
+                    }
+                })
+            },
+            closeTab: function (tabIndex) {
+                this._removeTab({
+                    tabGroupId: 'prototype',
+                    tabIndex
+                })
+            }
+        },
+        created: function() {
+            this._addTabGroup({
+                tabGroupId: 'prototype',
+                tabs: []
+            })
+
+            this._addTab({
+                tabGroupId: 'prototype',
+                tabContent: {
+                    name: 'My First Prototype'
+                }
+            })
+
+            this._addTab({
+                tabGroupId: 'prototype',
+                tabContent: {
+                    name: 'Another one'
+                }
+            })
         }
     }
 </script>

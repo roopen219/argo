@@ -42,11 +42,12 @@
 <template>
 	<div class="tabs-container flex-row">
 		<component  :is="tabComponent"
-                    :id="tabId"
-                    v-for="tabId in tabs.tabOrder"
-                    :active="isActiveTab(tabId)"
-                    :onTabClick="_switchTab"
-                    :onTabClose="_closeTab">
+                    v-for="(tab, index) in tabs"
+                    :index="index"
+                    :tabContent="tab.tabContent"
+                    :isActive="isActiveTab(index)"
+                    :onTabClick="switchTab"
+                    :onTabClose="closeTab">
         </component>
 		<button class="btn-open-new-tab" @click="openTab">+</button>
 	</div>
@@ -54,8 +55,6 @@
 
 <script>
 	import rand from 'random-key'
-	import * as types from '../store/types'
-	import {mapState, mapActions} from 'vuex'
 
 	export default {
 		name: 'argo-tab-group',
@@ -63,22 +62,31 @@
             tabComponent: {
                 type: String,
                 default: 'argo-tab'
+            },
+            tabs: {
+                type: Array,
+                default: []
+            },
+            activeTab: {
+                type: Number,
+                default: 0
+            },
+            switchTab: {
+                type: Function,
+                required: true
+            },
+            closeTab: {
+                type: Function,
+                default: function(){}
+            },
+            openTab: {
+                type: Function,
+                default: function(){}
             }
         },
-		computed: {
-			...mapState(['tabs'])
-		},
 		methods: {
-			...mapActions({
-				_openTab: types.OPEN_TAB,
-                _closeTab: types.CLOSE_TAB,
-				_switchTab: types.SWITCH_TAB
-			}),
-			openTab: function () {
-				this._openTab({id: rand.generate()})
-			},
-            isActiveTab: function (tabId) {
-                return tabId === this.tabs.currentTab.id
+            isActiveTab: function (tabIndex) {
+                return tabIndex === this.activeTab
             }
 		}
 	}
