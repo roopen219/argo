@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
     app: path.join(__dirname, 'client/app.js'),
@@ -10,5 +10,6 @@ module.exports = {
     components: path.join(__dirname, 'client/components/'),
     services: path.join(__dirname, 'client/services'),
     nodeModules: path.join(__dirname, 'node_modules/'),
-    electronMain: path.join(__dirname, 'client/electron.js')
-};
+    electronMain: path.join(__dirname, 'client/electron.js'),
+    storeModules: path.join(__dirname, 'client/store/modules')
+}

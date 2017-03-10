@@ -15,7 +15,7 @@ export default new Vuex.Store({
 })
 
 function requireStoreModules() {
-    let storeModules = require.context('./modules', false, /\.js$/)
+    let storeModules = require.context('store/modules', false, /\.js$/)
 
     return storeModules
         .keys()

@@ -21,7 +21,8 @@ module.exports = {
             'scss': PATHS.scss,
             'utils': PATHS.utils,
             'components': PATHS.components,
-            'services': PATHS.services
+            'services': PATHS.services,
+            'store/modules': PATHS.storeModules
         }
     },
     externals: {
