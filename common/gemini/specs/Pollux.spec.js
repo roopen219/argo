@@ -60,7 +60,7 @@ test('register a service and call a method', t => {
         })
 })
 
-test('should login successfully', t => {
+test.skip('should login successfully', t => {
 
     let userServiceParameters = {
         data: {},
@@ -117,7 +117,7 @@ test.skip('dummy', t => {
 
 })
 
-test('local service should sync with the remote service', t => {
+test.skip('local service should sync with the remote service', t => {
 
     let articleServiceParameters = {
         find(params) {
