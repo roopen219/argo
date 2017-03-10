@@ -74,7 +74,7 @@
 
 <template>
     <div :class="this.classes" @click="clickTab">
-        <span>{{this.id}}</span>
+        <span>{{this.tabContent.name}}</span>
         <button class="close" @click="closeTab">&times;</button>
     </div>
 </template>
@@ -86,20 +86,39 @@
         	classes: function () {
         		let classes = {
         			tab: 'tab',
-        			active: this.active
+        			active: this.isActive
         		}
         		return classes
         	}
         },
+        props: {
+            tabContent: {
+                type: Object
+            },
+            onTabClick: {
+                type: Function,
+                required: true
+            },
+            onTabClose: {
+                type: Function
+            },
+            isActive: {
+                type: Boolean,
+                default: false
+            },
+            index: {
+                type: Number,
+                required: true
+            }
+        },
         methods: {
         	closeTab: function (e) {
         		e.stopPropagation()
-				this.onTabClose(this.id)
+				this.onTabClose(this.index)
         	},
         	clickTab: function () {
-				this.onTabClick(this.id)
+				this.onTabClick(this.index)
         	}
-        },
-        props: ['id', 'active', 'onTabClick', 'onTabClose']
+        }
     }
 </script>
