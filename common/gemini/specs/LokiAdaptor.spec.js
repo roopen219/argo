@@ -21,3 +21,15 @@ test('creates a new collection called "prototype"', t => {
     t.is(t.context.loki.collections[0].name, 'prototype')
 
 })
+
+test('passing no collection name throws an error', t => {
+
+    t.plan(1)
+
+    try {
+        t.context.lokiAdaptor({})
+    } catch (e) {
+        t.is(e.message, 'LokiAdaptor: pass a collectionName')
+    }
+
+})
