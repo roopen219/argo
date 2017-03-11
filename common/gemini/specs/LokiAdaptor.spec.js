@@ -117,3 +117,32 @@ test('check create method', t => {
         })
 
 })
+
+test('check find method', t => {
+
+    let data = {
+        id: 1,
+        name: 'My first prototype'
+    }
+
+    let prototypeService = t.context.lokiAdaptor({
+        collectionName: 'prototype'
+    })
+
+    return prototypeService
+        .create({data})
+        .then((_) => {
+            return prototypeService.find({id: 1})
+        })
+        .then((result) => {
+
+            t.is(result[0].id, data.id)
+            t.is(result[0].name, data.name)
+
+        })
+        .catch((error) => {
+            t.fail(error.message)
+        })
+
+})
+

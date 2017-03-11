@@ -19,7 +19,23 @@ export default function(lokiInstance) {
             hooks,
 
             collection,
+
             find: function (params) {
+
+                return new Promise((resolve, reject) => {
+
+                    try {
+
+                        let resultSet = this.collection.find(params)
+                        resolve(resultSet)
+
+                    } catch (e) {
+
+                        reject(e)
+
+                    }
+
+                })
 
             },
 
