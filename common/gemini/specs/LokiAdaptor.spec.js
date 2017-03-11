@@ -23,7 +23,8 @@ test('creates a new collection called "prototype"', t => {
         collectionName: 'prototype'
     })
 
-    t.is(t.context.loki.collections[0].name, 'prototype')
+    t.is(t.context.loki.getCollection('prototype').name, 'prototype')
+
 })
 
 test('exposes the underlying loki collection as collection', t => {
@@ -72,6 +73,7 @@ test('returns a service object containing relevant service methods', t => {
     SERVICE_METHODS.forEach((serviceMethod) => {
         t.is(_.isFunction(prototypeService[serviceMethod.name]), true)
     })
+
 })
 
 test('hooks provided in the options are added to the returned service object', t => {
