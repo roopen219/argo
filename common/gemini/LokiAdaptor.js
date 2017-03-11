@@ -10,13 +10,14 @@ export default function(lokiInstance) {
             throw new Error('LokiAdaptor: pass a collectionName')
         }
 
-        lokiInstance.addCollection(collectionName, collectionOptions)
+        let collection = lokiInstance.addCollection(collectionName, collectionOptions)
 
         return {
 
             hooks,
 
-            find: function () {
+            collection,
+            find: function (params) {
 
             },
 

@@ -24,6 +24,16 @@ test('creates a new collection called "prototype"', t => {
     })
 
     t.is(t.context.loki.collections[0].name, 'prototype')
+})
+
+test('exposes the underlying loki collection as collection', t => {
+
+    let prototypeService = t.context.lokiAdaptor({
+        collectionName: 'prototype'
+    })
+
+    t.is(prototypeService.collection instanceof Loki.Collection, true)
+    t.is(prototypeService.collection.name, 'prototype')
 
 })
 
