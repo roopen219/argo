@@ -3,6 +3,7 @@ export default function(lokiInstance) {
     function LokiAdaptor ({
         collectionName = null,
         collectionOptions = {},
+        hooks = {}
     }) {
 
         if(!collectionName) {
@@ -12,6 +13,8 @@ export default function(lokiInstance) {
         lokiInstance.addCollection(collectionName, collectionOptions)
 
         return {
+
+            hooks,
 
             find: function () {
 

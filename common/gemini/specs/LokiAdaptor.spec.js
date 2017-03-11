@@ -64,3 +64,20 @@ test('returns a service object containing relevant service methods', t => {
     })
 })
 
+test('hooks provided in the options are added to the returned service object', t => {
+
+    let hookText = 'before find hook'
+    let prototypeService = t.context.lokiAdaptor({
+        collectionName: 'prototype',
+        hooks: {
+            before: {
+                find: function () {
+                    return hookText
+                }
+            }
+        }
+    })
+
+    t.is(prototypeService.hooks.before.find(), hookText)
+})
+
