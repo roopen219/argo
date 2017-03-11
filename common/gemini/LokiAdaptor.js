@@ -1,3 +1,5 @@
+/*global Promise*/
+
 export default function(lokiInstance) {
 
     function LokiAdaptor ({
@@ -21,7 +23,22 @@ export default function(lokiInstance) {
 
             },
 
-            create: function () {
+            create: function (params) {
+
+                return new Promise((resolve, reject) => {
+
+                    try {
+
+                        let insertedData = this.collection.insert(params.data)
+                        resolve(insertedData)
+
+                    } catch (e) {
+
+                        reject(e)
+
+                    }
+
+                })
 
             },
 

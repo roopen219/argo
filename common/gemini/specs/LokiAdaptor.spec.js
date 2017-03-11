@@ -93,3 +93,27 @@ test('hooks provided in the options are added to the returned service object', t
     t.is(prototypeService.hooks.before.find(), hookText)
 })
 
+test('check create method', t => {
+
+    let data = {
+        id: 1,
+        name: 'My first prototype'
+    }
+
+    let prototypeService = t.context.lokiAdaptor({
+        collectionName: 'prototype'
+    })
+
+    return prototypeService
+        .create({data})
+        .then((result) => {
+
+            t.is(result.id, data.id)
+            t.is(result.name, data.name)
+
+        })
+        .catch((error) => {
+            t.fail(error.message)
+        })
+
+})
