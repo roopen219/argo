@@ -1,9 +1,13 @@
 /*global Promise*/
 
+import _ from 'lodash'
 import test from 'ava'
 import Loki from 'lokijs'
+
 import LokiAdaptor from '../LokiAdaptor'
 import Pollux from '../Pollux'
+import SERVICE_METHODS from '../geminiMethods'
+
 test.beforeEach((t) => {
 
     t.context.pollux = new Pollux()
@@ -48,3 +52,15 @@ test('creates a collection with specified options', t => {
     t.is(t.context.loki.collections[0].uniqueNames[0], 'id')
 
 })
+
+test('returns a service object containing relevant service methods', t => {
+
+    let prototypeService = t.context.lokiAdaptor({
+        collectionName: 'prototype'
+    })
+
+    SERVICE_METHODS.forEach((serviceMethod) => {
+        t.is(_.isFunction(prototypeService[serviceMethod.name]), true)
+    })
+})
+

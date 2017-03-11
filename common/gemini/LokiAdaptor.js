@@ -10,5 +10,37 @@ export default function(lokiInstance) {
         }
 
         lokiInstance.addCollection(collectionName, collectionOptions)
+
+        return {
+
+            find: function () {
+
+            },
+
+            create: function () {
+
+            },
+
+            get: function () {
+
+            },
+
+            patch: function () {
+
+            },
+
+            update: function () {
+
+            },
+
+            remove: function () {
+
+            }
+
+        }
+
+    }
+
     return LokiAdaptor
+
 }
