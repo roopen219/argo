@@ -81,9 +81,32 @@ export default function(lokiInstance) {
 
             },
 
-            update: function () {
+            update: function ({id, data, params}) {
 
-            },
+                if (data) {
+                    delete data['id']
+                }
+
+                return new Promise((resolve, reject) => {
+
+                    try {
+
+                        this.collection.findAndUpdate({id}, function(doc) {
+                            doc = Object.assign(doc, data)
+                        })
+
+                        let result = this.collection.findOne({id})
+                        resolve(result)
+
+                    } catch (e) {
+
+                        reject(e)
+
+                    }
+
+                })
+
+             },
 
             remove: function () {
 

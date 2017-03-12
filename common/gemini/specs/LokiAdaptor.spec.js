@@ -170,4 +170,32 @@ test('check get method', t => {
 
 })
 
+test('check update method', t => {
+
+    let data = t.context.dataToCreate
+    let dataToUpdate = {
+        id: '2',
+        name: 'Updated prototype name'
+    }
+
+    let prototypeService = t.context.lokiAdaptor({
+        collectionName: 'prototype'
+    })
+
+    return prototypeService
+        .create({data})
+        .then((_) => {
+            return prototypeService.update({id: 1, data: dataToUpdate})
+        })
+        .then((result) => {
+
+            t.is(result.id, data.id)
+            t.is(result.name, dataToUpdate.name)
+
+        })
+        .catch((error) => {
+            t.fail(error.message)
+        })
+
+})
 
