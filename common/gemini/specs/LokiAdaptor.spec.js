@@ -199,3 +199,34 @@ test('check update method', t => {
 
 })
 
+test('check remove method', t => {
+
+    let data = t.context.dataToCreate
+
+    let prototypeService = t.context.lokiAdaptor({
+        collectionName: 'prototype'
+    })
+
+    return prototypeService
+        .create({data})
+        .then((_) => {
+            return prototypeService.remove({id: data.id})
+        })
+        .then((result) => {
+
+            t.is(result.id, data.id)
+            t.is(result.name, data.name)
+
+        })
+        .then(() => {
+            return prototypeService.get({id: data.id})
+        })
+        .then((result) => {
+            t.is(result, null)
+        })
+        .catch((error) => {
+            t.fail(error.message)
+        })
+
+})
+

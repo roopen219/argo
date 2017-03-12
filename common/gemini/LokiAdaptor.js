@@ -108,7 +108,25 @@ export default function(lokiInstance) {
 
             },
 
-            remove: function () {
+            remove: function ({id, params}) {
+
+                return new Promise((resolve, reject) => {
+
+                    try {
+
+                        let docToRemove = this.collection.findOne({id})
+
+                        this.collection.remove(docToRemove)
+
+                        resolve(docToRemove)
+
+                    } catch (e) {
+
+                        reject(e)
+
+                    }
+
+                })
 
             }
 
