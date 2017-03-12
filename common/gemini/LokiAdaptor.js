@@ -12,7 +12,12 @@ export default function(lokiInstance) {
             throw new Error('LokiAdaptor: pass a collectionName')
         }
 
-        let collection = lokiInstance.addCollection(collectionName, collectionOptions)
+        let collection = lokiInstance.getCollection(collectionName)
+
+        // TODO add tests around this
+        if (!collection) {
+            collection = lokiInstance.addCollection(collectionName, collectionOptions)
+        }
 
         return {
 
