@@ -20,13 +20,13 @@ export default function(lokiInstance) {
 
             collection,
 
-            find: function (params) {
+            find: function ({query, params}) {
 
                 return new Promise((resolve, reject) => {
 
                     try {
 
-                        let resultSet = this.collection.find(params)
+                        let resultSet = this.collection.find(query)
                         resolve(resultSet)
 
                     } catch (e) {
@@ -39,13 +39,13 @@ export default function(lokiInstance) {
 
             },
 
-            create: function (params) {
+            create: function ({data, params}) {
 
                 return new Promise((resolve, reject) => {
 
                     try {
 
-                        let insertedData = this.collection.insert(params.data)
+                        let insertedData = this.collection.insert(data)
                         resolve(insertedData)
 
                     } catch (e) {

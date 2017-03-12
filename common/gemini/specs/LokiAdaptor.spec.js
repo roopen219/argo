@@ -100,10 +100,7 @@ test('hooks provided in the options are added to the returned service object', t
 
 test('check create method', t => {
 
-    let data = {
-        id: 1,
-        name: 'My first prototype'
-    }
+    let data = t.context.dataToCreate
 
     let prototypeService = t.context.lokiAdaptor({
         collectionName: 'prototype'
@@ -125,10 +122,7 @@ test('check create method', t => {
 
 test('check find method', t => {
 
-    let data = {
-        id: 1,
-        name: 'My first prototype'
-    }
+    let data = t.context.dataToCreate
 
     let prototypeService = t.context.lokiAdaptor({
         collectionName: 'prototype'
@@ -137,7 +131,7 @@ test('check find method', t => {
     return prototypeService
         .create({data})
         .then((_) => {
-            return prototypeService.find({id: 1})
+            return prototypeService.find({query: {id: data.id}})
         })
         .then((result) => {
 
