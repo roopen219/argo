@@ -53,7 +53,8 @@ module.exports = {
         process: false,
         Buffer: false,
         __filename: false,
-        setImmediate: false
+        setImmediate: false,
+        fs: 'empty'
     },
     vue: {
         loaders: {
