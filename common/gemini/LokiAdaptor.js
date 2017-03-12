@@ -77,8 +77,8 @@ export default function(lokiInstance) {
 
             },
 
-            patch: function () {
-
+            patch: function (params) {
+                return this.update(params)
             },
 
             update: function ({id, data, params}) {
