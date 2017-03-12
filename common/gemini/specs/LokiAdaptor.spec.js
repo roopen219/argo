@@ -156,7 +156,7 @@ test('check get method', t => {
     return prototypeService
         .create({data})
         .then((_) => {
-            return prototypeService.get({id: 1})
+            return prototypeService.get({id: data.id})
         })
         .then((result) => {
 
@@ -185,7 +185,7 @@ test('check update method', t => {
     return prototypeService
         .create({data})
         .then((_) => {
-            return prototypeService.update({id: 1, data: dataToUpdate})
+            return prototypeService.update({id: data.id, data: dataToUpdate})
         })
         .then((result) => {
 
