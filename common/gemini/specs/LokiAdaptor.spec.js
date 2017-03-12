@@ -15,6 +15,11 @@ test.beforeEach((t) => {
 
     t.context.lokiAdaptor = LokiAdaptor(t.context.loki)
 
+    t.context.dataToCreate = {
+        id: 1,
+        name: 'My first prototype'
+    }
+
 })
 
 test('creates a new collection called "prototype"', t => {
@@ -145,4 +150,30 @@ test('check find method', t => {
         })
 
 })
+
+test('check get method', t => {
+
+    let data = t.context.dataToCreate
+
+    let prototypeService = t.context.lokiAdaptor({
+        collectionName: 'prototype'
+    })
+
+    return prototypeService
+        .create({data})
+        .then((_) => {
+            return prototypeService.get({id: 1})
+        })
+        .then((result) => {
+
+            t.is(result.id, data.id)
+            t.is(result.name, data.name)
+
+        })
+        .catch((error) => {
+            t.fail(error.message)
+        })
+
+})
+
 
