@@ -58,14 +58,14 @@ export default function(lokiInstance) {
 
             },
 
-            get: function (params) {
+            get: function ({id, params}) {
 
                 return new Promise((resolve, reject) => {
 
                     try {
 
-                        let resultSet = this.collection.findOne(params)
-                        resolve(resultSet)
+                        let result = this.collection.findOne({id})
+                        resolve(result)
 
                     } catch (e) {
 
