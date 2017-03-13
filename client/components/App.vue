@@ -61,7 +61,6 @@
                 _addTabGroup: types.ADD_TAB_GROUP
 			}),
             switchTab: function (tabIndex) {
-                console.log(tabIndex)
                 this._switchTab({
                     tabGroupId: 'prototype',
                     tabIndex
