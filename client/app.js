@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import store from './store'
 import pollux from './pollux'
+registerArgoComponents()
 
-registerArcComponents()
 initializeApp()
 
 function initializeApp() {
@@ -17,7 +17,7 @@ function initializeApp() {
 
 }
 
-function registerArcComponents() {
+function registerArgoComponents() {
     var components = require.context('components', true, /\.vue$/)
     components.keys().forEach(function (componentName) {
         var component = components(componentName)
