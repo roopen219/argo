@@ -40,17 +40,22 @@
 </style>
 
 <template>
-	<div class="tabs-container flex-row">
-		<component  :is="tabComponent"
-                    v-for="(tab, index) in tabs"
-                    :index="index"
-                    :tabContent="tab.tabContent"
-                    :isActive="isActiveTab(index)"
-                    :onTabClick="switchTab"
-                    :onTabClose="closeTab">
-        </component>
-		<button class="btn-open-new-tab" @click="openTab">+</button>
-	</div>
+    <div class="flex-column flex-grow-1">
+        <div class="tabs-container flex-row">
+            <component  :is="tabComponent"
+                        v-for="(tab, index) in tabs"
+                        :index="index"
+                        :tabContent="tab.tabContent"
+                        :isActive="isActiveTab(index)"
+                        :onTabClick="switchTab"
+                        :onTabClose="closeTab">
+            </component>
+            <button class="btn-open-new-tab" @click="openTab">+</button>
+        </div>
+        <argo-tab-content   :tabViewComponent="tabs[activeTab].tabViewComponent"
+                            :tabContent="tabs[activeTab].tabContent">
+        </argo-tab-content>
+    </div>
 </template>
 
 <script>

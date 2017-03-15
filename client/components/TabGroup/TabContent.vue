@@ -9,11 +9,26 @@
 
 <template>
     <div class="tab-content flex-grow-1">
+        <keep-alive>
+            <component  :is="tabViewComponent"
+                        :tabContent="tabContent">
+            </component>
+        </keep-alive>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'argo-tab-content'
+        name: 'argo-tab-content',
+        props: {
+            tabViewComponent: {
+                type: String,
+                required: true
+            },
+            tabContent: {
+                type: Object,
+                default: {}
+            }
+        }
     }
 </script>

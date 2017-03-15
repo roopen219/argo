@@ -34,7 +34,6 @@
             :closeTab="closeTab"
             :activeTab="getActiveTabIndex('prototype')">
         </argo-tab-group>
-        <argo-tab-content></argo-tab-content>
     </div>
 </template>
 
