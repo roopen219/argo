@@ -4,8 +4,9 @@ import * as types from '../types'
 
 class Tab {
 
-    constructor(tabContent) {
+    constructor({tabContent, tabViewComponent}) {
         this.tabContent = tabContent
+        this.tabViewComponent = tabViewComponent
     }
 
 }
@@ -75,9 +76,9 @@ let mutations = {
 
 let actions = {
 
-    [types.ADD_TAB] ({commit, state}, {tabGroupId, tabContent, switchToTab = true}) {
+    [types.ADD_TAB] ({commit, state}, {tabGroupId, tabContent, tabViewComponent, switchToTab = true}) {
 
-        let tabContentToStore = new Tab(tabContent)
+        let tabContentToStore = new Tab({tabContent, tabViewComponent})
 
         commit(types.ADD_TAB, {
             tabGroupId,
