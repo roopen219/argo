@@ -1,9 +1,10 @@
 /* global Promise */
 
-import * as types from '../types'
-import pollux from '../../pollux'
 import uuid from 'node-uuid'
 import Vue from 'vue'
+
+import * as types from '../types'
+import pollux from '../../pollux'
 
 let state = {}
 
