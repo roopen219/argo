@@ -70,6 +70,6 @@ function registerArgoComponents() {
     var components = require.context('components', true, /\.vue$/)
     components.keys().forEach(function (componentName) {
         var component = components(componentName)
-        Vue.component(component.name, component)
+        component && component.name && Vue.component(component.name, component)
     })
 }
