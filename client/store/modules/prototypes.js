@@ -2,6 +2,7 @@
 
 import uuid from 'node-uuid'
 import Vue from 'vue'
+import randomName from 'adj-noun'
 
 import * as types from '../types'
 import pollux from '../../pollux'
@@ -31,20 +32,20 @@ let mutations = {
 
 let actions = {
 
-    [types.CREATE_PROTOTYPE] ({commit}, {options}) {
+    [types.CREATE_PROTOTYPE] ({commit}, {prototypeName}) {
 
         let prototype = {
             id: uuid.v4(),
-            name: 'The Next Big Thing',
+            name: prototypeName || randomName().join(' '),
             dom: {
                 root: {
                     children: [{
                         tagName: 'h1',
-                        textContent: 'Hello There',
+                        textContent: randomName().join(' '),
                         classes: ['header']
                     }, {
                         tagName: 'p',
-                        textContent: 'How are you?'
+                        textContent: randomName().join(' ')
                     }, {
                         tagName: 'argo-screen-view',
                         views: {
@@ -54,7 +55,7 @@ let actions = {
                                         tagName: 'input',
                                         type: 'text',
                                         classes: ['big-input'],
-                                        value: 'Already filled in'
+                                        value: randomName().join(' ')
                                     }]
                                 }
                             },
@@ -69,7 +70,7 @@ let actions = {
                                             }
                                         },
                                         classes: ['big-input'],
-                                        value: 'KABOOOM'
+                                        value: randomName().join(' ')
                                     }]
                                 }
                             }
