@@ -57,6 +57,21 @@ let actions = {
                                         value: 'Already filled in'
                                     }]
                                 }
+                            },
+                            'anotherscreen': {
+                                root: {
+                                    children: [{
+                                        tagName: 'input',
+                                        type: 'text',
+                                        style: {
+                                            padding: {
+                                                top: '20px'
+                                            }
+                                        },
+                                        classes: ['big-input'],
+                                        value: 'KABOOOM'
+                                    }]
+                                }
                             }
                         }
                     }]
