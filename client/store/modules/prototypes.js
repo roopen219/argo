@@ -101,8 +101,6 @@ let actions = {
 
         commit(types.OPEN_PROTOTYPE, prototype)
 
-        dispatch(types.SAVE_PROTOTYPE, prototype.id)
-
         return Promise.resolve(state[prototype.id])
 
     },
