@@ -1,5 +1,7 @@
 /*global Promise*/
 
+import _ from 'lodash'
+
 export default function(lokiInstance) {
 
     function LokiAdaptor ({
@@ -97,10 +99,11 @@ export default function(lokiInstance) {
                     try {
 
                         this.collection.findAndUpdate({id}, function(doc) {
-                            doc = Object.assign(doc, data)
+                            doc = _.merge(doc, data)
                         })
 
                         let result = this.collection.findOne({id})
+
                         resolve(result)
 
                     } catch (e) {
