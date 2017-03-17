@@ -52,7 +52,8 @@
             </component>
             <button class="btn-open-new-tab" @click="openTab">+</button>
         </div>
-        <argo-tab-content   :tabViewComponent="tabs[activeTab].tabViewComponent"
+        <argo-tab-content   v-if="tabs[activeTab]"
+                            :tabViewComponent="tabs[activeTab].tabViewComponent"
                             :tabContent="tabs[activeTab].tabContent">
         </argo-tab-content>
     </div>
