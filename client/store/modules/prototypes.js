@@ -32,11 +32,13 @@ let mutations = {
 
 let actions = {
 
-    [types.CREATE_PROTOTYPE] ({commit}, {prototypeName}) {
+    [types.CREATE_PROTOTYPE] ({commit, state, dispatch}, options = {}) {
+
+        let prototypeName = options.prototypeName || randomName().join(' ')
 
         let prototype = {
             id: uuid.v4(),
-            name: prototypeName || randomName().join(' '),
+            name: prototypeName,
             dom: {
                 root: {
                     children: [{
@@ -97,7 +99,11 @@ let actions = {
             }
         }
 
-        return Promise.resolve(commit(types.OPEN_PROTOTYPE, prototype))
+        commit(types.OPEN_PROTOTYPE, prototype)
+
+        dispatch(types.SAVE_PROTOTYPE, prototype.id)
+
+        return Promise.resolve(state[prototype.id])
 
     },
 
@@ -112,11 +118,17 @@ let actions = {
     },
 
     [types.CLOSE_PROTOTYPE] ({commit, state}, prototypeId) {
-        return Promise.resolve(commit(types.CLOSE_PROTOTYPE, prototypeId))
+
+        commit(types.CLOSE_PROTOTYPE, prototypeId)
+        return Promise.resolve(true)
+
     },
 
-    [types.OPEN_PROTOTYPE] ({commit}, prototype) {
-        return Promise.resolve(commit(types.OPEN_PROTOTYPE, prototype))
+    [types.OPEN_PROTOTYPE] ({commit, state}, prototype) {
+
+        commit(types.OPEN_PROTOTYPE, prototype)
+        return Promise.resolve(state[prototype.id])
+
     },
 
     [types.REMOVE_PROTOTYPE] ({commit}, prototypeId) {
