@@ -6,8 +6,11 @@ export const ADD_TAB_GROUP = 'tabs/ADD_TAB_GROUP'
 export const REMOVE_TAB_GROUP = 'tabs/REMOVE_TAB_GROUP'
 
 // PROTOTYPE
+export const FETCH_PROTOTYPES = 'prototype/FETCH_PROTOTYPES'
 export const CREATE_PROTOTYPE = 'prototype/CREATE_PROTOTYPE'
-export const OPEN_PROTOTYPE = 'prototype/OPEN_PROTOTYPE'
-export const CLOSE_PROTOTYPE = 'prototype/CLOSE_PROTOTYPE'
 export const SAVE_PROTOTYPE = 'prototype/SAVE_PROTOTYPE'
+export const DELETE_PROTOTYPE = 'prototype/DELETE_PROTOTYPE'
+
+export const ADD_PROTOTYPE = 'prototype/ADD_PROTOTYPE'
 export const REMOVE_PROTOTYPE = 'prototype/REMOVE_PROTOTYPE'
+

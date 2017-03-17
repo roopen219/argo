@@ -11,21 +11,20 @@ let state = {}
 
 let mutations = {
 
-    [types.OPEN_PROTOTYPE] (state, prototype) {
+    [types.ADD_PROTOTYPE] (state, prototype) {
+
+        if(Array.isArray(prototype)) {
+            prototype.forEach((proto) => {
+                Vue.set(state, proto.id, proto)
+            })
+        }
 
         Vue.set(state, prototype.id, prototype)
-        return state[prototype.id]
 
     },
 
-    [types.CLOSE_PROTOTYPE] (state, prototypeId) {
-
-        let prototype = state[prototypeId]
-
+    [types.REMOVE_PROTOTYPE] (state, prototypeId) {
         Vue.delete(state, prototypeId)
-
-        return prototype
-
     }
 
 }
@@ -33,6 +32,8 @@ let mutations = {
 let actions = {
 
     [types.CREATE_PROTOTYPE] ({commit, state, dispatch}, options = {}) {
+
+        let prototypeService = pollux.service('prototype')
 
         let prototypeName = options.prototypeName || randomName().join(' ')
 
@@ -99,37 +100,26 @@ let actions = {
             }
         }
 
-        commit(types.OPEN_PROTOTYPE, prototype)
-
-        return Promise.resolve(state[prototype.id])
-
+        return prototypeService.create({
+            data: prototype
+        }).then((prototype) => {
+            commit(types.ADD_PROTOTYPE, prototype)
+            return state[prototype.id]
+        })
     },
 
     [types.SAVE_PROTOTYPE] ({state}, prototypeId) {
 
         let prototypeService = pollux.service('prototype')
 
-        return prototypeService.create({
+        return prototypeService.update({
+            id: prototypeId,
             data: state[prototypeId]
         })
 
     },
 
-    [types.CLOSE_PROTOTYPE] ({commit, state}, prototypeId) {
-
-        commit(types.CLOSE_PROTOTYPE, prototypeId)
-        return Promise.resolve(true)
-
-    },
-
-    [types.OPEN_PROTOTYPE] ({commit, state}, prototype) {
-
-        commit(types.OPEN_PROTOTYPE, prototype)
-        return Promise.resolve(state[prototype.id])
-
-    },
-
-    [types.REMOVE_PROTOTYPE] ({commit}, prototypeId) {
+    [types.DELETE_PROTOTYPE] ({commit}, prototypeId) {
 
         let prototypeService = pollux.service('prototype')
 
@@ -138,11 +128,24 @@ let actions = {
         })
         .then((prototype) => {
 
-            commit(types.CLOSE_PROTOTYPE, prototypeId)
+            commit(types.REMOVE_PROTOTYPE, prototypeId)
             return prototype
 
         })
 
+    },
+
+    [types.FETCH_PROTOTYPES] ({commit}, prototypeId) {
+
+        let prototypeService = pollux.service('prototype')
+
+        return prototypeService.find({})
+            .then((prototypes) => {
+
+                commit(types.ADD_PROTOTYPE, prototypes)
+                return prototypes
+
+            })
     }
 
 }
