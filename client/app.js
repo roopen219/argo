@@ -28,20 +28,22 @@ function initializeApp () {
 
 function initializeDb () {
 
-    let idbAdaptor = new LokiIndexedAdaptor()
-    let lokiDb = new Loki('argo.db', {
-        adapter: idbAdaptor,
-        autoload: true,
-        autosave: true,
-        env: 'BROWSER'
-    })
-
-    window.loki = lokiDb
-
     return new Promise((resolve, reject) => {
-        lokiDb.on('loaded', () => {
-            resolve(lokiDb)
+
+        let idbAdaptor = new LokiIndexedAdaptor()
+        let lokiDb = new Loki('argo.db', {
+            adapter: idbAdaptor,
+            autoload: true,
+            autoloadCallback: autoLoadHandler,
+            autosave: true,
+            env: 'BROWSER'
         })
+
+        window.loki = lokiDb
+
+        function autoLoadHandler () {
+            resolve(lokiDb)
+        }
     })
 
 }
