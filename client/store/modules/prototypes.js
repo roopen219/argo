@@ -1,5 +1,3 @@
-/* global Promise */
-
 import uuid from 'node-uuid'
 import Vue from 'vue'
 import randomName from 'adj-noun'
@@ -102,7 +100,8 @@ let actions = {
 
         return prototypeService.create({
             data: prototype
-        }).then((prototype) => {
+        })
+        .then((prototype) => {
             commit(types.ADD_PROTOTYPE, prototype)
             return state[prototype.id]
         })
