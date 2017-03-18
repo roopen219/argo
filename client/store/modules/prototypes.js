@@ -33,6 +33,8 @@ let actions = {
 
         let prototypeService = pollux.service('prototype')
 
+        randomName.seed(Math.floor(Math.random() * 1000000))
+
         let prototypeName = options.prototypeName || randomName().join(' ')
 
         let prototype = {
