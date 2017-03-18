@@ -34,6 +34,10 @@
             :closeTab="closeTab"
             :activeTab="getActiveTabIndex('prototype')">
         </argo-tab-group>
+        <div v-if="tabGroup['prototype'].tabs.length === 0">
+            <argo-list-view :listItems="listOfPrototypes">
+            </argo-list-view>
+        </div>
     </div>
 </template>
 
@@ -44,20 +48,17 @@
     export default {
         name: 'argo-app',
         computed: {
-			...mapState(['tabGroup']),
-            ...mapGetters(['getActiveTabIndex'])
+			...mapState(['tabGroup','prototypes']),
+            ...mapGetters(['getActiveTabIndex', 'listOfPrototypes'])
 		},
-        data: function() {
-            return {
-                dom: window.arcDOM
-            };
-        },
         methods: {
             ...mapActions({
 				_addTab: types.ADD_TAB,
                 _removeTab: types.REMOVE_TAB,
 				_switchTab: types.SWITCH_TAB,
-                _addTabGroup: types.ADD_TAB_GROUP
+                _addTabGroup: types.ADD_TAB_GROUP,
+                _createPrototype: types.CREATE_PROTOTYPE,
+                _fetchPrototypes: types.FETCH_PROTOTYPES
 			}),
             switchTab: function (tabIndex) {
                 this._switchTab({
@@ -66,12 +67,14 @@
                 })
             },
             openTab: function () {
-                this._addTab({
-                    tabGroupId: 'prototype',
-                    tabContent: {
-                        name: 'one more'
-                    }
-                })
+                this._createPrototype()
+                    .then((prototype) => {
+                        this._addTab({
+                            tabGroupId: 'prototype',
+                            tabContent: prototype,
+                            tabViewComponent: 'argo-dummy'
+                        })
+                    })
             },
             closeTab: function (tabIndex) {
                 this._removeTab({
@@ -86,19 +89,7 @@
                 tabs: []
             })
 
-            this._addTab({
-                tabGroupId: 'prototype',
-                tabContent: {
-                    name: 'My First Prototype'
-                }
-            })
-
-            this._addTab({
-                tabGroupId: 'prototype',
-                tabContent: {
-                    name: 'Another one'
-                }
-            })
+            this._fetchPrototypes()
         }
     }
 </script>
