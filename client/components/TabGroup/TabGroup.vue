@@ -3,17 +3,8 @@
 
 	.tabs-container {
 		background: $bg-title-bar;
-		padding: 5px 20px 0 80px;
 		border-bottom: 1px solid #aaa;
     	box-shadow: inset 0 -2px 4px rgba(0,0,0,0.2);
-	}
-
-	.logo {
-		font-size: 11px;
-		font-weight: bold;
-		color: $text-color-light;
-		letter-spacing: 3px;
-		margin: 3px 15px 0 0;
 	}
 
 	.btn-open-new-tab {
@@ -40,8 +31,8 @@
 </style>
 
 <template>
-    <div class="flex-column flex-grow-1">
-        <div class="tabs-container flex-row">
+    <div :class="wrapperClass">
+        <div :class="tabContainerClasses">
             <component  :is="tabComponent"
                         v-for="(tab, index) in tabs"
                         :index="index"
@@ -62,6 +53,11 @@
 <script>
 	export default {
 		name: 'argo-tab-group',
+        computed: {
+            tabContainerClasses: function () {
+                return "tabs-container flex-row " + this.tabContainerClass
+            }
+        },
         props: {
             tabComponent: {
                 type: String,
@@ -86,6 +82,14 @@
             openTab: {
                 type: Function,
                 default: function(){}
+            },
+            wrapperClass: {
+                type: String,
+                default: ''
+            },
+            tabContainerClass: {
+                type: String,
+                default: ''
             }
         },
 		methods: {

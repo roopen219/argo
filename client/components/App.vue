@@ -23,21 +23,39 @@
         height: 100%;
         width: 100%;
     }
+
+    .argo-logo {
+        line-height: 1;
+        align-self: center;
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        position: absolute;
+        top: 12px;
+        font-size: 11px;
+        left: 20px;
+    }
+
+    .app-tab-container {
+        padding: 5px 20px 0 80px;
+    }
+
 </style>
 
 <template>
     <div class="flex-column flex-grow-1">
+        <span class="argo-logo">
+            Argo
+        </span>
         <argo-tab-group
-            :tabs="tabGroup['prototype'].tabs"
+            wrapperClass="flex-column flex-grow-1"
+            tabContainerClass="app-tab-container"
+            :tabs="tabGroup['app'].tabs"
             :switchTab="switchTab"
             :openTab="openTab"
             :closeTab="closeTab"
-            :activeTab="getActiveTabIndex('prototype')">
+            :activeTab="getActiveTabIndex('app')">
         </argo-tab-group>
-        <div v-if="tabGroup['prototype'].tabs.length === 0">
-            <argo-list-view :listItems="listOfPrototypes">
-            </argo-list-view>
-        </div>
     </div>
 </template>
 
@@ -48,8 +66,8 @@
     export default {
         name: 'argo-app',
         computed: {
-			...mapState(['tabGroup','prototypes']),
-            ...mapGetters(['getActiveTabIndex', 'listOfPrototypes'])
+			...mapState(['tabGroup']),
+            ...mapGetters(['getActiveTabIndex'])
 		},
         methods: {
             ...mapActions({
@@ -57,39 +75,35 @@
                 _removeTab: types.REMOVE_TAB,
 				_switchTab: types.SWITCH_TAB,
                 _addTabGroup: types.ADD_TAB_GROUP,
-                _createPrototype: types.CREATE_PROTOTYPE,
-                _fetchPrototypes: types.FETCH_PROTOTYPES
+                _createPrototype: types.CREATE_PROTOTYPE
 			}),
             switchTab: function (tabIndex) {
                 this._switchTab({
-                    tabGroupId: 'prototype',
+                    tabGroupId: 'app',
                     tabIndex
                 })
             },
             openTab: function () {
-                this._createPrototype()
-                    .then((prototype) => {
-                        this._addTab({
-                            tabGroupId: 'prototype',
-                            tabContent: prototype,
-                            tabViewComponent: 'argo-dummy'
-                        })
-                    })
+                this._addTab({
+                    tabGroupId: 'app',
+                    tabContent: {name: 'New Tab'},
+                    tabViewComponent: 'argo-new-tab'
+                })
             },
             closeTab: function (tabIndex) {
                 this._removeTab({
-                    tabGroupId: 'prototype',
+                    tabGroupId: 'app',
                     tabIndex
                 })
             }
         },
         created: function() {
             this._addTabGroup({
-                tabGroupId: 'prototype',
+                tabGroupId: 'app',
                 tabs: []
             })
 
-            this._fetchPrototypes()
+            this.openTab()
         }
     }
 </script>

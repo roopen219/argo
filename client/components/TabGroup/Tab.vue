@@ -8,10 +8,10 @@
     	position: relative;
     	min-width: 200px;
     	z-index: 0;
-    	color: #444;
+    	color: $text-color-dark;
     	text-shadow: 0 1px rgba(255, 255, 255, 0.5);
     	line-height: 1;
-		border: 1px solid #aaa;
+		border: 1px solid $color-tabs-border;
 		background: $bg-tab;
 		border-top-left-radius: 4px;
 		border-top-right-radius: 4px;

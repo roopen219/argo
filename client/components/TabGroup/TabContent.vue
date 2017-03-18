@@ -8,7 +8,7 @@
 </style>
 
 <template>
-    <div class="tab-content flex-grow-1">
+    <div class="tab-content flex-grow-1 flex-column">
         <keep-alive>
             <component  :is="tabViewComponent"
                         :tabContent="tabContent">
