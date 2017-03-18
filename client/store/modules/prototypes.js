@@ -11,13 +11,14 @@ let mutations = {
 
     [types.ADD_PROTOTYPE] (state, prototype) {
 
-        if(Array.isArray(prototype)) {
+        if (Array.isArray(prototype)) {
             prototype.forEach((proto) => {
                 Vue.set(state, proto.id, proto)
             })
+        } else {
+            Vue.set(state, prototype.id, prototype)
         }
 
-        Vue.set(state, prototype.id, prototype)
 
     },
 
@@ -151,10 +152,19 @@ let actions = {
 
 }
 
+let getters = {
+    listOfPrototypes: (state) => {
+        return Object.keys(state).map((key) => {
+            return state[key]
+        })
+    }
+}
+
 let PrototypeModule = {
     state,
     mutations,
-    actions
+    actions,
+    getters
 }
 
 export default PrototypeModule
