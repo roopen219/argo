@@ -1,8 +1,12 @@
 <style>
+    .argo-list {
+        padding: 0;
+
+    }
 </style>
 
 <template>
-    <ul class="flex-column">
+    <ul class="argo-list">
         <component  :is="listItemComponent"
                     v-for="(listItem, index) in listItems"
                     :index="index"
@@ -13,7 +17,7 @@
 
 <script>
     export default {
-        name: 'argo-list-view',
+        name: 'argo-list',
         props: {
             listItems: {
                 type: Array,

@@ -1,5 +1,13 @@
+<style>
+    .argo-list-item {
+        list-style: none;
+    }
+</style>
+
 <template>
-    <li v-if="listItem">{{this.listItem.name}} &mdash; {{Date(this.listItem.meta.created)}}</li>
+    <li class="argo-list-item">
+        {{this.listItem.name}} &mdash; {{Date(this.listItem.meta.created)}}
+    </li>
 </template>
 
 <script>
