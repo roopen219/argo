@@ -60,8 +60,6 @@
 </template>
 
 <script>
-	import rand from 'random-key'
-
 	export default {
 		name: 'argo-tab-group',
         props: {
