@@ -7,7 +7,7 @@
 
 <template>
     <div class="flex-grow-1 argo-new-tab">
-        <button @click="createPrototype">+ Create New</button>
+        <button class="argo-btn-primary" @click="createPrototype">+ Create New</button>
         <argo-list :listItems="listOfPrototypes">
         </argo-list>
     </div>
