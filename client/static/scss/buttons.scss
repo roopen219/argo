@@ -18,3 +18,8 @@
     @extend .argo-btn-base;
     @include argo-btn(1px solid #2e85bf, #3498db, #eee, inset 0 1px 0 rgba(255,255,255,0.5), 0 1px 0px rgba(0,0,0,0.15));
 }
+
+.argo-btn-default {
+    @extend .argo-btn-base;
+    @include argo-btn(1px solid #aaa, #FAFAFA, #7F8C8D, 0 1px 0px rgba(0,0,0,0.15));
+}
