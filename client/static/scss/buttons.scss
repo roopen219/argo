@@ -1,4 +1,4 @@
-@mixin argo-btn($border, $background, $color, $box-shadow...) {
+@mixin btn($border, $background, $color, $box-shadow...) {
 
     border: $border;
     background: $background;
@@ -7,19 +7,19 @@
 
 }
 
-.argo-btn-base {
+.btn-base {
     padding: 8px;
     border-radius: 2px;
     line-height: 1;
     font-size: 14px;
 }
 
-.argo-btn-primary {
-    @extend .argo-btn-base;
-    @include argo-btn(1px solid #2e85bf, #3498db, #eee, inset 0 1px 0 rgba(255,255,255,0.5), 0 1px 0px rgba(0,0,0,0.15));
+.btn-primary {
+    @extend .btn-base;
+    @include btn(1px solid #2e85bf, #3498db, #eee, inset 0 1px 0 rgba(255,255,255,0.5), 0 1px 0px rgba(0,0,0,0.15));
 }
 
-.argo-btn-default {
-    @extend .argo-btn-base;
-    @include argo-btn(1px solid #aaa, #FAFAFA, #7F8C8D, 0 1px 0px rgba(0,0,0,0.15));
+.btn-default {
+    @extend .btn-base;
+    @include btn(1px solid #aaa, #FAFAFA, #7F8C8D, 0 1px 0px rgba(0,0,0,0.15));
 }
