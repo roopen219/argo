@@ -1,16 +1,10 @@
-<style>
-    .argo-list {
-        padding: 0;
-
-    }
-</style>
-
 <template>
-    <ul class="argo-list">
+    <ul>
         <component  :is="listItemComponent"
                     v-for="(listItem, index) in listItems"
                     :index="index"
-                    :listItem="listItem">
+                    :listItem="listItem"
+                    :listItemClass="listItemClass">
         </component>
     </ul>
 </template>
@@ -21,11 +15,15 @@
         props: {
             listItems: {
                 type: Array,
-                default: []
+                default: function () { return [] }
             },
             listItemComponent: {
                 type: String,
                 default: 'argo-list-item'
+            },
+            listItemClass: {
+                type: [Object, String],
+                default: function () { return {} }
             }
         },
         created: function (){

@@ -1,14 +1,24 @@
-<style>
-    .argo-new-tab {
+<style lang="scss">
+    .new-tab-view {
         padding: 20px;
-    }
 
+        .list {
+            padding: 0;
+
+            .list-item {
+                list-style: none;
+            }
+
+        }
+    }
 </style>
 
 <template>
-    <div class="flex-grow-1 argo-new-tab">
-        <button class="argo-btn-primary" @click="createPrototype">+ Create New</button>
-        <argo-list :listItems="listOfPrototypes">
+    <div class="flex-grow-1 new-tab-view">
+        <button class="btn-primary" @click="createPrototype">+ Create New</button>
+        <argo-list  :listItems="listOfPrototypes"
+                    class="list"
+                    listItemClass="list-item">
         </argo-list>
     </div>
 </template>
