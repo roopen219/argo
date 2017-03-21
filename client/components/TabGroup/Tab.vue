@@ -36,15 +36,15 @@
             },
             activeTabClass: {
                 type: [Object, String],
-                default: {}
+                default: function () { return {} }
             },
             tabClass: {
                 type: [Object, String],
-                default: {}
+                default: function () { return {} }
             },
             tabCloseButtonClass: {
                 type: [Object, String],
-                default: {}
+                default: function () { return {} }
             }
         },
         methods: {
