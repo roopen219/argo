@@ -18,12 +18,6 @@
         font-family: Roboto !important;
     }
 
-    .dom-container {
-        display: flex;
-        height: 100%;
-        width: 100%;
-    }
-
     .argo-logo {
         line-height: 1;
         align-self: center;
