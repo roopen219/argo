@@ -32,7 +32,7 @@
             },
             tabs: {
                 type: Array,
-                default: []
+                default: function () { return [] }
             },
             activeTab: {
                 type: Number,
@@ -52,31 +52,31 @@
             },
             wrapperClass: {
                 type: [Object, String],
-                default: {}
+                default: function () { return {} }
             },
             tabRowClass: {
                 type: [Object, String],
-                default: {}
+                default: function () { return {} }
             },
             newTabButtonClass: {
                 type: [Object, String],
-                default: {}
+                default: function () { return {} }
             },
             activeTabClass: {
                 type: [Object, String],
-                default: {}
+                default: function () { return {} }
             },
             tabClass: {
                 type: [Object, String],
-                default: {}
+                default: function () { return {} }
             },
             tabViewClass: {
                 type: [Object, String],
-                default: {}
+                default: function () { return {} }
             },
             tabCloseButtonClass: {
                 type: [Object, String],
-                default: {}
+                default: function () { return {} }
             }
         },
 		methods: {
