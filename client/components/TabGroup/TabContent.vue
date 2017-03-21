@@ -1,14 +1,5 @@
-<style lang="scss" scoped>
-    @import "variables";
-
-    .tab-content {
-        background: $bg-tab-active;
-        box-shadow: inset 0 1px 0 #fff;
-    }
-</style>
-
 <template>
-    <div class="tab-content flex-grow-1 flex-column">
+    <div :class="tabViewClass">
         <keep-alive>
             <component  :is="tabViewComponent"
                         :tabContent="tabContent">
@@ -27,6 +18,10 @@
             },
             tabContent: {
                 type: Object,
+                default: {}
+            },
+            tabViewClass: {
+                type: [Object, String],
                 default: {}
             }
         }

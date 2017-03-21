@@ -29,11 +29,6 @@
         font-size: 11px;
         left: 20px;
     }
-
-    .app-tab-container {
-        padding: 5px 20px 0 80px;
-    }
-
 </style>
 
 <template>
@@ -42,8 +37,13 @@
             Argo
         </span>
         <argo-tab-group
-            wrapperClass="flex-column flex-grow-1"
-            tabContainerClass="app-tab-container"
+            wrapperClass="flex-column flex-grow-1 app-tab-view"
+            tabRowClass="tab-row flex-row"
+            newTabButtonClass="btn-open-new-tab"
+            tabClass="tab"
+            activeTabClass="active"
+            tabCloseButtonClass="close"
+            tabViewClass="tab-content flex-grow-1 flex-column"
             :tabs="tabGroup['app'].tabs"
             :switchTab="switchTab"
             :openTab="openTab"
