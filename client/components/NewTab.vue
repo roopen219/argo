@@ -14,13 +14,27 @@
         }
 
         .location-bar {
-            padding: 4px 20px;
+            padding: 8px 20px;
             margin: -20px -20px 20px -20px;
             background: $bg-tab-active;
             border-bottom: 1px solid $color-tabs-border;
 
             input[type="text"] {
-                margin-left: 12px;
+                padding-left: 52px;
+            }
+
+            .prev, .next {
+                padding: 8px;
+            }
+
+            .search-input-wrapper {
+                position: relative;
+
+                .placeholder {
+                    position: absolute;
+                    top: 5px;
+                    left: 8px;
+                }
             }
         }
     }
@@ -29,11 +43,14 @@
 <template>
     <div class="flex-grow-1 new-tab-view">
         <div class="location-bar flex-row">
-            <div class="btn-group">
-                <button class="prev btn-default">&laquo;</button>
-                <button class="next btn-default">&raquo;</button>
+            <!--<div class="btn-group flex-row">
+                <button class="prev btn-default"><i class="mdi-arrow-left"></i></button>
+                <button class="next btn-default"><i class="mdi-arrow-right"></i></button>
+            </div>-->
+            <div class="search-input-wrapper flex-row flex-grow-1">
+                <span class="placeholder text-muted">argo://</span>
+                <input type="text" class="flex-grow-1 input-text">
             </div>
-            <input type="text" class="input-text flex-grow-1" placeholder="Open...">
         </div>
         <button class="btn-primary" @click="createPrototype">+ Create New</button>
         <argo-list  :listItems="listOfPrototypes"
