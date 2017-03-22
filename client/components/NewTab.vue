@@ -5,11 +5,20 @@
         padding: 20px;
         background: #fff;
 
+        $bg-list-item: #fafafa;
+        $color-list-item-border: #ccc;
+
         .list {
             padding: 0;
 
             .list-item {
                 list-style: none;
+                background: $bg-list-item;
+                padding: 12px;
+                margin-bottom: 8px;
+                border-radius: 4px;
+                border: 1px solid $color-list-item-border;
+                text-transform: capitalize;
             }
         }
 
