@@ -5,6 +5,7 @@
                     :index="index"
                     :listItem="listItem"
                     :listItemClass="listItemClass">
+                    <slot :listItem="listItem"></slot>
         </component>
     </ul>
 </template>

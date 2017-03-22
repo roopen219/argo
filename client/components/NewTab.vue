@@ -52,11 +52,16 @@
                 <input type="text" class="flex-grow-1 input-text">
             </div>
         </div>
-        <button class="btn-primary" @click="createPrototype">+ Create New</button>
-        <argo-list  :listItems="listOfPrototypes"
-                    class="list"
-                    listItemClass="list-item">
-        </argo-list>
+        <div class="flex-grow-1">
+            <button class="btn-primary" @click="createPrototype">+ Create New</button>
+            <argo-list  :listItems="listOfPrototypes"
+                        class="list"
+                        listItemClass="list-item">
+                    <template scope="props">
+                        <span>{{props.listItem.name}}</span>
+                    </template>
+            </argo-list>
+        </div>
     </div>
 </template>
 

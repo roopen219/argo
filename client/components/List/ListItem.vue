@@ -1,6 +1,6 @@
 <template>
     <li :class="listItemClass">
-        {{this.listItem.name}} &mdash; {{Date(this.listItem.meta.created)}}
+        <slot>{{this.listItem.name}}</slot>
     </li>
 </template>
 
