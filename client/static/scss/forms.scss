@@ -19,3 +19,18 @@
         outline: none;
     }
 }
+
+.input-with-icon {
+    position: relative;
+
+    [class*="mdi-"] {
+        position: absolute;
+        top: 5px;
+        font-size: 18px;
+        left: 8px;
+    }
+
+    .input-text {
+        padding-left: 28px;
+    }
+}
