@@ -16,10 +16,24 @@
 
 .btn-primary {
     @extend .btn-base;
-    @include btn(1px solid #2e85bf, #3498db, #eee, inset 0 1px 0 rgba(255,255,255,0.5), 0 1px 0px rgba(0,0,0,0.15));
+    @include btn(1px solid #2e85bf, #3498db, #eee, inset 0 1px 0 rgba(255,255,255,0.5), 0 1px 1px rgba(170,170,170,0.30));
 }
 
 .btn-default {
     @extend .btn-base;
-    @include btn(1px solid #aaa, #FAFAFA, #7F8C8D, 0 1px 0px rgba(0,0,0,0.15));
+    @include btn(1px solid #aaa, #FAFAFA, #7F8C8D, 0 1px 1px rgba(170,170,170,0.30));
+}
+
+.btn-group {
+    [class*="btn"]:first-child {
+        border-radius: 2px 0 0 2px;
+    }
+
+    [class*="btn"]:last-child {
+        border-radius: 0 2px 2px 0;
+    }
+
+    [class*="btn"]:last-child:nth-child(2) {
+        border-left: none;
+    }
 }
