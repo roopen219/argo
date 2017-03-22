@@ -15,7 +15,7 @@
     }
 
     * {
-        font-family: Roboto !important;
+        font-family: Roboto;
     }
 
     .argo-logo {

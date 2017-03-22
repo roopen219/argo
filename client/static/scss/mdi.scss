@@ -1,0 +1,12 @@
+@import "../../node_modules/mdi/css/materialdesignicons.min.css";
+@import "variables";
+
+[class*="mdi-"] {
+    font-family: "Material Design Icons" !important;
+    font-style: normal;
+
+    &.muted {
+        color: $text-color-muted
+    }
+}
+

@@ -11,6 +11,7 @@
     "debug": "^2.6.0",
     "electron-is": "^2.3.0",
     "lokijs": "^1.4.3",
+    "mdi": "^1.8.36",
     "mongodb": "^2.2.16",
     "mousetrap": "^1.5.3",
     "node-uuid": "^1.4.7",
