@@ -45,6 +45,10 @@ module.exports = {
         {
             test: /\.(sass|scss)$/,
             loaders: ['style', 'css?minimize&autoprefixer=1', 'sass']
+        },
+        {
+            test: /\.(svg|eot|ttf|woff|woff2).*$/,
+            loader: 'file'
         }]
     },
     node: {
