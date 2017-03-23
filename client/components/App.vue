@@ -85,7 +85,7 @@
             openTab: function () {
                 this._addTab({
                     tabGroupId: 'app',
-                    tabContent: {name: 'New Tab'},
+                    tabContent: {name: 'New Tab', query: ''},
                     tabViewComponent: 'argo-new-tab'
                 })
             },
