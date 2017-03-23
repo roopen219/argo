@@ -16,6 +16,7 @@
 
     * {
         font-family: Roboto;
+        box-sizing: border-box;
     }
 
     .argo-logo {
@@ -29,10 +30,14 @@
         font-size: 11px;
         left: 20px;
     }
+
+    .app-view {
+        overflow: hidden;
+    }
 </style>
 
 <template>
-    <div class="flex-column flex-grow-1">
+    <div class="flex-column flex-grow-1 app-view">
         <span class="argo-logo">
             Argo
         </span>
