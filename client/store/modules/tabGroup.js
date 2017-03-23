@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import _ from 'lodash'
 
 import * as types from '../types'
 
@@ -70,6 +71,11 @@ let mutations = {
 
     [types.REMOVE_TAB_GROUP] (state, tabGroupId) {
         Vue.delete(state, tabGroupId)
+    },
+
+    [types.UPDATE_TAB_CONTENT] (state, {tabGroupId, tabIndex, tabContent}) {
+        let oldTabContent = state[tabGroupId].tabs[tabIndex].tabContent
+        state[tabGroupId].tabs[tabIndex].tabContent = _.merge({}, oldTabContent, tabContent)
     }
 
 }
