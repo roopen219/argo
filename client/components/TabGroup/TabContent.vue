@@ -2,7 +2,8 @@
     <div :class="tabViewClass">
         <keep-alive>
             <component  :is="tabViewComponent"
-                        :tabContent="tabContent">
+                        :tabContent="tabContent"
+                        :tabIndex="tabIndex">
             </component>
         </keep-alive>
     </div>
@@ -23,7 +24,11 @@
             tabViewClass: {
                 type: [Object, String],
                 default: {}
-            }
+            },
+            tabIndex: {
+                type: Number,
+                required: true
+            },
         }
     }
 </script>

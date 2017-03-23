@@ -15,6 +15,7 @@
             <button :class="newTabButtonClass" @click="openTab">+</button>
         </div>
         <argo-tab-content   v-if="tabs[activeTab]"
+                            :tabIndex="activeTab"
                             :tabViewClass="tabViewClass"
                             :tabViewComponent="tabs[activeTab].tabViewComponent"
                             :tabContent="tabs[activeTab].tabContent">
