@@ -27,8 +27,21 @@
 </template>
 
 <script>
-	export default {
-		name: 'argo-tab-group',
+    import {MixinClassFactory} from '../../utils'
+
+    export default {
+        name: 'argo-tab-group',
+        mixins: [
+            MixinClassFactory([
+                'wrapperClass',
+                'tabRowClass',
+                'newTabButtonClass',
+                'activeTabClass',
+                'tabClass',
+                'tabViewClass',
+                'tabCloseButtonClass'
+            ])
+        ],
         props: {
             tabComponent: {
                 type: String,
@@ -53,40 +66,12 @@
             openTab: {
                 type: Function,
                 default: function(){}
-            },
-            wrapperClass: {
-                type: [Object, String],
-                default: function () { return {} }
-            },
-            tabRowClass: {
-                type: [Object, String],
-                default: function () { return {} }
-            },
-            newTabButtonClass: {
-                type: [Object, String],
-                default: function () { return {} }
-            },
-            activeTabClass: {
-                type: [Object, String],
-                default: function () { return {} }
-            },
-            tabClass: {
-                type: [Object, String],
-                default: function () { return {} }
-            },
-            tabViewClass: {
-                type: [Object, String],
-                default: function () { return {} }
-            },
-            tabCloseButtonClass: {
-                type: [Object, String],
-                default: function () { return {} }
             }
         },
-		methods: {
+        methods: {
             isActiveTab: function (tabIndex) {
                 return tabIndex === this.activeTab
             }
-		}
-	}
+        }
+    }
 </script>
