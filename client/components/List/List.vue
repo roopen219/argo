@@ -3,6 +3,7 @@
         <component  @click.native="_emitClickEvent(listItem)"
                     :is="listItemComponent"
                     v-for="(listItem, index) in listItems"
+                    :key="listItem.id"
                     :index="index"
                     :listItem="listItem"
                     :listItemClass="listItemClass">
