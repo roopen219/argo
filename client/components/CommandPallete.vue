@@ -15,7 +15,7 @@
     }
 </script>
 
-<style language="scss">
+<style lang="scss" scoped>
     @import "variables";
 
     .command-pallete {
