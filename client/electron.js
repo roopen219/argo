@@ -5,6 +5,8 @@ const is = require('electron-is')
 
 const appService = require('services/appService')
 
+const { default: installExtension, VUEJS_DEVTOOLS } = require('electron-devtools-installer')
+
 const {
     app,
     BrowserWindow,
@@ -38,8 +40,12 @@ app.on('ready', () => {
     }
 
     if (is.dev()) {
-        mainWindow.loadURL('http://localhost:8080/index.html')
-        mainWindow.webContents.openDevTools()
+        installExtension(VUEJS_DEVTOOLS)
+            .then((name) => {
+                mainWindow.loadURL('http://localhost:8080/index.html')
+                mainWindow.webContents.openDevTools()
+            })
+            .catch((err) => console.log('An error occurred: ', err))
     } else {
         protocol.registerFileProtocol('argo', (request, callback) => {
             const url = request.url.substr(13)
