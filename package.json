@@ -10,6 +10,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "debug": "^2.6.0",
     "electron-is": "^2.3.0",
+    "fuse.js": "^2.6.2",
     "lokijs": "^1.4.3",
     "mdi": "^1.8.36",
     "mongodb": "^2.2.16",
