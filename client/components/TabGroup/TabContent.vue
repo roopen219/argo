@@ -26,7 +26,7 @@
             tabIndex: {
                 type: Number,
                 required: true
-            },
+            }
         }
     }
 </script>
