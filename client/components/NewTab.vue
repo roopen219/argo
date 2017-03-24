@@ -90,11 +90,11 @@
         methods: {
             ...mapActions({
                 _addTab: types.ADD_TAB,
-                _createProtoype: types.CREATE_PROTOTYPE,
+                _createPrototype: types.CREATE_PROTOTYPE,
                 _fetchPrototypes: types.FETCH_PROTOTYPES
             }),
             createPrototype: function() {
-                this._createProtoype()
+                this._createPrototype()
                     .then((prototype) => {
                         this._addTab({
                             tabGroupId: 'app',
