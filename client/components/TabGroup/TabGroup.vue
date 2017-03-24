@@ -3,6 +3,7 @@
         <div :class="tabRowClass">
             <component  :is="tabComponent"
                         v-for="(tab, index) in tabs"
+                        :key="tab.id"
                         :index="index"
                         :tabContent="tab.tabContent"
                         :isActive="isActiveTab(index)"
@@ -15,7 +16,8 @@
             <button :class="newTabButtonClass" @click="openTab">+</button>
         </div>
         <argo-tab-content   v-for="(tab, index) in tabs"
-                            :style="{display: isActiveTab(index) ? '' : 'none'}"
+                            :key="tab.id"
+                            v-show="isActiveTab(index)"
                             :tabIndex="index"
                             :tabViewClass="tabViewClass"
                             :tabViewComponent="tab.tabViewComponent"

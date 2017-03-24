@@ -1,11 +1,9 @@
 <template>
     <div :class="tabViewClass">
-        <keep-alive>
-            <component  :is="tabViewComponent"
-                        :tabContent="tabContent"
-                        :tabIndex="tabIndex">
-            </component>
-        </keep-alive>
+        <component  :is="tabViewComponent"
+                    :tabContent="tabContent"
+                    :tabIndex="tabIndex">
+        </component>
     </div>
 </template>
 

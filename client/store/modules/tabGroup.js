@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import uuid from 'node-uuid'
 import _ from 'lodash'
 
 import * as types from '../types'
@@ -6,6 +7,7 @@ import * as types from '../types'
 class Tab {
 
     constructor({tabContent, tabViewComponent}) {
+        this.id = uuid.v4()
         this.tabContent = tabContent
         this.tabViewComponent = tabViewComponent
     }
@@ -15,7 +17,6 @@ class Tab {
 class TabGroup {
 
     constructor(tabs = []) {
-
         this.tabs = tabs
         this.activeTabIndex = 0
 
