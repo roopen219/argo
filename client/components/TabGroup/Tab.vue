@@ -6,15 +6,28 @@
 </template>
 
 <script>
+    import {MixinClassFactory} from '../../utils'
+
     export default {
         name: 'argo-tab',
         computed: {
-        	classes: function () {
-        		if (this.isActive)
-        		    return [this.tabClass, this.activeTabClass]
+            classes: function () {
+
+                if (this.isActive) {
+                    return [this.tabClass, this.activeTabClass]
+                }
+
                 return this.tabClass
-        	}
+
+            }
         },
+        mixins: [
+            MixinClassFactory([
+                'activeTabClass',
+                'tabClass',
+                'tabCloseButtonClass'
+            ])
+        ],
         props: {
             tabContent: {
                 type: Object
@@ -33,28 +46,16 @@
             index: {
                 type: Number,
                 required: true
-            },
-            activeTabClass: {
-                type: [Object, String],
-                default: function () { return {} }
-            },
-            tabClass: {
-                type: [Object, String],
-                default: function () { return {} }
-            },
-            tabCloseButtonClass: {
-                type: [Object, String],
-                default: function () { return {} }
             }
         },
         methods: {
-        	closeTab: function (e) {
-        		e.stopPropagation()
-				this.onTabClose(this.index)
-        	},
-        	clickTab: function () {
-				this.onTabClick(this.index)
-        	}
+            closeTab: function (e) {
+                e.stopPropagation()
+                this.onTabClose(this.index)
+            },
+            clickTab: function () {
+                this.onTabClick(this.index)
+            }
         }
     }
 </script>
