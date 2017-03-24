@@ -62,7 +62,7 @@
             </div>-->
             <div class="search-input-wrapper flex-row flex-grow-1">
                 <span class="placeholder text-muted">argo://</span>
-                <input type="text" class="flex-grow-1 input-text" :value="tabContent.query" @input="updateQuery">
+                <input type="text" class="flex-grow-1 input-text" :value="query">
             </div>
         </div>
         <div class="flex-grow-1 content-wrapper">
@@ -87,6 +87,11 @@
         computed: {
             ...mapGetters(['listOfPrototypes'])
         },
+        data: function () {
+            return {
+                query: ''
+            }
+        },
         methods: {
             ...mapActions({
                 _addTab: types.ADD_TAB,
@@ -102,15 +107,6 @@
                             tabViewComponent: 'argo-dummy'
                         })
                     })
-            },
-            updateQuery: function(e) {
-                this.$store.commit(types.UPDATE_TAB_CONTENT, {
-                    tabGroupId: 'app',
-                    tabIndex: this.tabIndex,
-                    tabContent: {
-                        query: e.target.value
-                    }
-                })
             }
         },
         props: ['tabContent', 'tabIndex'],

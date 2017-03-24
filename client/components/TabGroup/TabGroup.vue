@@ -14,11 +14,12 @@
             </component>
             <button :class="newTabButtonClass" @click="openTab">+</button>
         </div>
-        <argo-tab-content   v-if="tabs[activeTab]"
-                            :tabIndex="activeTab"
+        <argo-tab-content   v-for="(tab, index) in tabs"
+                            :style="{display: isActiveTab(index) ? '' : 'none'}"
+                            :tabIndex="index"
                             :tabViewClass="tabViewClass"
-                            :tabViewComponent="tabs[activeTab].tabViewComponent"
-                            :tabContent="tabs[activeTab].tabContent">
+                            :tabViewComponent="tab.tabViewComponent"
+                            :tabContent="tab.tabContent">
         </argo-tab-content>
     </div>
 </template>
