@@ -8,8 +8,11 @@
 </template>
 
 <script>
+    import {MixinClassFactory} from '../../utils'
+
     export default {
         name: 'argo-tab-content',
+        mixins: [MixinClassFactory(['tabViewClass'])],
         props: {
             tabViewComponent: {
                 type: String,
@@ -17,10 +20,6 @@
             },
             tabContent: {
                 type: Object,
-                default: {}
-            },
-            tabViewClass: {
-                type: [Object, String],
                 default: {}
             },
             tabIndex: {
