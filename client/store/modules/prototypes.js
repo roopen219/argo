@@ -1,11 +1,26 @@
 import uuid from 'node-uuid'
 import Vue from 'vue'
 import randomName from 'adj-noun'
+import Fuse from 'fuse.js'
 
 import * as types from '../types'
 import pollux from '../../pollux'
 
 let state = {}
+
+let fuseOptions = {
+    shouldSort: true,
+    threshold: 0.4,
+    location: 0,
+    distance: 100,
+    maxPatternLength: 32,
+    minMatchCharLength: 1,
+    keys: [
+        'name'
+    ]
+}
+
+let fuse = new Fuse(prototypeArray(), fuseOptions)
 
 let mutations = {
 
@@ -19,11 +34,16 @@ let mutations = {
             Vue.set(state, prototype.id, prototype)
         }
 
+        updateFuseList()
 
     },
 
     [types.REMOVE_PROTOTYPE] (state, prototypeId) {
+
         Vue.delete(state, prototypeId)
+
+        updateFuseList()
+
     }
 
 }
@@ -153,10 +173,11 @@ let actions = {
 }
 
 let getters = {
-    listOfPrototypes: (state) => {
-        return Object.keys(state).map((key) => {
-            return state[key]
-        })
+    listOfPrototypes: state => filter => {
+        if (!filter || filter === '' || filter.length > fuseOptions.maxPatternLength) {
+            return fuse.list
+        }
+        return fuse.search(filter)
     }
 }
 
@@ -165,6 +186,16 @@ let PrototypeModule = {
     mutations,
     actions,
     getters
+}
+
+function prototypeArray () {
+    return Object.keys(state).map((key) => {
+        return state[key]
+    })
+}
+
+function updateFuseList () {
+    fuse.list = prototypeArray()
 }
 
 export default PrototypeModule

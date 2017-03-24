@@ -68,12 +68,12 @@
             </div>-->
             <div class="search-input-wrapper flex-row flex-grow-1">
                 <span class="placeholder text-muted">argo://</span>
-                <input type="text" class="flex-grow-1 input-text" :value="query">
+                <input type="text" class="flex-grow-1 input-text" v-model="query">
             </div>
         </div>
         <div class="flex-grow-1 content-wrapper">
             <button class="btn-primary" @click="createPrototype">+ Create New</button>
-            <argo-list  :listItems="listOfPrototypes" class="list" listItemClass="list-item" @listItemClicked="openPrototype">
+            <argo-list  :listItems="listOfPrototypes(query)" class="list" listItemClass="list-item" @listItemClicked="openPrototype">
                 <template scope="props">
                     <span>{{props.listItem.name}}</span>
                 </template>
