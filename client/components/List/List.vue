@@ -1,5 +1,5 @@
 <template>
-    <ul>
+    <ul v-if="listItems.length">
         <component  @click.native="_emitClickEvent(listItem)"
                     :is="listItemComponent"
                     v-for="(listItem, index) in listItems"
