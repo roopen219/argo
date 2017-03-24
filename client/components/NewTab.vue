@@ -31,49 +31,21 @@
             overflow: auto;
             padding: 20px;
         }
-
-        .location-bar {
-            padding: 8px 20px;
-            background: $bg-tab-active;
-            border-bottom: 1px solid $color-tabs-border;
-            min-height: 46px;
-
-            input[type="text"] {
-                padding-left: 52px;
-            }
-
-            .prev, .next {
-                padding: 8px;
-            }
-
-            .search-input-wrapper {
-                position: relative;
-
-                .placeholder {
-                    position: absolute;
-                    top: 5px;
-                    left: 8px;
-                }
-            }
-        }
     }
 </style>
 
 <template>
     <div class="flex-grow-1 new-tab-view flex-column">
-        <div class="location-bar flex-row">
-            <!--<div class="btn-group flex-row">
-                <button class="prev btn-default"><i class="mdi-arrow-left"></i></button>
-                <button class="next btn-default"><i class="mdi-arrow-right"></i></button>
-            </div>-->
-            <div class="search-input-wrapper flex-row flex-grow-1">
-                <span class="placeholder text-muted">argo://</span>
-                <input type="text" class="flex-grow-1 input-text" v-model="query">
-            </div>
-        </div>
+        <argo-location-bar  :inputValue="query"
+                            :showNavigationButtons="false"
+                            :list="listOfPrototypes()">
+        </argo-location-bar>
         <div class="flex-grow-1 content-wrapper">
             <button class="btn-primary" @click="createPrototype">+ Create New</button>
-            <argo-list  :listItems="listOfPrototypes(query)" class="list" listItemClass="list-item" @listItemClicked="openPrototype">
+            <argo-list  :listItems="listOfPrototypes()"
+                        class="list"
+                        listItemClass="list-item"
+                        @listItemClicked="openPrototype">
                 <template scope="props">
                     <span>{{props.listItem.name}}</span>
                 </template>
@@ -90,11 +62,6 @@
         name: 'argo-new-tab',
         computed: {
             ...mapGetters(['listOfPrototypes'])
-        },
-        data: function () {
-            return {
-                query: ''
-            }
         },
         methods: {
             ...mapActions({
