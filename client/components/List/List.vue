@@ -13,8 +13,11 @@
 </template>
 
 <script>
+    import {MixinClassFactory} from '../../utils'
+
     export default {
         name: 'argo-list',
+        mixins: [MixinClassFactory(['listItemClass'])],
         props: {
             listItems: {
                 type: Array,
@@ -23,10 +26,6 @@
             listItemComponent: {
                 type: String,
                 default: 'argo-list-item'
-            },
-            listItemClass: {
-                type: [Object, String],
-                default: function () { return {} }
             }
         },
         methods: {
