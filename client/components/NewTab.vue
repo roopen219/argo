@@ -18,6 +18,12 @@
                 border-radius: 4px;
                 border: 1px solid $color-list-item-border;
                 text-transform: capitalize;
+                transition: all 0.2s ease-in;
+
+                &:hover {
+                    cursor: pointer;
+                    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+                }
             }
         }
 
@@ -67,12 +73,10 @@
         </div>
         <div class="flex-grow-1 content-wrapper">
             <button class="btn-primary" @click="createPrototype">+ Create New</button>
-            <argo-list  :listItems="listOfPrototypes"
-                        class="list"
-                        listItemClass="list-item">
-                    <template scope="props">
-                        <span>{{props.listItem.name}}</span>
-                    </template>
+            <argo-list  :listItems="listOfPrototypes" class="list" listItemClass="list-item" @listItemClicked="openPrototype">
+                <template scope="props">
+                    <span>{{props.listItem.name}}</span>
+                </template>
             </argo-list>
         </div>
     </div>
@@ -107,6 +111,13 @@
                             tabViewComponent: 'argo-dummy'
                         })
                     })
+            },
+            openPrototype: function(prototype) {
+                this._addTab({
+                    tabGroupId: 'app',
+                    tabContent: prototype,
+                    tabViewComponent: 'argo-dummy'
+                })
             }
         },
         props: ['tabContent', 'tabIndex'],

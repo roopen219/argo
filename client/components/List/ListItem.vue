@@ -16,9 +16,6 @@
                 type: [Object, String],
                 default: function () { return {} }
             }
-        },
-        created: function() {
-            console.log(this.listItem)
         }
     }
 </script>

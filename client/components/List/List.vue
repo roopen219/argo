@@ -1,6 +1,7 @@
 <template>
     <ul>
-        <component  :is="listItemComponent"
+        <component  @click.native="_emitClickEvent(listItem)"
+                    :is="listItemComponent"
                     v-for="(listItem, index) in listItems"
                     :index="index"
                     :listItem="listItem"
@@ -27,8 +28,11 @@
                 default: function () { return {} }
             }
         },
-        created: function (){
-            console.log(this.listItems)
+        methods: {
+            _emitClickEvent: function(listItem) {
+                this.$emit('listItemClicked', listItem)
+            }
+
         }
     }
 </script>
