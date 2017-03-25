@@ -38,7 +38,8 @@
     <div class="flex-grow-1 new-tab-view flex-column">
         <argo-location-bar  :inputValue="query"
                             :showNavigationButtons="false"
-                            :list="listOfPrototypes()">
+                            :list="listOfPrototypes()"
+                            @valueSelected="openPrototype">
         </argo-location-bar>
         <div class="flex-grow-1 content-wrapper">
             <button class="btn-primary" @click="createPrototype">+ Create New</button>
