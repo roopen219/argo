@@ -32,13 +32,17 @@
                 @input="emitChange">
         <argo-list  :listItems="filteredList"
                     class="argo-select-list"
-                    listItemClass="argo-select-list-item">
+                    listItemClass="argo-select-list-item"
+                    v-on-clickaway="hideDropdown"
+                    v-show="showDropdown">
         </argo-list>
     </div>
 </template>
 
 <script>
     import Fuse from 'fuse.js'
+    import { mixin as clickaway } from 'vue-clickaway'
+
     import {MixinClassFactory} from '../../utils'
 
     export default {
@@ -54,16 +58,18 @@
                     maxPatternLength: 32,
                     minMatchCharLength: 1,
                     keys: this.keys
-                }
+                },
+                showDropdown: true
             }
         },
         computed: {
             filteredList: function () {
+                this.showDropdown = true
                 this.fuse.list = this.list
                 return this.fuse.search(this.input) || []
             }
         },
-        mixins: [MixinClassFactory(['containerClasses', 'inputFieldClasses'])],
+        mixins: [MixinClassFactory(['containerClasses', 'inputFieldClasses']), clickaway],
         props: {
             list: {
                 type: [Array, Object],
@@ -85,6 +91,9 @@
         methods: {
             emitChange: function () {
                 this.$emit('inputChanged', this.input)
+            },
+            hideDropdown: function () {
+                this.showDropdown = false
             }
         },
         created: function () {
