@@ -29,6 +29,7 @@
         <input  type="text"
                 :class="['input-text', inputFieldClasses]"
                 v-model="input"
+                @keyup.esc.stop="hideDropdown"
                 @input="emitChange">
         <argo-list  :listItems="filteredList"
                     class="argo-select-list"
