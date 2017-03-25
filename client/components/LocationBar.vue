@@ -41,7 +41,9 @@
                     containerClasses="flex-grow-1 flex"
                     inputFieldClasses="flex-grow-1"
                     :list="list"
-                    :keys="['name']">
+                    :keys="['name']"
+                    inputValueKey="name"
+                    @valueSelected="valueSelected">
             </argo-select>
         </div>
     </div>
@@ -65,6 +67,9 @@
         methods: {
             emitChange: function(data) {
                 this.$emit('inputChanged', data)
+            },
+            valueSelected: function (data) {
+                this.$emit('valueSelected', data)
             }
         }
     }

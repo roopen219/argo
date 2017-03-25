@@ -17,7 +17,7 @@
             text-transform: capitalize;
 
             &:hover {
-                background-color: #FAFAFA;
+                background-color: #f5f5f5;
                 cursor: pointer;
             }
         }
@@ -35,12 +35,14 @@
                     class="argo-select-list"
                     listItemClass="argo-select-list-item"
                     v-on-clickaway="hideDropdown"
-                    v-show="showDropdown">
+                    v-show="showDropdown"
+                    @listItemClicked="valueSelected">
         </argo-list>
     </div>
 </template>
 
 <script>
+    // noinspection JSFileReferences
     import Fuse from 'fuse.js'
     import { mixin as clickaway } from 'vue-clickaway'
 
@@ -87,6 +89,10 @@
             initialInputValue: {
                 type: String,
                 default: ''
+            },
+            inputValueKey: {
+                type: String,
+                required: true
             }
         },
         methods: {
@@ -95,6 +101,11 @@
             },
             hideDropdown: function () {
                 this.showDropdown = false
+            },
+            valueSelected: function (data) {
+                this.input = data[this.inputValueKey]
+                this.showDropdown = false
+                this.$emit('valueSelected', data)
             }
         },
         created: function () {
