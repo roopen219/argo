@@ -57,7 +57,7 @@
 
 <script>
     import * as types from '../store/types'
-	import {mapState, mapActions, mapGetters} from 'vuex'
+	import {mapState, mapActions, mapGetters, mapMutations} from 'vuex'
 
     export default {
         name: 'argo-new-tab',
@@ -66,7 +66,7 @@
         },
         methods: {
             ...mapActions({
-                _addTab: types.ADD_TAB,
+                _replaceTabContent: types.REPLACE_TAB_CONTENT,
                 _createPrototype: types.CREATE_PROTOTYPE,
                 _fetchPrototypes: types.FETCH_PROTOTYPES
             }),
@@ -81,8 +81,9 @@
                     })
             },
             openPrototype: function(prototype) {
-                this._addTab({
+                this._replaceTabContent({
                     tabGroupId: 'app',
+                    tabIndex: this.tabIndex,
                     tabContent: prototype,
                     tabViewComponent: 'argo-dummy'
                 })
