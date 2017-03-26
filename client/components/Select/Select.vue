@@ -68,7 +68,6 @@
         computed: {
             filteredList: function () {
                 this.showDropdown = true
-                this.fuse.list = this.list
                 return this.fuse.search(this.input) || []
             }
         },
@@ -110,6 +109,11 @@
         },
         created: function () {
             this.fuse = new Fuse(this.list, this.fuseOptions)
+        },
+        watch: {
+            list: function (newList) {
+                this.fuse.list = newList
+            }
         }
     }
 </script>
