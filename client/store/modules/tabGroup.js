@@ -33,6 +33,10 @@ class TabGroup {
         return this.tabs.splice(index, 1)
     }
 
+    replaceTab(index, newTab) {
+        return Vue.set(this.tabs, index, newTab)
+    }
+
     setActiveTabIndex(index) {
         this.activeTabIndex = index
     }
@@ -77,6 +81,10 @@ let mutations = {
     [types.UPDATE_TAB_CONTENT] (state, {tabGroupId, tabIndex, tabContent}) {
         let oldTabContent = state[tabGroupId].tabs[tabIndex].tabContent
         state[tabGroupId].tabs[tabIndex].tabContent = _.merge({}, oldTabContent, tabContent)
+    },
+
+    [types.REPLACE_TAB_CONTENT] (state, {tabGroupId, tabIndex, tabContent}) {
+        state[tabGroupId].replaceTab(tabIndex, tabContent)
     }
 
 }
@@ -159,6 +167,16 @@ let actions = {
         if (state[tabGroupId]) {
             commit(types.REMOVE_TAB_GROUP, tabGroupId)
         }
+    },
+
+    [types.REPLACE_TAB_CONTENT] ({commit}, {tabGroupId, tabIndex, tabContent, tabViewComponent}) {
+        let tabContentToStore = new Tab({tabContent, tabViewComponent})
+
+        commit(types.REPLACE_TAB_CONTENT, {
+            tabGroupId,
+            tabIndex,
+            tabContent: tabContentToStore
+        })
     }
 
 }

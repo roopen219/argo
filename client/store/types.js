@@ -5,6 +5,7 @@ export const SWITCH_TAB = 'tabs/SWITCH_TAB'
 export const ADD_TAB_GROUP = 'tabs/ADD_TAB_GROUP'
 export const REMOVE_TAB_GROUP = 'tabs/REMOVE_TAB_GROUP'
 export const UPDATE_TAB_CONTENT = 'tabs/UPDATE_TAB_CONTENT'
+export const REPLACE_TAB_CONTENT = 'tabs/REPLACE_TAB_CONTENT'
 
 // PROTOTYPE
 export const FETCH_PROTOTYPES = 'prototype/FETCH_PROTOTYPES'
