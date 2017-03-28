@@ -84,7 +84,7 @@
                         this._addTab({
                             tabGroupId: 'app',
                             tabContent: prototype,
-                            tabViewComponent: 'argo-dummy'
+                            tabViewComponent: 'argo-prototype-editor'
                         })
                     })
             },
@@ -93,7 +93,7 @@
                     tabGroupId: 'app',
                     tabIndex: this.tabIndex,
                     tabContent: prototype,
-                    tabViewComponent: 'argo-dummy'
+                    tabViewComponent: 'argo-prototype-editor'
                 })
             }
         },
