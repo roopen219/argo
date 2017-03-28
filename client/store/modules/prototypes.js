@@ -66,7 +66,7 @@ let actions = {
                     children: [{
                         tagName: 'h1',
                         textContent: randomName().join(' '),
-                        classes: ['header']
+                        'class': ['header']
                     }, {
                         tagName: 'p',
                         textContent: randomName().join(' ')
@@ -78,7 +78,7 @@ let actions = {
                                     children: [{
                                         tagName: 'input',
                                         type: 'text',
-                                        classes: ['big-input'],
+                                        'class': ['big-input'],
                                         value: randomName().join(' ')
                                     }]
                                 }
@@ -93,7 +93,7 @@ let actions = {
                                                 top: '20px'
                                             }
                                         },
-                                        classes: ['big-input'],
+                                        'class': ['big-input'],
                                         value: randomName().join(' ')
                                     }]
                                 }
