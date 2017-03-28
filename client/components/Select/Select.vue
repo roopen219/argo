@@ -1,4 +1,8 @@
 <style lang="scss">
+    .argo-select-wrapper {
+        position: relative;
+    }
+
     .argo-select-list {
         position: absolute;
         left: 0px;
@@ -25,7 +29,7 @@
 </style>
 
 <template>
-    <div :class="containerClasses">
+    <div :class="['argo-select-wrapper', containerClasses]">
         <input  type="text"
                 :class="['input-text', inputFieldClasses]"
                 v-model="input"
