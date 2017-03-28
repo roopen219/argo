@@ -34,7 +34,8 @@
                 :class="['input-text', inputFieldClasses]"
                 v-model="input"
                 @keyup.esc.stop="hideDropdown"
-                @input="emitChange">
+                @input="emitChange"
+                :placeholder="placeholder">
         <argo-list  :listItems="filteredList"
                     class="argo-select-list"
                     listItemClass="argo-select-list-item"
@@ -96,6 +97,10 @@
             inputValueKey: {
                 type: String,
                 required: true
+            },
+            placeholder: {
+                type: String,
+                default: ''
             }
         },
         methods: {
