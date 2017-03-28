@@ -36,11 +36,19 @@
 
 <template>
     <div class="flex-grow-1 new-tab-view flex-column">
-        <argo-location-bar  :inputValue="query"
-                            :showNavigationButtons="false"
-                            :list="listOfPrototypes()"
-                            @valueSelected="openPrototype">
+
+        <argo-location-bar>
+                <argo-select
+                    containerClasses="flex-grow-1 flex"
+                    inputFieldClasses="flex-grow-1"
+                    :list="listOfPrototypes()"
+                    :keys="['name']"
+                    inputValueKey="name"
+                    @valueSelected="openPrototype"
+                    placeholder="Search for a prototype...">
+                </argo-select>
         </argo-location-bar>
+
         <div class="flex-grow-1 content-wrapper">
             <button class="btn-primary" @click="createPrototype">+ Create New</button>
             <argo-list  :listItems="listOfPrototypes()"
