@@ -81,8 +81,9 @@
             createPrototype: function() {
                 this._createPrototype()
                     .then((prototype) => {
-                        this._addTab({
+                        this._replaceTabContent({
                             tabGroupId: 'app',
+                            tabIndex: this.tabIndex,
                             tabContent: prototype,
                             tabViewComponent: 'argo-prototype-editor'
                         })
