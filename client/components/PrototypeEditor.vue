@@ -40,7 +40,9 @@
 
         <div class="flex-grow-1 canvas-wrapper flex-row">
             <div class="canvas flex-grow-9">
-                <argo-dom-renderer :dom="tabContent.dom"></argo-dom-renderer>
+                <argo-dom-renderer :dom="tabContent.dom"
+                                   :shared-styles="tabContent.sharedStyles">
+                </argo-dom-renderer>
             </div>
             <div class="property-panel flex-grow-1"></div>
         </div>
