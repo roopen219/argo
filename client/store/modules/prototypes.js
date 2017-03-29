@@ -50,7 +50,7 @@ let mutations = {
 
 let actions = {
 
-    [types.CREATE_PROTOTYPE] ({commit, state, dispatch}, options = {}) {
+    [types.CREATE_PROTOTYPE] ({commit, state}, options = {}) {
 
         let prototypeService = pollux.service('prototype')
 
@@ -71,31 +71,36 @@ let actions = {
                         tagName: 'p',
                         textContent: randomName().join(' ')
                     }, {
-                        tagName: 'argo-screen-view',
-                        views: {
-                            'default': {
-                                root: {
-                                    children: [{
-                                        tagName: 'input',
-                                        type: 'text',
-                                        'class': ['big-input'],
-                                        value: randomName().join(' ')
-                                    }]
-                                }
-                            },
-                            'anotherscreen': {
-                                root: {
-                                    children: [{
-                                        tagName: 'input',
-                                        type: 'text',
-                                        style: {
-                                            padding: {
-                                                top: '20px'
-                                            }
-                                        },
-                                        'class': ['big-input'],
-                                        value: randomName().join(' ')
-                                    }]
+                        tagName: 'argo-page-view',
+                        props: {
+                            defaultActivePage: 'default',
+                            views: {
+                                'default': {
+                                    root: {
+                                        children: [{
+                                            tagName: 'input',
+                                            attrs: {
+                                                type: 'text',
+                                                value: randomName().join(' ')
+                                            },
+                                            'class': ['big-input']
+                                        }]
+                                    }
+                                },
+                                'anotherscreen': {
+                                    root: {
+                                        children: [{
+                                            tagName: 'input',
+                                            attrs: {
+                                                type: 'text',
+                                                value: randomName().join(' ')
+                                            },
+                                            style: {
+                                                paddingTop: '20px'
+                                            },
+                                            'class': ['big-input']
+                                        }]
+                                    }
                                 }
                             }
                         }
@@ -106,17 +111,10 @@ let actions = {
                 header: {
                     fontSize: '24px',
                     color: '#666',
-                    margin: {
-                        bottom: '20px'
-                    }
+                    marginBottom: '20px'
                 },
                 bigInput: {
-                    padding: {
-                        top: '8px',
-                        bottom: '8px',
-                        left: '8px',
-                        right: '8px'
-                    }
+                    padding: '8px'
                 }
             }
         }
