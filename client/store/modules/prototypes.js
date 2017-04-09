@@ -1,6 +1,7 @@
 import uuid from 'node-uuid'
 import Vue from 'vue'
 import randomName from 'adj-noun'
+import rand from 'random-key'
 import Fuse from 'fuse.js'
 
 import * as types from '../types'
@@ -8,41 +9,25 @@ import pollux from '../../pollux'
 
 let state = {}
 
-let fuseOptions = {
-    shouldSort: true,
-    threshold: 0.4,
-    location: 0,
-    distance: 100,
-    maxPatternLength: 32,
-    minMatchCharLength: 1,
-    keys: [
-        'name'
-    ]
-}
-
-let fuse = new Fuse(prototypeArray(), fuseOptions)
-
 let mutations = {
 
     [types.ADD_PROTOTYPE] (state, prototype) {
 
         if (Array.isArray(prototype)) {
+
             prototype.forEach((proto) => {
                 Vue.set(state, proto.id, proto)
             })
+
         } else {
             Vue.set(state, prototype.id, prototype)
         }
-
-        updateFuseList()
 
     },
 
     [types.REMOVE_PROTOTYPE] (state, prototypeId) {
 
         Vue.delete(state, prototypeId)
-
-        updateFuseList()
 
     }
 
@@ -59,37 +44,52 @@ let actions = {
         let prototypeName = options.prototypeName || randomName().join(' ')
 
         let prototype = {
+            entityName: 'prototype',
             id: uuid.v4(),
             name: prototypeName,
             dom: {
                 root: {
-                    children: [{
-                        tagName: 'h1',
-                        textContent: randomName().join(' '),
-                        'class': ['header']
-                    }, {
-                        tagName: 'p',
-                        textContent: randomName().join(' ')
-                    }, {
-                        tagName: 'argo-page-view',
-                        props: {
-                            defaultActivePage: 'default',
-                            views: {
-                                'default': {
-                                    root: {
-                                        children: [{
+                    children: {
+                        a: {
+                            tagName: 'h1',
+                            textContent: randomName().join(' '),
+                            children: {},
+                            childrenOrder: [],
+                            'class': ['header']
+                        },
+                        b: {
+                            tagName: 'p',
+                            textContent: randomName().join(' '),
+                            children: {},
+                            childrenOrder: []
+                        },
+                        c: {
+                            tagName: 'argo-page-view',
+                            children: {
+                                z: {
+                                    tagName: 'argo-page-content',
+                                    props: {
+                                        pageKey: 'z'
+                                    },
+                                    children: {
+                                        u: {
                                             tagName: 'input',
                                             attrs: {
                                                 type: 'text',
                                                 value: randomName().join(' ')
                                             },
                                             'class': ['big-input']
-                                        }]
-                                    }
+                                        }
+                                    },
+                                    childrenOrder: ['u']
                                 },
-                                'anotherscreen': {
-                                    root: {
-                                        children: [{
+                                t: {
+                                    tagName: 'argo-page-content',
+                                    props: {
+                                        pageKey: 't'
+                                    },
+                                    children: {
+                                        v: {
                                             tagName: 'input',
                                             attrs: {
                                                 type: 'text',
@@ -99,12 +99,18 @@ let actions = {
                                                 paddingTop: '20px'
                                             },
                                             'class': ['big-input']
-                                        }]
-                                    }
+                                        }
+                                    },
+                                    childrenOrder: ['v']
                                 }
+                            },
+                            childrenOrder: ['z', 't'],
+                            props: {
+                                defaultActivePage: 'z'
                             }
                         }
-                    }]
+                    },
+                    childrenOrder: ['a', 'b', 'c']
                 }
             },
             sharedStyles: {
@@ -113,7 +119,7 @@ let actions = {
                     color: '#666',
                     marginBottom: '20px'
                 },
-                bigInput: {
+                'big-input': {
                     padding: '8px'
                 }
             }
@@ -171,11 +177,12 @@ let actions = {
 }
 
 let getters = {
-    listOfPrototypes: state => filter => {
-        if (!filter || filter === '' || filter.length > fuseOptions.maxPatternLength) {
-            return fuse.list
-        }
-        return fuse.search(filter)
+    listOfPrototypes: () => {
+        return prototypeArray()
+    },
+
+    getPrototype: state => prototypeId => {
+        return state[prototypeId]
     }
 }
 
@@ -190,10 +197,6 @@ function prototypeArray () {
     return Object.keys(state).map((key) => {
         return state[key]
     })
-}
-
-function updateFuseList () {
-    fuse.list = prototypeArray()
 }
 
 export default PrototypeModule

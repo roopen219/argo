@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-// import * as actions from './actions'
+import actions from './actions'
 // import * as getters from './getters'
 
 Vue.use(Vuex)
@@ -9,7 +9,7 @@ Vue.use(Vuex)
 let storeModules = requireStoreModules()
 
 export default new Vuex.Store({
-    // actions,
+    actions,
     // getters,
     modules: storeModules
 })

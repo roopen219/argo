@@ -41,7 +41,7 @@
                 <argo-select
                     containerClasses="flex-grow-1 flex"
                     inputFieldClasses="flex-grow-1"
-                    :list="listOfPrototypes()"
+                    :list="listOfPrototypes"
                     :keys="['name']"
                     inputValueKey="name"
                     @valueSelected="openPrototype"
@@ -51,7 +51,7 @@
 
         <div class="flex-grow-1 content-wrapper">
             <button class="btn-primary" @click="createPrototype">+ Create New</button>
-            <argo-list  :listItems="listOfPrototypes()"
+            <argo-list  :listItems="listOfPrototypes"
                         class="list"
                         listItemClass="list-item"
                         @listItemClicked="openPrototype">
@@ -76,25 +76,18 @@
             ...mapActions({
                 _replaceTabContent: types.REPLACE_TAB_CONTENT,
                 _createPrototype: types.CREATE_PROTOTYPE,
-                _fetchPrototypes: types.FETCH_PROTOTYPES
+                _fetchPrototypes: types.FETCH_PROTOTYPES,
+                _openPrototype: types.OPEN_PROTOTYPE
             }),
             createPrototype: function() {
                 this._createPrototype()
-                    .then((prototype) => {
-                        this._replaceTabContent({
-                            tabGroupId: 'app',
-                            tabIndex: this.tabIndex,
-                            tabContent: prototype,
-                            tabViewComponent: 'argo-prototype-editor'
-                        })
-                    })
+                    .then(this.openPrototype)
             },
             openPrototype: function(prototype) {
-                this._replaceTabContent({
-                    tabGroupId: 'app',
-                    tabIndex: this.tabIndex,
-                    tabContent: prototype,
-                    tabViewComponent: 'argo-prototype-editor'
+                this._openPrototype({
+                    prototype,
+                    replaceTab: true,
+                    tabIndex: this.tabIndex
                 })
             }
         },

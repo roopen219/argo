@@ -74,7 +74,8 @@
                 _removeTab: types.REMOVE_TAB,
 				_switchTab: types.SWITCH_TAB,
                 _addTabGroup: types.ADD_TAB_GROUP,
-                _createPrototype: types.CREATE_PROTOTYPE
+                _createPrototype: types.CREATE_PROTOTYPE,
+                _closePrototype: types.CLOSE_PROTOTYPE
 			}),
             switchTab: function (tabIndex) {
                 this._switchTab({
@@ -90,10 +91,17 @@
                 })
             },
             closeTab: function (tabIndex) {
+                let tabContent = this.tabGroup['app'].tabs[tabIndex].tabContent
+                let isPrototypeTab = tabContent.entityName === 'prototype'
+
                 this._removeTab({
                     tabGroupId: 'app',
                     tabIndex
                 })
+
+                if(isPrototypeTab) {
+                    this._closePrototype(tabContent.id)
+                }
             }
         },
         created: function() {

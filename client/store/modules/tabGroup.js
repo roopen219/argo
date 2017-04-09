@@ -17,6 +17,7 @@ class Tab {
 class TabGroup {
 
     constructor(tabs = []) {
+
         this.tabs = tabs
         this.activeTabIndex = 0
 
@@ -39,10 +40,6 @@ class TabGroup {
 
     setActiveTabIndex(index) {
         this.activeTabIndex = index
-    }
-
-    getTabIndexByContentId(id) {
-        return this.tabs.findIndex((tab) => tab.tabContent.id === id)
     }
 
 }
@@ -144,7 +141,7 @@ let actions = {
 
     },
 
-    [types.ADD_TAB_GROUP] ({commit, state}, {tabGroupId, tabs}) {
+    [types.ADD_TAB_GROUP] ({commit}, {tabGroupId, tabs}) {
         let multipleTabsProvided = Array.isArray(tabs)
 
         if (multipleTabsProvided) {
@@ -190,6 +187,10 @@ let getters = {
         }
 
         return 0
+    },
+
+    getTabIndexByContentId: state => (tabGroupId, contentId) => {
+        return state[tabGroupId].tabs.findIndex((tab) => tab.tabContent.id === contentId)
     }
 
 }

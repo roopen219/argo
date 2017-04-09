@@ -1,9 +1,13 @@
 <template>
-    <argo-dom-renderer :dom="views[defaultActivePage]" :shared-styles="sharedStyles"></argo-dom-renderer>
+    <div><slot></slot></div>
 </template>
 <script>
     export default {
         name: 'argo-page-view',
-        props: ['defaultActivePage', 'views', 'sharedStyles']
+        props: ['defaultActivePage'],
+        mounted: function() {
+            window.x = this.$el
+            console.log(this.$el)
+        }
     }
 </script>
