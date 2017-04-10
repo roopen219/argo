@@ -96,15 +96,17 @@ function getHashOfElements (dom) {
 
     function walker(parent) {
 
-        parent.childrenOrder.forEach((childKey) => {
+        parent.props.childrenOrder.forEach((childKey) => {
+
+            let child = parent.props.children[childKey]
 
             hashOfElements[childKey] = {
                 parent: parent,
-                element: parent.children[childKey]
+                element: child
             }
 
-            if(parent.children[childKey].children) {
-                walker(parent.children[childKey])
+            if(child.props.childrenOrder.length) {
+                walker(child)
             }
 
         })

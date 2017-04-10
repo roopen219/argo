@@ -49,9 +49,7 @@
 
         <div class="flex-grow-1 canvas-wrapper flex-row">
             <div class="canvas flex-grow-9" @click="elementSelected({elementKey: 'root'})">
-                <argo-dom-renderer :dom="tabContent.dom"
-                                   :shared-styles="tabContent.sharedStyles"
-                                    @elementSelected="elementSelected">
+                <argo-dom-renderer :prototype="tabContent">
                 </argo-dom-renderer>
             </div>
             <div class="property-panel flex-grow-1"></div>
