@@ -49,70 +49,84 @@ let actions = {
             name: prototypeName,
             dom: {
                 root: {
-                    children: {
-                        a: {
-                            tagName: 'h1',
-                            textContent: randomName().join(' '),
-                            children: {},
-                            childrenOrder: [],
-                            'class': ['header']
-                        },
-                        b: {
-                            tagName: 'p',
-                            textContent: randomName().join(' '),
-                            children: {},
-                            childrenOrder: []
-                        },
-                        c: {
-                            tagName: 'argo-page-view',
-                            children: {
-                                z: {
-                                    tagName: 'argo-page-content',
-                                    props: {
-                                        pageKey: 'z'
-                                    },
-                                    children: {
-                                        u: {
-                                            tagName: 'input',
-                                            attrs: {
-                                                type: 'text',
-                                                value: randomName().join(' ')
-                                            },
-                                            'class': ['big-input']
-                                        }
-                                    },
-                                    childrenOrder: ['u']
-                                },
-                                t: {
-                                    tagName: 'argo-page-content',
-                                    props: {
-                                        pageKey: 't'
-                                    },
-                                    children: {
-                                        v: {
-                                            tagName: 'input',
-                                            attrs: {
-                                                type: 'text',
-                                                value: randomName().join(' ')
-                                            },
-                                            style: {
-                                                paddingTop: '20px'
-                                            },
-                                            'class': ['big-input']
-                                        }
-                                    },
-                                    childrenOrder: ['v']
+                    component: 'argo-dom-container',
+                    props: {
+                        children: {
+                            a: {
+                                component: 'argo-dom-text',
+                                props: {
+                                    textContent: randomName().join(' '),
+                                    children: {},
+                                    childrenOrder: [],
+                                    'class': ['header']
                                 }
                             },
-                            childrenOrder: ['z', 't'],
-                            props: {
-                                defaultActivePage: 'z'
+                            b: {
+                                component: 'argo-dom-text',
+                                props: {
+                                    textContent: randomName().join(' '),
+                                    children: {},
+                                    childrenOrder: []
+                                }
+                            },
+                            c: {
+                                component: 'argo-page-view',
+                                props: {
+                                    children: {
+                                        z: {
+                                            component: 'argo-dom-container',
+                                            props: {
+                                                children: {
+                                                    u: {
+                                                        component: 'argo-dom-input',
+                                                        props: {
+                                                            attrs: {
+                                                                type: 'text',
+                                                                value: randomName().join(' ')
+                                                            },
+                                                            'class': ['big-input'],
+                                                            children: {},
+                                                            childrenOrder: []
+                                                        }
+                                                    }
+                                                },
+                                                childrenOrder: ['u']
+                                            }
+                                        },
+                                        t: {
+                                            component: 'argo-dom-container',
+                                            props: {
+                                                children: {
+                                                    v: {
+                                                        component: 'argo-dom-input',
+                                                        props: {
+                                                            attrs: {
+                                                                type: 'text',
+                                                                value: randomName().join(' ')
+                                                            },
+                                                            style: {
+                                                                paddingTop: '20px'
+                                                            },
+                                                            'class': ['big-input'],
+                                                            children: {},
+                                                            childrenOrder: []
+                                                        }
+                                                    }
+                                                },
+                                                childrenOrder: ['v']
+                                            }
+                                        }
+                                    },
+                                    childrenOrder: ['z', 't'],
+                                    defaultActivePage: 't'
+                                }
                             }
-                        }
-                    },
-                    childrenOrder: ['a', 'b', 'c']
+                        },
+                        childrenOrder: ['a', 'b', 'c']
+                    }
                 }
             },
+
             sharedStyles: {
                 header: {
                     fontSize: '24px',
