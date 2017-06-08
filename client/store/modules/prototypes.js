@@ -1,11 +1,8 @@
-import uuid from 'node-uuid'
 import Vue from 'vue'
-import randomName from 'adj-noun'
-import rand from 'random-key'
-import Fuse from 'fuse.js'
 
 import * as types from '../types'
 import pollux from '../../pollux'
+import Prototype from '../entities/Prototype'
 
 let state = {}
 
@@ -15,12 +12,12 @@ let mutations = {
 
         if (Array.isArray(prototype)) {
 
-            prototype.forEach((proto) => {
-                Vue.set(state, proto.id, proto)
+            prototype.forEach((_prototype) => {
+                Vue.set(state, _prototype.id, new Prototype(_prototype))
             })
 
         } else {
-            Vue.set(state, prototype.id, prototype)
+            Vue.set(state, prototype.id, new Prototype(prototype))
         }
 
     },
@@ -28,6 +25,22 @@ let mutations = {
     [types.REMOVE_PROTOTYPE] (state, prototypeId) {
 
         Vue.delete(state, prototypeId)
+
+    },
+
+    [types.OPEN_PROTOTYPE] (state, prototypeId) {
+        state[prototypeId].hydrateDomTree()
+    },
+
+    [types.SELECT_ELEMENT] (state, {prototypeId, elementId}) {
+        state[prototypeId].editorState.currentSelection = [elementId]
+    },
+
+    [types.APPEND_ELEMENT] (state, {prototypeId, elementOptions, parentId}) {
+
+        let prototype = state[prototypeId]
+
+        prototype.dom.createElement(elementOptions, parentId)
 
     }
 
@@ -39,105 +52,7 @@ let actions = {
 
         let prototypeService = pollux.service('prototype')
 
-        randomName.seed(Math.floor(Math.random() * 1000000))
-
-        let prototypeName = options.prototypeName || randomName().join(' ')
-
-        let prototype = {
-            entityName: 'prototype',
-            id: uuid.v4(),
-            name: prototypeName,
-            dom: {
-                root: {
-                    component: 'argo-dom-container',
-                    props: {
-                        children: {
-                            a: {
-                                component: 'argo-dom-text',
-                                props: {
-                                    textContent: randomName().join(' '),
-                                    children: {},
-                                    childrenOrder: [],
-                                    'class': ['header']
-                                }
-                            },
-                            b: {
-                                component: 'argo-dom-text',
-                                props: {
-                                    textContent: randomName().join(' '),
-                                    children: {},
-                                    childrenOrder: []
-                                }
-                            },
-                            c: {
-                                component: 'argo-page-view',
-                                props: {
-                                    children: {
-                                        z: {
-                                            component: 'argo-dom-container',
-                                            props: {
-                                                children: {
-                                                    u: {
-                                                        component: 'argo-dom-input',
-                                                        props: {
-                                                            attrs: {
-                                                                type: 'text',
-                                                                value: randomName().join(' ')
-                                                            },
-                                                            'class': ['big-input'],
-                                                            children: {},
-                                                            childrenOrder: []
-                                                        }
-                                                    }
-                                                },
-                                                childrenOrder: ['u']
-                                            }
-                                        },
-                                        t: {
-                                            component: 'argo-dom-container',
-                                            props: {
-                                                children: {
-                                                    v: {
-                                                        component: 'argo-dom-input',
-                                                        props: {
-                                                            attrs: {
-                                                                type: 'text',
-                                                                value: randomName().join(' ')
-                                                            },
-                                                            style: {
-                                                                paddingTop: '20px'
-                                                            },
-                                                            'class': ['big-input'],
-                                                            children: {},
-                                                            childrenOrder: []
-                                                        }
-                                                    }
-                                                },
-                                                childrenOrder: ['v']
-                                            }
-                                        }
-                                    },
-                                    childrenOrder: ['z', 't'],
-                                    defaultActivePage: 't'
-                                }
-                            }
-                        },
-                        childrenOrder: ['a', 'b', 'c']
-                    }
-                }
-            },
-
-            sharedStyles: {
-                header: {
-                    fontSize: '24px',
-                    color: '#666',
-                    marginBottom: '20px'
-                },
-                'big-input': {
-                    padding: '8px'
-                }
-            }
-        }
+        let prototype = new Prototype()
 
         return prototypeService.create({
             data: prototype
@@ -186,6 +101,47 @@ let actions = {
                 return prototypes
 
             })
+    },
+
+    [types.OPEN_PROTOTYPE] ({commit, dispatch}, {prototype, replaceTab = false, tabIndex}) {
+
+        let tabGroupId = 'app'
+        let tabContent = prototype
+        let tabViewComponent = 'argo-prototype-editor'
+
+        if (replaceTab) {
+
+            dispatch(types.REPLACE_TAB_CONTENT, {
+                tabGroupId,
+                tabIndex,
+                tabContent,
+                tabViewComponent
+            })
+
+        } else {
+
+            dispatch(types.ADD_TAB, {
+                tabGroupId,
+                tabContent,
+                tabViewComponent
+            })
+
+        }
+
+        commit(types.OPEN_PROTOTYPE, prototype.id)
+    },
+
+    [types.CREATE_ELEMENT] ({state, commit}, {prototypeId, elementOptions}) {
+
+        let currentSelection = state[prototypeId].editorState.currentSelection
+        let parentId = currentSelection.length === 1 ? currentSelection[0] : 'root'
+
+        commit(types.APPEND_ELEMENT, {
+            prototypeId,
+            elementOptions,
+            parentId
+        })
+
     }
 
 }
@@ -197,6 +153,10 @@ let getters = {
 
     getPrototype: state => prototypeId => {
         return state[prototypeId]
+    },
+
+    getElements: state => prototypeId => {
+        return state[prototypeId].dom.elements
     }
 }
 

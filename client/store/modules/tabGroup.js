@@ -1,48 +1,10 @@
 import Vue from 'vue'
-import uuid from 'node-uuid'
 import _ from 'lodash'
 
 import * as types from '../types'
 
-class Tab {
-
-    constructor({tabContent, tabViewComponent}) {
-        this.id = uuid.v4()
-        this.tabContent = tabContent
-        this.tabViewComponent = tabViewComponent
-    }
-
-}
-
-class TabGroup {
-
-    constructor(tabs = []) {
-
-        this.tabs = tabs
-        this.activeTabIndex = 0
-
-    }
-
-    addTab(tab) {
-
-        this.tabs.push(tab)
-        return this
-
-    }
-
-    removeTab(index) {
-        return this.tabs.splice(index, 1)
-    }
-
-    replaceTab(index, newTab) {
-        return Vue.set(this.tabs, index, newTab)
-    }
-
-    setActiveTabIndex(index) {
-        this.activeTabIndex = index
-    }
-
-}
+import Tab from '../entities/Tab'
+import TabGroup from '../entities/TabGroup'
 
 let state = {}
 
@@ -197,13 +159,14 @@ let getters = {
 
 function getTabIndexToSwitch(tabIndex, numberOfTabs) {
 
-    // if it is the only tab remaining
-    if (numberOfTabs === 1) {
+    let isOnlyTab = numberOfTabs === 1
+    let isLastTabInOrder = tabIndex === (numberOfTabs - 1)
+
+    if (isOnlyTab) {
         return null
     }
 
-    // if it is the last tab
-    if (tabIndex === (numberOfTabs - 1)) {
+    if (isLastTabInOrder) {
         return tabIndex - 1
     }
 

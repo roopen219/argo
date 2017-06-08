@@ -1,19 +1,23 @@
 <script>
-    import {mapMutations} from 'vuex'
+    import {mapMutations, mapGetters} from 'vuex'
     import * as types from '../../store/types'
 
     export default {
         name: 'argo-dom-element',
         render: function (createElement) {
 
-            return createElement(this.tagName, [this.textContent].concat(this.childrenOrder.map((childKey) => {
+            return createElement(this.tagName, {
+                style: {
+                    ...this.style
+                }
+            }, [this.textContent].concat(this.children.map((childId) => {
 
-                let child = this.children[childKey]
+                let child = this.getElements(this.prototypeId)[childId]
 
-                return createElement(child.component, {
+                return createElement(child.componentName, {
                     props: {
-                        elementKey: childKey,
                         prototypeId: this.prototypeId,
+                        id: child.id,
                         ...child.props
                     }
                 })
@@ -21,18 +25,21 @@
             })))
 
         },
+        computed: {
+            ...mapGetters(['getElements'])
+        },
         data: function() {
             return {tagName: 'div'}
         },
         mounted: function() {
-
+            console.log(this)
             this.$el.addEventListener('click', (e) => {
                 e.preventDefault()
                 e.stopPropagation()
 
                 this.elementSelected({
                     prototypeId: this.prototypeId,
-                    elementKey: this.elementKey
+                    elementId: this.id
                 })
             })
 
@@ -42,6 +49,6 @@
                 elementSelected: types.SELECT_ELEMENT
             })
         },
-        props: ['prototypeId', 'children', 'childrenOrder', 'class', 'elementKey', 'attrs']
+        props: ['prototypeId', 'id', 'children', 'class', 'attrs', 'style', 'textContent', 'config']
     }
 </script>

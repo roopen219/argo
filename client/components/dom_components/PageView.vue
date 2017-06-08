@@ -2,18 +2,18 @@
     import BaseElement from './Element.vue'
 
     export default {
-        name: 'argo-page-view',
+        name: 'argo-dom-page-view',
         props: ['defaultActivePage'],
         extends: BaseElement,
         render: function(createElement) {
 
-            let childToShow = this.children[this.defaultActivePage]
+            let childToShow = this.children[this.config.defaultActivePage]
 
-            return createElement(childToShow.component, {
+            return createElement(childToShow.componentName, {
                 props: {
                     prototypeId: this.prototypeId,
-                    elementKey: this.defaultActivePage,
                     key: this.defaultActivePage,
+                    id: childToShow.id,
                     ...childToShow.props
                 }
             })

@@ -92,16 +92,16 @@
             },
             closeTab: function (tabIndex) {
                 let tabContent = this.tabGroup['app'].tabs[tabIndex].tabContent
-                let isPrototypeTab = tabContent.entityName === 'prototype'
+                // let isPrototypeTab = tabContent.entityName === 'prototype'
 
                 this._removeTab({
                     tabGroupId: 'app',
                     tabIndex
                 })
 
-                if(isPrototypeTab) {
-                    this._closePrototype(tabContent.id)
-                }
+                // if(isPrototypeTab) {
+                //     this._closePrototype(tabContent.id)
+                // }
             }
         },
         created: function() {

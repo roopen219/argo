@@ -30,6 +30,7 @@
 
     .property-panel {
         background: aquamarine;
+        max-width: 300px;
     }
 </style>
 
@@ -41,14 +42,13 @@
                <button class="next btn-default"><i class="mdi-arrow-right"></i></button>
             </div>
             <div class="btn-group flex-row">
-                <button class="btn-default" @click="createElement('h1')">Create H1</button>
-                <button class="btn-default" @click="createElement('p')">Create P</button>
-                <button class="btn-default" @click="createElement('div')">Create DIV</button>
+                <button class="btn-default" @click="createElement('argo-dom-text')">Text</button>
+                <button class="btn-default" @click="createElement('argo-dom-container')">Container</button>
             </div>
         </argo-location-bar>
 
         <div class="flex-grow-1 canvas-wrapper flex-row">
-            <div class="canvas flex-grow-9" @click="elementSelected({elementKey: 'root'})">
+            <div class="canvas flex-grow-1" @click="elementSelected({elementId: 'root'})">
                 <argo-dom-renderer :prototype="tabContent">
                 </argo-dom-renderer>
             </div>
@@ -73,13 +73,12 @@
                 _createElement: types.CREATE_ELEMENT
             }),
 
-            createElement: function(tagName) {
+            createElement: function(componentName) {
                 this._createElement({
                     prototypeId: this.tabContent.id,
-                    element: {
-                        tagName,
-                        children: {},
-                        childrenOrder: []
+                    elementOptions: {
+                        componentName,
+                        props: {}
                     }
                 })
             },
@@ -87,7 +86,7 @@
             elementSelected: function(event) {
                 this._selectElement({
                     prototypeId: this.tabContent.id,
-                    elementKey: event.elementKey
+                    elementId: event.elementId
                 })
             }
 

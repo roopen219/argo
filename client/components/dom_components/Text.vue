@@ -6,7 +6,6 @@
         data: function () {
             return {tagName: 'p'}
         },
-        props: ['textContent'],
         extends: BaseElement
     }
 </script>
