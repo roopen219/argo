@@ -24,13 +24,17 @@
     }
 
     .canvas {
-        background: aqua;
+        background: #eee;
         overflow: auto;
     }
 
     .property-panel {
-        background: aquamarine;
+        background: #ECF0F1;
         max-width: 300px;
+        position: relative;
+        z-index: 2;
+        box-shadow: -1px 0 4px rgba(0,0,0,0.15), inset 1px 1px 0 rgba(255,255,255,0.8);
+        border-left: 1px solid #95A5A6;
     }
 </style>
 
