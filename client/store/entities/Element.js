@@ -1,60 +1,67 @@
 import Vue from 'vue'
 import _ from 'lodash'
 
-import ArgoEntity from './ArgoEntity'
+import ArgoEntityFactory from './ArgoEntityFactory'
 
-class Element extends ArgoEntity {
-
-    constructor(initData = {
-        componentName: 'argo-dom-container',
-        props: {}
-    }) {
-
-        let _defaultProps = {
-            parent: null,
-            children: [],
-            'class': [],
-            style: {},
-            config: {},
-            attrs: {},
-            textContent: ''
+export default ArgoEntityFactory('element', {
+    properties: {
+        componentName: {
+            type: 'string',
+            default: 'argo-dom-container'
+        },
+        parent: {
+            type: ['string', 'null'],
+            default: null
+        },
+        children: {
+            type: 'array',
+            default: []
+        },
+        class: {
+            type: 'array',
+            default: []
+        },
+        style: {
+            type: 'object',
+            default: {}
+        },
+        attrs: {
+            type: 'object',
+            default: {}
+        },
+        textContent: {
+            type: 'string',
+            default: ''
         }
+    },
+    methods: {
 
-        super('element', initData.id)
+        addChild(child) {
 
-        this.componentName = initData.componentName
-        this.props = _.merge({}, _defaultProps, initData.props)
+            let children = this.children
 
-    }
+            if (children.indexOf(child) !== -1) {
+                throw Error(`child with key ${child} already present`)
+            }
 
-    addChild(child) {
+            children.push(child)
 
-        let children = this.props.children
+        },
 
-        if (children.indexOf(child) !== -1) {
-            throw Error(`child with key ${child} already present`)
+        removeChild(child) {
+            this.children.splice(this.children.indexOf(child), 1)
+        },
+
+        addClass(className) {
+
+            if (!className) {
+                throw Error('pass a class')
+            } else if (Array.isArray(className)) {
+                this.class = this.class.concat(className)
+            } else {
+                this.class.push(className)
+            }
+
         }
-
-        this.props.children.push(child)
-
     }
-
-    removeChild(child) {
-        this.props.children.splice(this.props.children.indexOf(child), 1)
-    }
-
-    addClass(className) {
-
-        if (!className) {
-            throw Error('pass a class')
-        } else if (Array.isArray(className)) {
-            this.props.class = this.props.class.concat(className)
-        } else {
-            this.props.class.push(className)
-        }
-
-    }
-
-}
-
-export default Element
+})

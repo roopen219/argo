@@ -1,45 +1,46 @@
 import Vue from 'vue'
 
-import ArgoEntity from './ArgoEntity'
+import ArgoEntityFactory from './ArgoEntityFactory'
 import Element from './Element'
 
-class Dom extends ArgoEntity {
+export default ArgoEntityFactory('dom', {
 
-    constructor(dom = {}) {
+    properties: {
+        elements: {
+            type: 'object'
+        },
+        sharedStyles: {
+            type: 'object'
+        }
+    },
 
-        super('dom', dom.id)
+    methods: {
 
-        this.elements = dom.elements || {}
-        this.sharedStyles = dom.sharedStyles || {}
+        hydrateElements() {
 
-    }
+            let elements = this.elements
+            let elementIds = Object.keys(elements)
 
-    hydrateElements() {
+            let hasElements = elementIds.length
 
-        let elements = this.elements
-        let elementIds = Object.keys(elements)
+            if (!hasElements) {
+                Vue.set(elements, 'root', new Element())
+            } else {
+                elementIds.forEach((elementId) => {
+                    elements[elementId] = new Element(elements[elementId])
+                })
+            }
+        },
 
-        let hasElements = elementIds.length
+        createElement(elementOptions, parentId) {
 
-        if (!hasElements) {
-            Vue.set(elements, 'root', new Element())
-        } else {
-            elementIds.forEach((elementId) => {
-                elements[elementId] = new Element(elements[elementId])
-            })
+            let element = new Element(elementOptions)
+
+            Vue.set(this.elements, element.id, element)
+
+            this.elements[parentId].addChild(element.id)
+
         }
     }
+})
 
-    createElement(elementOptions, parentId) {
-
-        let element = new Element(elementOptions)
-
-        Vue.set(this.elements, element.id, element)
-
-        this.elements[parentId].addChild(element.id)
-
-    }
-
-}
-
-export default Dom
