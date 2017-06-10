@@ -32,7 +32,6 @@
             return {tagName: 'div'}
         },
         mounted: function() {
-            console.log(this)
             this.$el.addEventListener('click', (e) => {
                 e.preventDefault()
                 e.stopPropagation()

@@ -5,12 +5,22 @@ import Element from './Element'
 
 class Dom extends ArgoEntity {
 
-    constructor(dom = {}) {
+    constructor(initData = {}) {
 
-        super('dom', dom.id)
+        super('dom', initData.id)
 
-        this.elements = dom.elements || {}
-        this.sharedStyles = dom.sharedStyles || {}
+        this.schema = {
+            elements: {
+                type: 'object',
+                default: {}
+            },
+            sharedStyles: {
+                type: 'object',
+                default: {}
+            }
+        }
+
+        this.deserialize(initData)
 
     }
 
