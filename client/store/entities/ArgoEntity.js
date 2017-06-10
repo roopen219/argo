@@ -23,21 +23,42 @@ class ArgoEntity {
 
         fieldsNotPresentInData.forEach((field) => {
 
-            let isDefaultValueFunction = _.isFunction(this.schema[field])
+            isFunction = _.isFunction(this.schema[field].default)
 
-            if(!isDefaultValueFunction) {
+            if(isFunction) {
+                defaultValues[field] = this.schema[field].default()
+            } else {
                 defaultValues[field] = this.schema[field].default //TODO: need to copy instead of just assign
             }
+
         })
 
         return defaultValues
+
+    }
+
+    _getDeserializedValues(data) {
+
+        let fieldsInSchema = Object.keys(this.schema)
+        let fieldsPresentInData = _.pick(data, fieldsInSchema)
+
+        return _.mapValues(fieldsPresentInData, (field, key) => {
+
+            let deserializeFn = this.schema[key].deserialize
+
+            if(_.isFunction(deserializeFn)) {
+                return deserializeFn(field)
+            }
+
+            return field
+
+        })
+
     }
 
     _sanitize(data) {
 
-        let fieldsInSchema = Object.keys(this.schema)
-
-        return _.merge(data, this._getDefaultValues(data))
+        return _.merge({}, this._getDeserializedValues(data), this._getDefaultValues(data))
 
     }
 
@@ -57,14 +78,14 @@ class ArgoEntity {
             throw Error('No schema specified')
         }
 
-        this._sanitize(data)
-        let validationResult = this._validate(data)
+        let sanitizedData = this._sanitize(data)
+        let validationResult = this._validate(sanitizedData)
 
         if(!validationResult.valid) {
             throw Error(JSON.stringify(validationResult.errors))
         }
 
-        _.merge(this, data)
+        _.merge(this, sanitizedData)
 
     }
 

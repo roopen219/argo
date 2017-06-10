@@ -29,7 +29,7 @@ let mutations = {
     },
 
     [types.OPEN_PROTOTYPE] (state, prototypeId) {
-        state[prototypeId].hydrateDomTree()
+        // state[prototypeId].hydrateDomTree()
     },
 
     [types.SELECT_ELEMENT] (state, {prototypeId, elementId}) {

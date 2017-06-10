@@ -7,23 +7,26 @@ randomName.seed(Math.floor(Math.random() * 1000000))
 
 class Prototype extends ArgoEntity {
 
-    constructor (initData = {
-        name: randomName().join(' '),
-        editorState: {
-            currentSelection: []
-        }
-    }) {
+    constructor (initData = {}) {
 
         super('prototype', initData.id)
 
-        this.name = initData.name
-        this.dom = new Dom(initData.dom)
-        this.editorState = initData.editorState
+        this.schema = {
+            name: {
+                type: 'string',
+                default: () => {
+                    return randomName().join(' ')
+                }
+            },
+            dom: {
+                type: 'object',
+                default: () => new Dom(),
+                deserialize: (dom) => new Dom(dom)
+            }
+        }
 
-    }
+        this.deserialize(initData)
 
-    hydrateDomTree () {
-        this.dom.hydrateElements()
     }
 
 }
