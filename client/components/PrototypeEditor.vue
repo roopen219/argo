@@ -25,12 +25,20 @@
 
     .canvas {
         background: #eee;
-        overflow: auto;
+        overflow: hidden;
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    .page-wrapper {
+        display: flex;
+        flex-direction: column;
     }
 
     .property-panel {
         background: #ECF0F1;
         max-width: 300px;
+        min-width: 300px;
         position: relative;
         z-index: 2;
         box-shadow: -1px 0 4px rgba(0,0,0,0.15), inset 1px 1px 0 rgba(255,255,255,0.8);
@@ -44,6 +52,9 @@
             <div class="btn-group flex-row">
                <button class="prev btn-default"><i class="mdi-arrow-left"></i></button>
                <button class="next btn-default"><i class="mdi-arrow-right"></i></button>
+            </div>
+            <div class="btn-group flex-row">
+               <button class="btn-default" @click="_savePrototype(tabContent.id)">Save</button>
             </div>
             <div class="btn-group flex-row">
                 <button class="btn-default" @click="createElement('argo-dom-text')">Text</button>
@@ -74,15 +85,15 @@
             }),
 
             ...mapActions({
-                _createElement: types.CREATE_ELEMENT
+                _createElement: types.CREATE_ELEMENT,
+                _savePrototype: types.SAVE_PROTOTYPE
             }),
 
             createElement: function(componentName) {
                 this._createElement({
                     prototypeId: this.tabContent.id,
                     elementOptions: {
-                        componentName,
-                        props: {}
+                        componentName
                     }
                 })
             },
