@@ -10,7 +10,7 @@
 .btn-base {
     padding: 8px;
     border-radius: 2px;
-    line-height: 1;
+    line-height: 13px;
     font-size: 14px;
 }
 
@@ -31,6 +31,10 @@
 
     [class*="btn"]:last-child {
         border-radius: 0 2px 2px 0;
+    }
+
+    [class*="btn"]:first-child:last-child {
+        border-radius: 2px;
     }
 
     [class*="btn"] {

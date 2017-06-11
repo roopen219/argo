@@ -5,7 +5,7 @@
         padding: 8px 20px;
         background: $bg-tab-active;
         border-bottom: 1px solid $color-tabs-border;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+        box-shadow: inset 0 1px 0 #fff, 0 1px 4px rgba(0,0,0,0.15);
         min-height: 48px;
         position: relative;
         z-index: 1;
