@@ -12,7 +12,7 @@ function ArgoEntityFactory(entityName, schema, methods = {}) {
         constructor(initData = {}) {
 
             this.id = initData.id || shortid.generate()
-            this.entityName = entityName
+            this.entityName = initData.entityName || entityName
 
             this.deserialize(initData)
 
