@@ -11,9 +11,10 @@
                         :activeTabClass="activeTabClass"
                         :tabCloseButtonClass="tabCloseButtonClass"
                         :onTabClick="switchTab"
-                        :onTabClose="closeTab">
+                        :onTabClose="closeTab"
+                        :showCloseButton="allowClose">
             </component>
-            <button :class="newTabButtonClass" @click="openTab">+</button>
+            <button v-show="allowOpen" :class="newTabButtonClass" @click="openTab">+</button>
         </div>
         <argo-tab-content   v-for="(tab, index) in tabs"
                             :key="tab.id"
@@ -66,6 +67,14 @@
             openTab: {
                 type: Function,
                 default: function(){}
+            },
+            allowClose: {
+                type: Boolean,
+                default: false
+            },
+            allowOpen: {
+                type: Boolean,
+                default: false
             }
         },
         methods: {

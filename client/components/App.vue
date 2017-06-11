@@ -53,6 +53,8 @@
             :switchTab="switchTab"
             :openTab="openTab"
             :closeTab="closeTab"
+            :allowOpen="true"
+            :allowClose="true"
             :activeTab="getActiveTabIndex('app')">
         </argo-tab-group>
     </div>
@@ -60,7 +62,7 @@
 
 <script>
     import * as types from '../store/types'
-	import {mapState, mapActions, mapGetters} from 'vuex'
+	import {mapState, mapActions, mapGetters, mapMutations} from 'vuex'
 
     export default {
         name: 'argo-app',
@@ -74,9 +76,11 @@
                 _removeTab: types.REMOVE_TAB,
 				_switchTab: types.SWITCH_TAB,
                 _addTabGroup: types.ADD_TAB_GROUP,
-                _createPrototype: types.CREATE_PROTOTYPE,
-                _closePrototype: types.CLOSE_PROTOTYPE
+                _createPrototype: types.CREATE_PROTOTYPE
 			}),
+            ...mapMutations({
+                _closePrototype: types.CLOSE_PROTOTYPE
+            }),
             switchTab: function (tabIndex) {
                 this._switchTab({
                     tabGroupId: 'app',
@@ -92,16 +96,16 @@
             },
             closeTab: function (tabIndex) {
                 let tabContent = this.tabGroup['app'].tabs[tabIndex].tabContent
-                // let isPrototypeTab = tabContent.entityName === 'prototype'
+                let isPrototypeTab = tabContent.entityName === 'prototype'
 
                 this._removeTab({
                     tabGroupId: 'app',
                     tabIndex
                 })
 
-                // if(isPrototypeTab) {
-                //     this._closePrototype(tabContent.id)
-                // }
+                if(isPrototypeTab) {
+                    this._closePrototype(tabContent.id)
+                }
             }
         },
         created: function() {

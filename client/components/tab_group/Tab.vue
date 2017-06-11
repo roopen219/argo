@@ -1,7 +1,7 @@
 <template>
     <div :class="this.classes" @click="clickTab">
         <span>{{this.tabContent.name}}</span>
-        <button :class="tabCloseButtonClass" @click="closeTab">&times;</button>
+        <button v-show="showCloseButton" :class="tabCloseButtonClass" @click="closeTab">&times;</button>
     </div>
 </template>
 
@@ -46,6 +46,10 @@
             index: {
                 type: Number,
                 required: true
+            },
+            showCloseButton: {
+                type: Boolean,
+                default: false
             }
         },
         methods: {
