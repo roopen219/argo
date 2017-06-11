@@ -1,31 +1,29 @@
 import Vue from 'vue'
-import _ from 'lodash'
 
-import ArgoEntity from './ArgoEntity'
+import ArgoEntityFactory from './ArgoEntityFactory'
 
-class Element extends ArgoEntity {
-
-    constructor(initData = {
-        componentName: 'argo-dom-container',
-        props: {}
-    }) {
-
-        let _defaultProps = {
-            parent: null,
-            children: [],
-            'class': [],
-            style: {},
-            config: {},
-            attrs: {},
-            textContent: ''
+let schema = {
+    componentName: {
+        type: 'string',
+        default: 'argo-dom-container'
+    },
+    props: {
+        type: 'object',
+        default: function () {
+            return {
+                parent: null,
+                children: [],
+                'class': [],
+                style: {},
+                config: {},
+                attrs: {},
+                textContent: ''
+            }
         }
-
-        super('element', initData.id)
-
-        this.componentName = initData.componentName
-        this.props = _.merge({}, _defaultProps, initData.props)
-
     }
+}
+
+let methods = {
 
     addChild(child) {
 
@@ -37,11 +35,11 @@ class Element extends ArgoEntity {
 
         this.props.children.push(child)
 
-    }
+    },
 
     removeChild(child) {
         this.props.children.splice(this.props.children.indexOf(child), 1)
-    }
+    },
 
     addClass(className) {
 
@@ -56,5 +54,7 @@ class Element extends ArgoEntity {
     }
 
 }
+
+let Element = ArgoEntityFactory('element', schema, methods)
 
 export default Element

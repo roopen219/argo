@@ -1,31 +1,24 @@
 import randomName from 'adj-noun'
 
-import ArgoEntity from './ArgoEntity'
+import ArgoEntityFactory from './ArgoEntityFactory'
 import Dom from './Dom'
 
 randomName.seed(Math.floor(Math.random() * 1000000))
 
-class Prototype extends ArgoEntity {
-
-    constructor (initData = {
-        name: randomName().join(' '),
-        editorState: {
-            currentSelection: []
+let schema = {
+    name: {
+        type: 'string',
+        default: () => {
+            return randomName().join(' ')
         }
-    }) {
-
-        super('prototype', initData.id)
-
-        this.name = initData.name
-        this.dom = new Dom(initData.dom)
-        this.editorState = initData.editorState
-
+    },
+    dom: {
+        type: 'object',
+        default: () => new Dom(),
+        deserialize: (dom) => new Dom(dom)
     }
-
-    hydrateDomTree () {
-        this.dom.hydrateElements()
-    }
-
 }
+
+let Prototype = ArgoEntityFactory('prototype', schema)
 
 export default Prototype
