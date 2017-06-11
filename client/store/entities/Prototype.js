@@ -16,6 +16,14 @@ let schema = {
         type: 'object',
         default: () => new Dom(),
         deserialize: (dom) => new Dom(dom)
+    },
+    editorState: {
+        type: 'object',
+        default: () => {
+            return {
+                currentSelection: []
+            }
+        }
     }
 }
 
