@@ -70,25 +70,41 @@
     export default {
         name: 'argo-new-tab',
         computed: {
-            ...mapGetters(['listOfPrototypes'])
+            ...mapGetters(['listOfPrototypes','getTabIndexByContentId'])
         },
         methods: {
             ...mapActions({
                 _replaceTabContent: types.REPLACE_TAB_CONTENT,
                 _createPrototype: types.CREATE_PROTOTYPE,
                 _fetchPrototypes: types.FETCH_PROTOTYPES,
-                _openPrototype: types.OPEN_PROTOTYPE
+                _openPrototype: types.OPEN_PROTOTYPE,
+                _switchTab: types.SWITCH_TAB
             }),
             createPrototype: function() {
                 this._createPrototype()
                     .then(this.openPrototype)
             },
             openPrototype: function(prototype) {
-                this._openPrototype({
-                    prototype,
-                    replaceTab: true,
-                    tabIndex: this.tabIndex
-                })
+
+                let isPrototypeAlreadyOpened = this.getTabIndexByContentId('app', prototype.id)
+
+                if(isPrototypeAlreadyOpened !== -1) {
+
+                    this._switchTab({
+                        tabGroupId: 'app',
+                        tabIndex: isPrototypeAlreadyOpened
+                    })
+
+                } else {
+
+                    this._openPrototype({
+                        prototype,
+                        replaceTab: true,
+                        tabIndex: this.tabIndex
+                    })
+
+                }
+
             }
         },
         props: ['tabContent', 'tabIndex'],

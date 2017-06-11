@@ -37,6 +37,10 @@ let mutations = {
         Vue.set(state.openedForEditing, prototype.id, new Prototype(prototype))
     },
 
+    [types.CLOSE_PROTOTYPE] (state, prototypeId) {
+        Vue.delete(state.openedForEditing, prototypeId)
+    },
+
     [types.SELECT_ELEMENT] (state, {prototypeId, elementId}) {
         state.openedForEditing[prototypeId].editorState.currentSelection = [elementId]
     },
