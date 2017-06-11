@@ -90,6 +90,8 @@ export default function(lokiInstance) {
 
             update: function ({id, data, params}) {
 
+                data = _.merge({}, data)
+
                 if (data) {
                     delete data['id']
                 }
