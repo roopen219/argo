@@ -1,16 +1,16 @@
-import ArgoEntity from './ArgoEntity'
+import ArgoEntityFactory from './ArgoEntityFactory'
 
-class Tab extends ArgoEntity {
-
-    constructor({tabContent, tabViewComponent}) {
-
-        super('tab')
-
-        this.tabContent = tabContent
-        this.tabViewComponent = tabViewComponent
-
+let schema = {
+    tabContent: {
+        type: 'object',
+        default: () => {return {}}
+    },
+    tabViewComponent: {
+        type: 'string',
+        required: true
     }
-
 }
+
+let Tab = ArgoEntityFactory('tab', schema)
 
 export default Tab

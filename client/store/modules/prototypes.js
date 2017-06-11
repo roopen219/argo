@@ -13,11 +13,11 @@ let mutations = {
         if (Array.isArray(prototype)) {
 
             prototype.forEach((_prototype) => {
-                Vue.set(state, _prototype.id, new Prototype(_prototype))
+                Vue.set(state, _prototype.id, _prototype)
             })
 
         } else {
-            Vue.set(state, prototype.id, new Prototype(prototype))
+            Vue.set(state, prototype.id, prototype)
         }
 
     },
@@ -29,7 +29,7 @@ let mutations = {
     },
 
     [types.OPEN_PROTOTYPE] (state, prototypeId) {
-        // state[prototypeId].hydrateDomTree()
+        state[prototypeId] = new Prototype(state[prototypeId])
     },
 
     [types.SELECT_ELEMENT] (state, {prototypeId, elementId}) {

@@ -1,36 +1,30 @@
 import Vue from 'vue'
 import _ from 'lodash'
 
-import ArgoEntity from './ArgoEntity'
+import ArgoEntityFactory from './ArgoEntityFactory'
 import Element from './Element'
 
-class Dom extends ArgoEntity {
-
-    constructor(initData = {}) {
-
-        super('dom', initData.id)
-
-        this.schema = {
-            elements: {
-                type: 'object',
-                default: () => {
-                    return {
-                        root: new Element()
-                    }
-                },
-                deserialize: function (elements) {
-                    return _.mapValues(elements, (element) => new Element(element))
-                }
-            },
-            sharedStyles: {
-                type: 'object',
-                default: () => {return {}}
+let schema = {
+    elements: {
+        type: 'object',
+        default: () => {
+            return {
+                root: new Element()
             }
+        },
+        deserialize: function (elements) {
+            return _.mapValues(elements, (element) => new Element(element))
         }
-
-        this.deserialize(initData)
-
+    },
+    sharedStyles: {
+        type: 'object',
+        default: () => {
+            return {}
+        }
     }
+}
+
+let methods = {
 
     createElement(elementOptions, parentId) {
 
@@ -43,5 +37,7 @@ class Dom extends ArgoEntity {
     }
 
 }
+
+let Dom = ArgoEntityFactory('dom', schema, methods)
 
 export default Dom
