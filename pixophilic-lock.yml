@@ -1,2 +1,2 @@
 #!!! DO NOT UPDATE THIS FILE MANUALLY !!! Run 'npm run cypress:vr:update' if you want to update the base snapshots. If you are getting merge conflicts, it means that the snapshots were updated on the branch you are trying to merge into. Merge from the that branch and run the aforementioned npm command.
-last_update_commit: ef887932f38bd0c7db311b6e00a775e22f98f8b4
+last_update_commit: ef887932f38bd0c7db311b6e00a775e22f98f8b5
